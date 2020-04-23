@@ -5,11 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class HomePageController {
+public class HomePageController extends MainController{
 
     @GetMapping(value = {"/", "/index", "/home"})
     public ModelAndView getHomePage(ModelAndView modelAndView) {
-        modelAndView.setViewName("index");
-        return modelAndView;
+        return super.view("fragments/home");
     }
 }
