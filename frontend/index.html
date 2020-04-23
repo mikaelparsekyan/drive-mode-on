@@ -1,27 +1,54 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Homepage</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <script type="text/javascript" src="script.js"></script>
-</head>
-<body>
-<div>
-	<header>
-		<div class="nav-bar">
-			<ul>
-			  <li><img src="icons/user.png"/></li>
-			  <li><span class="header-divider"></span></li>
-			  <li><span>Explore</span></li>
-			  <li><span class="header-divider"></span></li>
-			  <li><span>Feed</span></li>
-			</ul>
-		</div>
-		<div class="main-container">
-			<h1>title</h1>
-		</div>
-	</header>
-</div>
-</body>
-</html>
+	<!DOCTYPE html>
+	<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Homepage</title>
+	    <link rel="stylesheet" type="text/css" href="styles.css">
+	    <script type="text/javascript" src="script.js"></script>
+	</head>
+	<body>
+	<div>
+		<header>
+			<div class="main-container">
+				<div class="nav-bar">
+				<ul>
+				  <li class="navbar-element">
+				  	<a href="./login.html">
+				  		<img class="user-profile-pic" src="icons/user_icon.svg"/>
+				  	</a>
+				  </li>
+				  <li class="navbar-element"><span class="header-divider"></span></li>
+				  <li class="navbar-element"><span>Explore</span></li>
+				  <li class="navbar-element"><span class="header-divider"></span></li>
+				  <li class="navbar-element"><span>Feed</span></li>
+				</ul>
+			</div>
+			<div class="content-holder">
+				<div class="register-form">
+					<h1>Sign up</h1>
+					<form action="/register" method="post">
+						<div>
+							<label class="form-labels">Nickname</label>
+							<input type="text" name="nickname" required />
+						</div>
+						<div>
+							<label class="form-labels">Email</label>
+							<input type="text" name="nickname" required />
+						</div>
+						<div>
+							<label class="form-labels">Password</label>
+							<input type="text" name="nickname" required />
+						</div>
+						<div>
+							<label class="form-labels">Confirm password</label>
+							<input type="text" name="nickname" required />
+						</div>
+						<button class="register-button">Get started</button>
+					</form>
+				</div>
+			</div>
+			</div>
+	    </header>
+	</div>
+	</body>
+	</html>
