@@ -2,27 +2,32 @@
     font-family: "Montserrat-Medium";
     src: url("../fonts/Montserrat-Medium.ttf");
 }
+
 @font-face {
     font-family: "Montserrat-Medium";
     src: url("../fonts/Montserrat-Medium.ttf");
 }
+
 body {
     margin: 0;
 }
-.nav-bar{
+
+.nav-bar {
     position: fixed;
     width: 100%;
-    height:100px;
+    height: 100px;
 }
+
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #fafafa ;
+    background-color: #fafafa;
     height: 42px;
 }
-ul{
+
+ul {
     padding: 11px;
     padding-right: 95px;
     border-bottom-style: solid;
@@ -32,6 +37,7 @@ ul{
     position: sticky;
     top: 0;
 }
+
 li {
     float: right;
     margin-left: 35px;
@@ -40,21 +46,87 @@ li {
     color: #757575;
     text-transform: uppercase;
 }
+
 li img {
     color: white;
     margin: 3px;
     height: 35px;
     text-decoration: none;
 }
-h1{
+
+h1 {
     padding: 0;
     margin: 0;
 }
-li:hover{
+
+li:hover {
     color: #000000;
 }
+
 .header-divider {
-    border-left:1.5px solid #38546d;
+    border-left: 1.5px solid #38546d;
 }
-.main-container{
+
+.content-holder {
+    margin-top: 60px;
+    width: 100vw;
+    position: absolute;
+    z-index: -1;
+}
+
+.register-form {
+    background-color: #EEEEEE;
+    width: 400px;
+    margin: 50px auto 0;
+    padding: 42px 42px 0px;
+    border-width: 2px;
+    border-radius: 3px;
+}
+
+.register-form label, button, input, h1, p {
+    font-family: "Montserrat-Medium", serif;
+    border-radius: 3px;
+}
+
+.form-labels {
+    font-size: 14px;
+    display: inline-block;
+    margin-bottom: 6px;
+}
+
+.register-form input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #E0E0E0;
+    font-size: 14px;
+    clear: both;
+    outline: none;
+}
+
+.register-form div {
+    margin-top: 30px;
+}
+
+.register-button {
+    background-color: #00C853;
+    color: #ffffff;
+    width: 100%;
+    padding: 10px;
+    size: 10px;
+    margin-top: 80px;
+    border-color: #00C853;
+    border-style: solid;
+    text-transform: uppercase;
+}
+
+.sign-in-text-div {
+    height: 50px;
+    font-size: 12px;
+    display: inline;
+    padding: 20px;
+}
+
+.sign-in-text-p {
+    text-align: center;
 }

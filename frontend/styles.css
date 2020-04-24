@@ -6,7 +6,7 @@
   font-family: "Montserrat-Medium";
   src: url("fonts/Montserrat-Medium.ttf");
 }
-body {
+body,h1 {
   margin: 0;
 }
 .nav-bar{
@@ -62,10 +62,11 @@ ul {
   margin: 0 auto;
   margin-top: 50px;
   padding: 42px;
+  padding-bottom: 0px;
   border-width: 2px;
   border-radius: 3px;
 }
-.register-form label, button, input, h1{
+.register-form label, button, input, h1, p{
   font-family: "Montserrat-Medium";
   border-radius: 3px;
 }
@@ -98,5 +99,14 @@ ul {
   border-color: #00C853;
   border-style: solid;
   text-transform: uppercase;
+}
+.sign-in-text-div{
+  height: 50px;
+  font-size: 12px;
+  display: inline;
+  padding: 20px;
+}
+.sign-in-text-p{
+  text-align: center;
 }
   
