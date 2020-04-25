@@ -3,8 +3,6 @@ package com.project.drivemodeon.web.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Map;
-
 @Controller
 public class MainController {
 
@@ -19,19 +17,12 @@ public class MainController {
         return modelAndView;
     }
 
-    protected ModelAndView view(String viewName, Map<String, Object> objects) {
+    protected ModelAndView view(String viewName, String objName, Object object) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("layouts/index");
         modelAndView.addObject("view", viewName);
-
-        addObjectsToView(objects, modelAndView);
+        modelAndView.addObject(objName, object);
 
         return modelAndView;
-    }
-
-    private void addObjectsToView(Map<String, Object> objects, ModelAndView modelAndView) {
-        for (var entry : objects.entrySet()) {
-            modelAndView.addObject(entry.getKey(),entry.getValue());    
-        }
     }
 }

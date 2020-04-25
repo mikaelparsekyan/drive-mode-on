@@ -5,7 +5,8 @@ import com.project.drivemodeon.util.api.ValidatorUtil;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import java.util.Set;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ValidatorUtilImpl implements ValidatorUtil {
     private final Validator validator;
@@ -22,7 +23,12 @@ public class ValidatorUtilImpl implements ValidatorUtil {
     }
 
     @Override
-    public <E> Set<ConstraintViolation<E>> violations(E entity) {
-        return validator.validate(entity);
+    public <E> Map<String, Object> violations(E entity) {
+        Map<String, Object> violations = new LinkedHashMap<>();
+        for (ConstraintViolation<E> violation : validator.validate(entity)) {
+            violations.put(violation.getPropertyPath().toString(),
+                    violation.getMessage());
+        }
+        return violations;
     }
 }

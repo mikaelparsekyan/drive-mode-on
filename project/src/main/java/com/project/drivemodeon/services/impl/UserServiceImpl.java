@@ -12,14 +12,22 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
+
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
 
     @Override
-    public void signUpUser(UserSignUpDto userSignUpDto) {
-        userRepository.saveAndFlush(
-                modelMapper.map(userSignUpDto, User.class));
+    public boolean signUpUser(UserSignUpDto userSignUpDto) {
+        String password = userSignUpDto.getPassword();
+        String confirmedPassword = userSignUpDto.getConfirmPassword();
+
+        if(password.trim().equals(confirmedPassword.trim())) {
+            userRepository.saveAndFlush(
+                    modelMapper.map(userSignUpDto, User.class));
+            return true;
+        }
+        return false;
     }
 }

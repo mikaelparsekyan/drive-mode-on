@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
-    void signUpUser(UserSignUpDto userSignUpDto);
+    boolean signUpUser(UserSignUpDto userSignUpDto);
 }

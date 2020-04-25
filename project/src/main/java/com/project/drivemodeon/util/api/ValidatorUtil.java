@@ -1,10 +1,9 @@
 package com.project.drivemodeon.util.api;
 
-import javax.validation.ConstraintViolation;
-import java.util.Set;
+import java.util.Map;
 
 public interface ValidatorUtil {
     <E> boolean isValid(E entity);
 
-    <E> Set<ConstraintViolation<E>> violations(E entity);
+    <E> Map<String, Object> violations(E entity);
 }
