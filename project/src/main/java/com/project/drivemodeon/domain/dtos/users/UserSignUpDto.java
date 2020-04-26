@@ -10,9 +10,6 @@ import javax.validation.constraints.Size;
 public class UserSignUpDto {
     @NotNull(message = "Nickname cannot be empty!")
     @Size(min = 4, max = 10, message = "Nickname must be between 4 and 15 symbols!")
-    @Pattern(
-            regexp = ""
-    )
     private String nickname;
 
     @NotNull(message = "Email cannot be empty!")
@@ -24,7 +21,7 @@ public class UserSignUpDto {
     @NotNull(message = "Password cannot be empty!")
     @Size(min = 8, message = "Password must be at least 8 symbols!")
     @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$",
+            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{1,}$",
             message = "Password must contains one upper letter, one lower letter and one digit!"
     )
     private String password;
