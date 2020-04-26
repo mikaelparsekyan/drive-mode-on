@@ -18,6 +18,10 @@ body {
     height: 100px;
 }
 
+.nav-bar a {
+    text-decoration: none;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -118,6 +122,11 @@ li:hover {
     border-color: #00C853;
     border-style: solid;
     text-transform: uppercase;
+}
+
+.register-button:hover {
+    background-color: #43A047;
+    border-color: #43A047;
 }
 
 .sign-in-text-div {
