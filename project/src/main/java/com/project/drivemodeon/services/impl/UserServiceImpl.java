@@ -36,4 +36,14 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public boolean isEmailTaken(String email) {
+        return userRepository.findUserByEmail(email) != null;
+    }
+
+    @Override
+    public boolean isNicknameTaken(String nickname) {
+        return userRepository.findUserByNickname(nickname) != null;
+    }
 }

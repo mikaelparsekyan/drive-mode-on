@@ -6,4 +6,8 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
     boolean signUpUser(UserSignUpDto userSignUpDto);
+
+    boolean isEmailTaken(String email);
+
+    boolean isNicknameTaken(String value);
 }
