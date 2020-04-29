@@ -8,11 +8,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-
 
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
@@ -39,11 +40,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isEmailTaken(String email) {
-        return userRepository.findUserByEmail(email) != null;
+        Optional<User> foundUser = userRepository.findUserByEmail(email);
+        return foundUser.isPresent();
     }
 
     @Override
     public boolean isNicknameTaken(String nickname) {
-        return userRepository.findUserByNickname(nickname) != null;
+        Optional<User> foundUser = userRepository.findUserByNickname(nickname);
+        return foundUser.isPresent();
     }
 }

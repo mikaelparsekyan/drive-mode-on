@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class UserSignUpController extends MainController {
     }
 
     @PostMapping
-    public ModelAndView doSignUp(@Validated @ModelAttribute("user") UserSignUpDto userSignUpDto,
+    public ModelAndView doSignUp(@Valid @ModelAttribute("user") UserSignUpDto userSignUpDto,
                                  BindingResult bindingResult,
                                  HttpServletRequest request) {
         Map<String, Object> inputErrors = new HashMap<>();

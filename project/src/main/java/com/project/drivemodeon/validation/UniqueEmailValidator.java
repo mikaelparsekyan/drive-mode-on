@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-@Component
 public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
 
+    @Autowired
     private UserService userService;
 
     @Override
@@ -20,10 +20,10 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, St
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
-        try {
-            return email != null && !userService.isEmailTaken(email);
-        } catch (NullPointerException ignored) {
+        if (email == null) {
             return false;
         }
+
+        return !userService.isEmailTaken(email);
     }
 }
