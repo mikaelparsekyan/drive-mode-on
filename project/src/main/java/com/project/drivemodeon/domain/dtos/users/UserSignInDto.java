@@ -10,7 +10,7 @@ public class UserSignInDto {
 
     @NotNull
     @Max(255)
-    private String usernameOrEmail;
+    private String username;
 
     @NotNull
     @Max(255)

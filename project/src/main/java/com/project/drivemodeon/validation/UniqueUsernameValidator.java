@@ -1,30 +1,29 @@
 package com.project.drivemodeon.validation;
 
 import com.project.drivemodeon.services.api.UserService;
-import com.project.drivemodeon.validation.annotations.UniqueEmail;
+import com.project.drivemodeon.validation.annotations.UniqueUsername;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
+public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, String> {
 
     @Autowired
     private UserService userService;
 
     @Override
-    public void initialize(UniqueEmail constraintAnnotation) {
+    public void initialize(UniqueUsername constraintAnnotation) {
 
     }
 
     @Override
-    public boolean isValid(String email, ConstraintValidatorContext context) {
-        if (email == null) {
+    public boolean isValid(String username, ConstraintValidatorContext context) {
+        if (username == null) {
             return false;
         }
         try {
-            return !userService.isEmailTaken(email);
+            return !userService.isUsernameTaken(username);
         } catch (Exception e) {
             return false;
         }

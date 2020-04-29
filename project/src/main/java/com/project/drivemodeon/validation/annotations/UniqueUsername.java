@@ -1,6 +1,6 @@
 package com.project.drivemodeon.validation.annotations;
 
-import com.project.drivemodeon.validation.UniqueNicknameValidator;
+import com.project.drivemodeon.validation.UniqueUsernameValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -10,10 +10,10 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Constraint(validatedBy = {UniqueNicknameValidator.class})
+@Constraint(validatedBy = {UniqueUsernameValidator.class})
 @Target({FIELD})
 @Retention(RUNTIME)
-public @interface UniqueNickname {
+public @interface UniqueUsername {
     String message() default "";
 
     Class<?>[] groups() default {};

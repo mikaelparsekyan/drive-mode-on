@@ -123,17 +123,17 @@ li:hover {
     text-transform: uppercase;
 }
 
+.submit-button:hover {
+    background-color: #43A047;
+    border-color: #43A047;
+}
+
 .signup-submit-button {
     margin-top: 80px;
 }
 
 .signin-submit-button {
     margin-top: 50px;
-}
-
-.signup-submit-button:hover {
-    background-color: #43A047;
-    border-color: #43A047;
 }
 
 .input-form-hint-div {

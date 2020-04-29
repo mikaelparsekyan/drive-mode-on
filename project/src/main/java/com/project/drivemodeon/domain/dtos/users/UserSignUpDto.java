@@ -1,7 +1,7 @@
 package com.project.drivemodeon.domain.dtos.users;
 
 import com.project.drivemodeon.validation.annotations.UniqueEmail;
-import com.project.drivemodeon.validation.annotations.UniqueNickname;
+import com.project.drivemodeon.validation.annotations.UniqueUsername;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -11,10 +11,10 @@ import javax.validation.constraints.Size;
 @Data
 public class UserSignUpDto {
 
-    @UniqueNickname(message = "Nickname is already taken!")
-    @NotNull(message = "Nickname cannot be empty!")
-    @Size(min = 4, max = 10, message = "Nickname must be between 4 and 15 symbols!")
-    private String nickname;
+    @UniqueUsername(message = "Username is already taken!")
+    @NotNull(message = "Username cannot be empty!")
+    @Size(min = 4, max = 10, message = "Username must be between 4 and 15 symbols!")
+    private String username;
 
     @UniqueEmail(message = "Email is already taken!")
     @NotNull(message = "Email cannot be empty!")

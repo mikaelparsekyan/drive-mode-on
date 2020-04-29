@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class User extends BaseEntity {
     @NotNull
     @Column
-    private String nickname;
+    private String username;
 
     @NotNull
     @Column

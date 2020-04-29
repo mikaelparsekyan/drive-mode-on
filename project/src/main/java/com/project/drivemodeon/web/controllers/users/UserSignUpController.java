@@ -6,14 +6,12 @@ import com.project.drivemodeon.util.api.ValidatorUtil;
 import com.project.drivemodeon.web.controllers.MainController;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,8 +36,7 @@ public class UserSignUpController extends MainController {
 
     @PostMapping
     public ModelAndView doSignUp(@Valid @ModelAttribute("user") UserSignUpDto userSignUpDto,
-                                 BindingResult bindingResult,
-                                 HttpServletRequest request) {
+                                 BindingResult bindingResult) {
         Map<String, Object> inputErrors = new HashMap<>();
 
         if (!bindingResult.hasErrors()) {
