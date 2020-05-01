@@ -1,5 +1,6 @@
 package com.project.drivemodeon.services.impl;
 
+import com.project.drivemodeon.domain.dtos.users.UserExposeInfoDto;
 import com.project.drivemodeon.domain.dtos.users.UserSignInDto;
 import com.project.drivemodeon.domain.dtos.users.UserSignUpDto;
 import com.project.drivemodeon.domain.models.User;
@@ -41,18 +42,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean signInUser(UserSignInDto userSignInDto) {
+    public long signInUser(UserSignInDto userSignInDto) {
         String username = userSignInDto.getUsername();
 
         Optional<User> user = userRepository.findUserByUsername(username);
 
         if (user.isEmpty()) {
-            return false;
+            return -1;
 
         }
         String passwordHash = DigestUtils.sha256Hex(userSignInDto.getPassword());
 
-        return user.get().getPassword().equals(passwordHash);
+        if (!(user.get().getPassword().equals(passwordHash))) {
+            return -1;
+        }
+
+        return user.get().getId();
     }
 
     @Override
@@ -67,4 +72,8 @@ public class UserServiceImpl implements UserService {
         return foundUser.isPresent();
     }
 
+    @Override
+    public Optional<User> getUserById(long id) {
+        return userRepository.findById(id);
+    }
 }

@@ -1,5 +1,6 @@
 package com.project.drivemodeon.web.controllers.home;
 
+import com.project.drivemodeon.domain.models.User;
 import com.project.drivemodeon.services.api.UserService;
 import com.project.drivemodeon.web.controllers.MainController;
 import org.springframework.stereotype.Controller;
@@ -7,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 @Controller
 public class HomePageController extends MainController {
@@ -17,14 +20,20 @@ public class HomePageController extends MainController {
     }
 
     @GetMapping(value = {"/", "/index", "/home"})
-    public ModelAndView getHomePage(ModelAndView modelAndView,
-                                    HttpServletRequest request) {
-        Long loggedUserId = (Long) request.getSession().getAttribute("USER-ID");
+    public ModelAndView getHomePage(HttpServletRequest request) {
+        Long loggedUserId = (Long) request.getSession().getAttribute("user_id");
 
+        String text = "";
         if (loggedUserId == null) {
-            request.getSession().setAttribute("USER-ID", loggedUserId);
+            text = "no user logged";
+        } else {
+            Optional<User> userFromSession = userService.getUserById(loggedUserId);
+
+            if (userFromSession.isPresent()) {
+                text = userFromSession.get().getUsername();
+            }
         }
 
-        return super.view("fragments/home");
+        return super.view("fragments/home", "text", text);
     }
 }

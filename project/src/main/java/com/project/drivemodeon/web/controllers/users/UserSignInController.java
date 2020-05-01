@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,19 +25,28 @@ public class UserSignInController extends MainController {
     }
 
     @GetMapping
-    public ModelAndView get() {
-        UserSignInDto userSignInDto = new UserSignInDto();
-        return super.view("fragments/signin",
-                "user", userSignInDto);
+    public ModelAndView get(HttpServletRequest request) {
+        HttpSession userSession = request.getSession();
+        if (userSession.getAttribute("user_id") == null) {
+            UserSignInDto userSignInDto = new UserSignInDto();
+            return super.view("fragments/signin",
+                    "user", userSignInDto);
+        }
+
+        return new ModelAndView("redirect:/");
     }
 
     @PostMapping
-    public ModelAndView doSignIn(@ModelAttribute("user") UserSignInDto userSignInDto) {
+    public ModelAndView doSignIn(@ModelAttribute("user") UserSignInDto userSignInDto,
+                                 HttpServletRequest request) {
         Map<String, Object> inputErrors = new HashMap<>();
 
-        boolean isUserSignedIn = userService.signInUser(userSignInDto);
+        long signedUserId = userService.signInUser(userSignInDto);
+        boolean isUserSignedIn = signedUserId != -1;
         if (isUserSignedIn) {
-            System.out.println("USER IS SIGNED IN SUCCESSFULLY!");
+            //session.invalidate();
+            HttpSession userSession = request.getSession();
+            userSession.setAttribute("user_id", signedUserId);
         } else {
             inputErrors.put("invalidInfo", "Invalid username or password!");
         }
