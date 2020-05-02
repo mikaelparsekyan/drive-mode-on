@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,10 +30,17 @@ public class UserSignUpController extends MainController {
     }
 
     @GetMapping
-    public ModelAndView showSignUpContent() {
-        UserSignUpDto userSignUpDto = new UserSignUpDto();
-        return super.view("fragments/signup",
-                "user", userSignUpDto);
+    public ModelAndView getSignUpPage(HttpServletRequest request) {
+        HttpSession userSession = request.getSession();
+        Long userId = (Long) userSession.getAttribute("user_id");
+
+        if (userId == null) {
+            UserSignUpDto userSignUpDto = new UserSignUpDto();
+            return super.view("fragments/signup",
+                    "user", userSignUpDto);
+        }
+
+        return new ModelAndView("redirect:/");
     }
 
     @PostMapping

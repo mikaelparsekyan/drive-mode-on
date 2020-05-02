@@ -25,15 +25,17 @@ public class UserSignInController extends MainController {
     }
 
     @GetMapping
-    public ModelAndView get(HttpServletRequest request) {
+    public ModelAndView getSignInPage(HttpServletRequest request) {
         HttpSession userSession = request.getSession();
-        if (userSession.getAttribute("user_id") == null) {
+        Long userId = (Long) userSession.getAttribute("user_id");
+
+        if (userId == null) {
             UserSignInDto userSignInDto = new UserSignInDto();
             return super.view("fragments/signin",
                     "user", userSignInDto);
         }
 
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/myprofile");
     }
 
     @PostMapping
