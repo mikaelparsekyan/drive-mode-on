@@ -10,12 +10,21 @@
 
 body {
     margin: 0;
+    position: relative;
+}
+
+footer ul {
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .nav-bar {
     position: fixed;
     width: 100%;
-    height: 100px;
+    height: 42px;
 }
 
 .nav-bar a {
@@ -23,7 +32,7 @@ body {
     color: inherit;
 }
 
-ul {
+.nav-bar ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -32,7 +41,7 @@ ul {
     height: 42px;
 }
 
-ul {
+.nav-bar ul {
     padding: 11px 95px 11px 11px;
     border-bottom-style: solid;
     border-width: 2px;
@@ -42,16 +51,16 @@ ul {
     top: 0;
 }
 
-li {
+.nav-bar li {
     float: right;
     margin-left: 35px;
     line-height: 42px;
     font-family: "Montserrat-Medium";
-    color: #616161;
+    color: #8c8c8c;
     text-transform: uppercase;
 }
 
-li img {
+.nav-bar li img {
     color: white;
     margin: 3px;
     height: 35px;
@@ -72,8 +81,8 @@ li:hover {
 }
 
 .content-holder {
-    margin-top: 60px;
-    width: 100vw;
+    margin-top: 42px;
+    width: 100%;
     position: absolute;
     z-index: -1;
 }
@@ -81,7 +90,7 @@ li:hover {
 .register-form {
     background-color: #F5F5F5;
     width: 400px;
-    margin: 50px auto 0;
+    margin: 0 auto 0;
     padding: 42px 42px 0px;
     border-width: 2px;
     border-radius: 3px;
@@ -153,4 +162,24 @@ li:hover {
     font-size: 12px;
     color: #B00020;
 }
+
+.sign-in-page-content {
+    padding-top: 80px;
+    padding-bottom: 300px;
+    background-position: center;
+    height: calc(100% - 122px);
+    width: 100%;
+    background-image: url('../photos/sign_in_bg.png');
+}
+
+/*footer ul {*/
+/*    margin-left: 80px;*/
+/*}*/
+/*footer li {*/
+/*    font-family: "Montserrat-Medium", serif;*/
+/*    font-size: 12px;*/
+/*    text-transform: uppercase;*/
+/*    margin-left: 30px;*/
+/*    display: inline;*/
+/*}*/
 
