@@ -18,4 +18,6 @@ public interface UserService {
     boolean isUsernameTaken(String username);
 
     Optional<User> getUserById(long id);
+
+    Optional<User> getUserByUsername(String username);
 }

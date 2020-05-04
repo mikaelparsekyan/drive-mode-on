@@ -15,10 +15,15 @@ body {
 
 footer ul {
     position: relative;
-    width: 100%;
     bottom: 0;
     left: 0;
     right: 0;
+}
+
+.all-page-content-div {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .nav-bar {
@@ -32,8 +37,11 @@ footer ul {
     color: inherit;
 }
 
-.nav-bar ul {
+ul {
     list-style-type: none;
+}
+
+.nav-bar ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -72,7 +80,7 @@ h1 {
     margin: 0;
 }
 
-li:hover {
+.nav-bar li:hover {
     color: #000000;
 }
 
@@ -80,10 +88,9 @@ li:hover {
     border-left: 1.5px solid #616161;
 }
 
-.content-holder {
+.main-content {
     margin-top: 42px;
     width: 100%;
-    position: absolute;
     z-index: -1;
 }
 
@@ -165,21 +172,25 @@ li:hover {
 
 .sign-in-page-content {
     padding-top: 80px;
-    padding-bottom: 300px;
     background-position: center;
-    height: calc(100% - 122px);
+    height: 100vh;
     width: 100%;
     background-image: url('../photos/sign_in_bg.png');
 }
 
-/*footer ul {*/
-/*    margin-left: 80px;*/
-/*}*/
-/*footer li {*/
-/*    font-family: "Montserrat-Medium", serif;*/
-/*    font-size: 12px;*/
-/*    text-transform: uppercase;*/
-/*    margin-left: 30px;*/
-/*    display: inline;*/
-/*}*/
+.footer-content {
+}
+
+.footer-content ul {
+    color: #FAFAFA;
+    text-transform: uppercase;
+    font-family: "Montserrat-Medium", serif;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.footer-content li {
+    float: left;
+    margin-left: 30px;
+}
 

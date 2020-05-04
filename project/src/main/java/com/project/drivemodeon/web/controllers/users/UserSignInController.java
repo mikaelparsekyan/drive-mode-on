@@ -1,6 +1,7 @@
 package com.project.drivemodeon.web.controllers.users;
 
 import com.project.drivemodeon.domain.dtos.users.UserSignInDto;
+import com.project.drivemodeon.domain.models.User;
 import com.project.drivemodeon.services.api.UserService;
 import com.project.drivemodeon.web.controllers.MainController;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/signin")
@@ -34,8 +36,8 @@ public class UserSignInController extends MainController {
             return super.view("fragments/signin",
                     "user", userSignInDto);
         }
-
-        return new ModelAndView("redirect:/myprofile");
+        Optional<User> loggedUser = userService.getUserById(userId);
+        return new ModelAndView("redirect:/" + loggedUser.get().getUsername());
     }
 
     @PostMapping
