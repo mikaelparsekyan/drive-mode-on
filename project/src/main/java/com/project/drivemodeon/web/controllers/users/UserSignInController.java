@@ -37,13 +37,16 @@ public class UserSignInController extends MainController {
                     "user", userSignInDto);
         }
         Optional<User> loggedUser = userService.getUserById(userId);
-        return new ModelAndView("redirect:/" + loggedUser.get().getUsername());
+        return new ModelAndView("redirect:/user/" + loggedUser.get().getUsername());
     }
 
     @PostMapping
     public ModelAndView doSignIn(@ModelAttribute("user") UserSignInDto userSignInDto,
                                  HttpServletRequest request) {
         Map<String, Object> inputErrors = new HashMap<>();
+
+        ModelAndView modelAndView = new ModelAndView("layouts/index");
+        modelAndView.addObject("view", "fragments/signin");
 
         long signedUserId = userService.signInUser(userSignInDto);
         boolean isUserSignedIn = signedUserId != -1;
@@ -54,8 +57,8 @@ public class UserSignInController extends MainController {
         } else {
             inputErrors.put("invalidInfo", "Invalid username or password!");
         }
+        modelAndView.addObject("inputErrors", inputErrors);
 
-        return super.view("fragments/signin", "inputErrors",
-                inputErrors);
+        return modelAndView;
     }
 }
