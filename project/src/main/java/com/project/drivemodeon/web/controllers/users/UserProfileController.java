@@ -30,13 +30,9 @@ public class UserProfileController extends MainController {
         Optional<User> user = userService.getUserByUsername(username);
 
         if (user.isPresent()) {
-            modelAndView.addObject("view",
-                    "fragments/user/user_profile");
-
-            modelAndView.addObject("username", username);
-
-            modelAndView.addObject("pageTitle",
-                    String.format("%s's profile", username));
+            modelAndView.addObject("view", "fragments/user/user_profile");
+            modelAndView.addObject("profileId", user.get().getId());
+            modelAndView.addObject("profileUsername", username.toLowerCase());
             return modelAndView;
         }
         modelAndView.setViewName("fragments/errors/user/user_not_found");

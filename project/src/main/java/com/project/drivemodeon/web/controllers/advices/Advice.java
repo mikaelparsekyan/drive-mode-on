@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @ControllerAdvice
 public class Advice {
+    //TODO remove code duplication
     private final UserService userService;
 
     public Advice(UserService userService) {
@@ -30,10 +31,27 @@ public class Advice {
         if (loggedUserId != null) {
             Optional<User> user = userService.getUserById(loggedUserId);
             if (user.isPresent()) {
-                return user.get().getUsername();
+                return user.get().getUsername().toLowerCase();
             }
         }
+        return null;
+    }
 
+    @ModelAttribute("loggedUserId")
+    public Long getLoggedUserId(HttpServletRequest request) {
+        return (Long) request.getSession().getAttribute("user_id");
+    }
+
+    @ModelAttribute("userProfileRoute")
+    public String getUserProfileRoute(HttpServletRequest request) {
+        Long loggedUserId = (Long) request.getSession().getAttribute("user_id");
+        if (loggedUserId != null) {
+            Optional<User> user = userService.getUserById(loggedUserId);
+            if (user.isPresent()) {
+                return String.format("/user/%s",
+                        user.get().getUsername().toLowerCase());
+            }
+        }
         return null;
     }
 }

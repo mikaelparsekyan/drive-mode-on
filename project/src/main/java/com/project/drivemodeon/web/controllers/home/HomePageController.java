@@ -23,17 +23,6 @@ public class HomePageController extends MainController {
     public ModelAndView getHomePage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("layouts/index");
 
-        Long loggedUserId = (Long) request.getSession().getAttribute("user_id");
-        boolean isUserLoggedIn = loggedUserId != null;
-        if (isUserLoggedIn) {
-            Optional<User> userFromSession = userService.getUserById(loggedUserId);
-
-            if (userFromSession.isPresent()) {
-                String username = userFromSession.get().getUsername();
-                modelAndView.addObject("userProfileRoute",
-                        String.format("/user/%s", username));
-            }
-        }
         modelAndView.addObject("view", "fragments/home");
 
         return modelAndView;
