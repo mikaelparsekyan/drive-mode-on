@@ -4,7 +4,7 @@ import com.project.drivemodeon.web.controllers.advices.Advice;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,9 +18,9 @@ public class UserEditController {
     }
 
     @GetMapping
-    @ResponseBody
-    public String getUserSettingsPage(HttpServletRequest request) {
-        String username = adviceController.getUsername(request);
-        return username;
+    public ModelAndView getUserSettingsPage(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("layouts/index");
+        modelAndView.addObject("view", "fragments/user/edit_user");
+        return modelAndView;
     }
 }
