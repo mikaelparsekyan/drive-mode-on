@@ -271,6 +271,7 @@ h1 {
 .followed {
     background-color: #00E676;
     color: #FAFAFA;
+    border-color: #00E676;
     transition: 0.2s;
 }
 
