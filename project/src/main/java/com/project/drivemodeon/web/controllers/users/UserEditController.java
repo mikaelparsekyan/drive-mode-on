@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/editprofile")
+@RequestMapping("/edit/profile")
 public class UserEditController {
     private final Advice adviceController;
 

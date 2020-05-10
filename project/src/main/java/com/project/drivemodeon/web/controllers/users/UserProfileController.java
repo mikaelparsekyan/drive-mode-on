@@ -54,4 +54,15 @@ public class UserProfileController extends MainController {
 
         return gson.toJson(jsonStr, HashMap.class);
     }
+
+    @PostMapping("/unfollow/{username}")
+    @ResponseBody
+    public String unfollowUser(@PathVariable String username) {
+        Map<String, Object> jsonStr = new HashMap<>();
+        jsonStr.put("success", true);
+        jsonStr.put("username", username);
+
+
+        return gson.toJson(jsonStr, HashMap.class);
+    }
 }
