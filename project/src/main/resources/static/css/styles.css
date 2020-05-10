@@ -256,8 +256,17 @@ h1 {
     margin-left: 20px;
 }
 
+.followed {
+    background-color: #00E676;
+    color: #FAFAFA;
+}
+
 .edit-profile-button:hover, .follow-user-button:hover {
     background-color: #f3f3f3;
+}
+
+.followed:hover {
+    background-color: #00c161;
 }
 
 .edit-profile-picture-div {
@@ -296,4 +305,6 @@ h1 {
     float: left;
     padding: 50px;
 }
+
+.
 

@@ -1,15 +1,17 @@
 package com.project.drivemodeon.web.controllers.users;
 
+import com.google.gson.Gson;
 import com.project.drivemodeon.domain.models.User;
 import com.project.drivemodeon.services.api.UserService;
 import com.project.drivemodeon.web.controllers.MainController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -18,8 +20,11 @@ public class UserProfileController extends MainController {
 
     private final UserService userService;
 
-    public UserProfileController(UserService userService) {
+    private final Gson gson;
+
+    public UserProfileController(UserService userService, Gson gson) {
         this.userService = userService;
+        this.gson = gson;
     }
 
     @GetMapping("/{username}")
@@ -37,5 +42,16 @@ public class UserProfileController extends MainController {
         }
         modelAndView.setViewName("fragments/errors/user/user_not_found");
         return modelAndView;
+    }
+
+    @PostMapping("/follow/{username}")
+    @ResponseBody
+    public String followUser(@PathVariable String username) {
+        Map<String, Object> jsonStr = new HashMap<>();
+        jsonStr.put("success", true);
+        jsonStr.put("username", username);
+
+
+        return gson.toJson(jsonStr, HashMap.class);
     }
 }
