@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.project.drivemodeon.domain.models.User;
 import com.project.drivemodeon.services.api.UserService;
 import com.project.drivemodeon.web.controllers.MainController;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.project.drivemodeon.web.controllers.advices.Advice;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,9 +22,12 @@ public class UserProfileController extends MainController {
 
     private final Gson gson;
 
-    public UserProfileController(UserService userService, Gson gson) {
+    private final Advice advice;
+
+    public UserProfileController(UserService userService, Gson gson, Advice advice) {
         this.userService = userService;
         this.gson = gson;
+        this.advice = advice;
     }
 
     @GetMapping("/{username}")
@@ -32,12 +35,16 @@ public class UserProfileController extends MainController {
                                        HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("layouts/index");
 
-        Optional<User> user = userService.getUserByUsername(username);
+        Optional<User> loggedUser = advice.getLoggedUser(request);
+        Optional<User> currentPageUser = userService.getUserByUsername(username);
 
-        if (user.isPresent()) {
+        if (currentPageUser.isPresent() && loggedUser.isPresent()) {
             modelAndView.addObject("view", "fragments/user/user_profile");
-            modelAndView.addObject("profileId", user.get().getId());
+            modelAndView.addObject("profileId", currentPageUser.get().getId());
             modelAndView.addObject("profileUsername", username.toLowerCase());
+            modelAndView.addObject("isUserFollowCurrentProfile",
+                    userService.isCurrentUserFollowProfileUser(
+                            loggedUser.get(), currentPageUser.get()));
             return modelAndView;
         }
         modelAndView.setViewName("fragments/errors/user/user_not_found");
@@ -46,23 +53,37 @@ public class UserProfileController extends MainController {
 
     @PostMapping("/follow/{username}")
     @ResponseBody
-    public String followUser(@PathVariable String username) {
-        Map<String, Object> jsonStr = new HashMap<>();
-        jsonStr.put("success", true);
-        jsonStr.put("username", username);
+    public String followUser(@PathVariable String username, HttpServletRequest request) {
+        Map<String, Object> jsonResult = new HashMap<>();
 
+        Optional<User> loggedUser = advice.getLoggedUser(request);
+        Optional<User> followingUser = userService.getUserByUsername(username);
 
-        return gson.toJson(jsonStr, HashMap.class);
+        boolean isUserFollowedSuccessfully = userService
+                .followUser(loggedUser, followingUser);
+
+        jsonResult.put("success", isUserFollowedSuccessfully);
+
+        return gson.toJson(jsonResult, HashMap.class);
     }
 
     @PostMapping("/unfollow/{username}")
     @ResponseBody
-    public String unfollowUser(@PathVariable String username) {
-        Map<String, Object> jsonStr = new HashMap<>();
-        jsonStr.put("success", true);
-        jsonStr.put("username", username);
+    public String unfollowUser(@PathVariable String username,
+                               HttpServletRequest request) {
+        Map<String, Object> jsonResult = new HashMap<>();
 
+        Optional<User> loggedUser = advice.getLoggedUser(request);
+        Optional<User> userToUnfollow = userService.getUserByUsername(username);
 
-        return gson.toJson(jsonStr, HashMap.class);
+        if (loggedUser.isPresent() && userToUnfollow.isPresent()) {
+            loggedUser.get().getFollowing().remove(userToUnfollow.get());
+
+            jsonResult.put("success", true);
+        } else {
+            jsonResult.put("success", false);
+        }
+
+        return gson.toJson(jsonResult, HashMap.class);
     }
 }

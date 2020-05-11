@@ -20,4 +20,8 @@ public interface UserService {
     Optional<User> getUserById(long id);
 
     Optional<User> getUserByUsername(String username);
+
+    boolean isCurrentUserFollowProfileUser(User currentUser, User profileUser);
+
+    boolean followUser(Optional<User> loggedUser, Optional<User> followingUser);
 }

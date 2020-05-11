@@ -55,4 +55,10 @@ public class Advice {
         return null;
     }
 
+    @ModelAttribute("sessionUser")
+    public Optional<User> getLoggedUser(HttpServletRequest request) {
+        Long loggedUserId = (Long) request.getSession().getAttribute("user_id");
+
+        return userService.getUserById(loggedUserId);
+    }
 }

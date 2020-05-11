@@ -281,6 +281,7 @@ h1 {
 
 .followed:hover {
     background-color: #00c161;
+    border-color: #00c161;
 }
 
 .edit-profile-picture-div {

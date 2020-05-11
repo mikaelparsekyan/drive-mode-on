@@ -81,4 +81,19 @@ public class UserServiceImpl implements UserService {
     public Optional<User> getUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
     }
+
+    @Override
+    public boolean isCurrentUserFollowProfileUser(User currentUser, User profileUser) {
+        return currentUser.getFollowing().contains(profileUser);
+    }
+
+    @Override
+    public boolean followUser(Optional<User> loggedUser, Optional<User> followingUser) {
+        if (loggedUser.isPresent() && followingUser.isPresent()) {
+            loggedUser.get().getFollowing().add(followingUser.get());
+
+            return true;
+        }
+        return false;
+    }
 }
