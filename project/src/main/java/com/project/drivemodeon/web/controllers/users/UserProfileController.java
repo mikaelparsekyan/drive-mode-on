@@ -38,13 +38,15 @@ public class UserProfileController extends MainController {
         Optional<User> loggedUser = advice.getLoggedUser(request);
         Optional<User> currentPageUser = userService.getUserByUsername(username);
 
-        if (currentPageUser.isPresent() && loggedUser.isPresent()) {
+        if (currentPageUser.isPresent()) {
             modelAndView.addObject("view", "fragments/user/user_profile");
             modelAndView.addObject("profileId", currentPageUser.get().getId());
             modelAndView.addObject("profileUsername", username.toLowerCase());
-            modelAndView.addObject("isUserFollowCurrentProfile",
+
+            loggedUser.ifPresent(user -> modelAndView.addObject("isUserFollowCurrentProfile",
                     userService.isCurrentUserFollowProfileUser(
-                            loggedUser.get(), currentPageUser.get()));
+                            user, currentPageUser.get()))
+            );
             return modelAndView;
         }
         modelAndView.setViewName("fragments/errors/user/user_not_found");

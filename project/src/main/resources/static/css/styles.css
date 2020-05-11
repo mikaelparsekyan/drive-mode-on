@@ -1,3 +1,4 @@
+/* Fonts */
 @font-face {
     font-family: "Montserrat-Medium";
     src: url("../fonts/Montserrat-Medium.ttf");
@@ -8,14 +9,32 @@
     src: url("../fonts/Montserrat-ExtraLight.ttf");
 }
 
+/* Fonts */
+
+/* HTML elements*/
 body {
     margin: 0;
     position: relative;
 }
 
+.inactive-body {
+    pointer-events: none;
+}
+
+button {
+    border: none;
+}
+
 button:focus {
     outline: 0;
 }
+
+ul {
+    list-style-type: none;
+}
+
+/* HTML elements*/
+
 
 footer ul {
     position: relative;
@@ -41,9 +60,6 @@ footer ul {
     color: inherit;
 }
 
-ul {
-    list-style-type: none;
-}
 
 .nav-bar ul {
     margin: 0;
@@ -325,3 +341,56 @@ h1 {
     color: #343434;
 }
 
+.confirm-user-unfollow-popup {
+    position: fixed;
+    transition: 0.3s;
+    opacity: 0;
+    width: 350px;
+    height: 150px;
+    background-color: #fefefe;
+    top: 50%;
+    left: 50%;
+    border: 1px rgba(213, 213, 213, 0.82) solid;
+    border-radius: 10px;
+    margin-top: -75px;
+    margin-left: -175px;
+    visibility: hidden;
+}
+
+.confirm-user-unfollow-popup.active {
+    opacity: 1;
+    transition: 0.3s;
+    visibility: visible;
+}
+
+.confirm-user-unfollow-popup p {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.confirm-user-unfollow-popup .buttons {
+    bottom: 0;
+    margin-top: 50px;
+    border-radius: 0 1em 1em 0 !important;
+    border-color: rgba(213, 213, 213, 0.82);
+}
+
+.confirm-user-unfollow-popup .buttons .cancel-button {
+    float: left;
+    height: 50px;
+    width: 50%;
+    border-bottom-left-radius: 10px;
+}
+
+.confirm-user-unfollow-popup .buttons .agree-button {
+    float: left;
+    height: 50px;
+    width: 50%;
+    left: 50%;
+    background-color: #00E676;
+    border-bottom-right-radius: 10px;
+}
+
+.confirm-user-unfollow-popup .buttons .agree-button:hover {
+    background-color: #00C853;
+}

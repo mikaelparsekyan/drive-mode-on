@@ -59,6 +59,10 @@ public class Advice {
     public Optional<User> getLoggedUser(HttpServletRequest request) {
         Long loggedUserId = (Long) request.getSession().getAttribute("user_id");
 
+        if (loggedUserId == null) {
+            return Optional.empty();
+        }
+
         return userService.getUserById(loggedUserId);
     }
 }
