@@ -88,12 +88,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean followUser(Optional<User> loggedUser, Optional<User> followingUser) {
-        if (loggedUser.isPresent() && followingUser.isPresent()) {
-            loggedUser.get().getFollowing().add(followingUser.get());
+    public void followUser(User loggedUser, User followingUser) {
+        loggedUser.getFollowing().add(followingUser);
+    }
 
-            return true;
-        }
-        return false;
+    @Override
+    public long getUserFollowersCount(User user) {
+        return (long) userRepository.getAllFollowersByUsername(user.getUsername()).size();
+    }
+
+    @Override
+    public long getUserFollowingsCount(User user) {
+        return (long) userRepository.getAllFollowingsByUsername(user.getUsername()).size();
     }
 }

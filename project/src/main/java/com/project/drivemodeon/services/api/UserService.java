@@ -23,5 +23,9 @@ public interface UserService {
 
     boolean isCurrentUserFollowProfileUser(User currentUser, User profileUser);
 
-    boolean followUser(Optional<User> loggedUser, Optional<User> followingUser);
+    void followUser(User loggedUser, User followingUser);
+
+    long getUserFollowersCount(User user);
+
+    long getUserFollowingsCount(User user);
 }

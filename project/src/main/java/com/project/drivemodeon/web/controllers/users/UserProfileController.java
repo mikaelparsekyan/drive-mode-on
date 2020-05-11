@@ -43,6 +43,11 @@ public class UserProfileController extends MainController {
             modelAndView.addObject("profileId", currentPageUser.get().getId());
             modelAndView.addObject("profileUsername", username.toLowerCase());
 
+            modelAndView.addObject("profileFollowers",
+                    userService.getUserFollowersCount(currentPageUser.get()));
+            modelAndView.addObject("profileFollowings",
+                    userService.getUserFollowingsCount(currentPageUser.get()));
+
             loggedUser.ifPresent(user -> modelAndView.addObject("isUserFollowCurrentProfile",
                     userService.isCurrentUserFollowProfileUser(
                             user, currentPageUser.get()))
@@ -61,10 +66,12 @@ public class UserProfileController extends MainController {
         Optional<User> loggedUser = advice.getLoggedUser(request);
         Optional<User> followingUser = userService.getUserByUsername(username);
 
-        boolean isUserFollowedSuccessfully = userService
-                .followUser(loggedUser, followingUser);
-
-        jsonResult.put("success", isUserFollowedSuccessfully);
+        if (loggedUser.isPresent() && followingUser.isPresent()) {
+            userService.followUser(loggedUser.get(), followingUser.get());
+            jsonResult.put("success", true);
+        } else {
+            jsonResult.put("success", false);
+        }
 
         return gson.toJson(jsonResult, HashMap.class);
     }
