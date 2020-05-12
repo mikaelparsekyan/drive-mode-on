@@ -44,6 +44,7 @@ public class User extends BaseEntity {
                     @JoinColumn(name = "user")
             }
     )
+    //TODO rename to 'followings'!
     private Set<User> following;
 
     @Override
