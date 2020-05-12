@@ -2,6 +2,8 @@ package com.project.drivemodeon.web.controllers.advices;
 
 import com.project.drivemodeon.domain.models.User;
 import com.project.drivemodeon.services.api.UserService;
+import com.project.drivemodeon.web.view_models.user.UserProfileViewModel;
+import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -13,8 +15,11 @@ public class Advice {
     //TODO remove code duplication
     private final UserService userService;
 
-    public Advice(UserService userService) {
+    private final ModelMapper modelMapper;
+
+    public Advice(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
+        this.modelMapper = modelMapper;
     }
 
     @ModelAttribute("isUserLogged")
@@ -56,13 +61,22 @@ public class Advice {
     }
 
     @ModelAttribute("sessionUser")
-    public Optional<User> getLoggedUser(HttpServletRequest request) {
+    public Optional<UserProfileViewModel> getLoggedUser(HttpServletRequest request) {
         Long loggedUserId = (Long) request.getSession().getAttribute("user_id");
 
         if (loggedUserId == null) {
             return Optional.empty();
         }
+        Optional<User> user = userService.getUserById(loggedUserId);
 
-        return userService.getUserById(loggedUserId);
+        if (user.isEmpty()) {
+            return Optional.empty();
+        }
+
+        UserProfileViewModel userProfileViewModel = modelMapper
+                .map(user.get(), UserProfileViewModel.class);
+
+        return Optional.of(userProfileViewModel);
     }
+
 }

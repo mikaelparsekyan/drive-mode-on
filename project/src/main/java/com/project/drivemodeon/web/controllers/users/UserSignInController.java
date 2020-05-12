@@ -51,7 +51,6 @@ public class UserSignInController extends MainController {
         long signedUserId = userService.signInUser(userSignInDto);
         boolean isUserSignedIn = signedUserId != -1;
         if (isUserSignedIn) {
-            //session.invalidate();
             HttpSession userSession = request.getSession();
             userSession.setAttribute("user_id", signedUserId);
         } else {

@@ -397,3 +397,34 @@ h1 {
 .confirm-user-unfollow-popup .buttons .agree-button:hover {
     background-color: #00C853;
 }
+
+.followers-list {
+    position: fixed;
+    transition: 0.3s;
+    width: 450px;
+    height: 250px;
+    background-color: #fefefe;
+    top: 50%;
+    left: 50%;
+    border: 1px rgba(213, 213, 213, 0.82) solid;
+    border-radius: 10px;
+    margin-top: -75px;
+    margin-left: -225px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.followers-list.active {
+    transition: 0.3s;
+    opacity: 1;
+    visibility: visible;
+}
+
+.followers-list .follower-info-div h1 {
+    font-size: 16px;
+}
+
+.followers-list .follower-info-div {
+    padding: 10px;
+    border-bottom: 1px rgba(213, 213, 213, 0.82) solid;
+}
