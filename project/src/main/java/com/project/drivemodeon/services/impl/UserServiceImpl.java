@@ -93,6 +93,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void unfollowUser(User loggedUser, User followingUser) {
+        loggedUser.getFollowing().remove(followingUser);
+    }
+
+    @Override
     public long getUserFollowersCount(User user) {
         return (long) userRepository.getAllFollowersByUsername(user.getUsername()).size();
     }

@@ -40,16 +40,15 @@ public class UserProfileController extends MainController {
                                        HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("layouts/index");
 
-        Optional<UserProfileViewModel> loggedUser = advice.getLoggedUser(request);
+        Optional<User> loggedUser = advice.getLoggedUser(request);
         Optional<User> currentPageUser = userService.getUserByUsername(username);
 
         if (currentPageUser.isPresent()) {
             //TODO map other fields (bio, f_name, l_name ...)
-            UserProfileViewModel currentUserViewModel = modelMapper
-                    .map(currentPageUser.get(), UserProfileViewModel.class);
 
             modelAndView.addObject("view", "fragments/user/user_profile");
-            modelAndView.addObject("userViewModel", currentUserViewModel);
+            modelAndView.addObject("userViewModel", currentPageUser.get());
+            modelAndView.addObject("profileUsername", currentPageUser.get().getUsername());
 
             if (loggedUser.isPresent()) {
                 User sessionUser = modelMapper.map(loggedUser.get(), User.class);
@@ -69,14 +68,12 @@ public class UserProfileController extends MainController {
     public String followUser(@PathVariable String username, HttpServletRequest request) {
         Map<String, Object> jsonResult = new HashMap<>();
 
-        Optional<UserProfileViewModel> loggedUser = advice.getLoggedUser(request);
+        Optional<User> loggedUser = advice.getLoggedUser(request);
         Optional<User> followingUser = userService.getUserByUsername(username);
 
         if (loggedUser.isPresent() && followingUser.isPresent()) {
-            User userProfileViewModel = modelMapper
-                    .map(loggedUser.get(), User.class);
 
-            userService.followUser(userProfileViewModel, followingUser.get());
+            userService.followUser(loggedUser.get(), followingUser.get());
 
             jsonResult.put("success", true);
         } else {
@@ -92,15 +89,12 @@ public class UserProfileController extends MainController {
                                HttpServletRequest request) {
         Map<String, Object> jsonResult = new HashMap<>();
 
-        Optional<UserProfileViewModel> loggedUser = advice.getLoggedUser(request);
+        Optional<User> loggedUser = advice.getLoggedUser(request);
         Optional<User> userToUnfollow = userService.getUserByUsername(username);
 
         if (loggedUser.isPresent() && userToUnfollow.isPresent()) {
-            User userProfileViewModel = modelMapper
-                    .map(loggedUser.get(), User.class);
 
-            //TODO
-            userProfileViewModel.getFollowing().remove(userToUnfollow.get());
+            userService.unfollowUser(loggedUser.get(), userToUnfollow.get());
 
             jsonResult.put("success", true);
         } else {

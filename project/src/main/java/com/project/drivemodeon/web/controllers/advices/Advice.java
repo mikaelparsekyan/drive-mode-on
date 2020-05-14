@@ -61,7 +61,7 @@ public class Advice {
     }
 
     @ModelAttribute("sessionUser")
-    public Optional<UserProfileViewModel> getLoggedUser(HttpServletRequest request) {
+    public Optional<User> getLoggedUser(HttpServletRequest request) {
         Long loggedUserId = (Long) request.getSession().getAttribute("user_id");
 
         if (loggedUserId == null) {
@@ -73,20 +73,18 @@ public class Advice {
             return Optional.empty();
         }
 
-        UserProfileViewModel userProfileViewModel = modelMapper
-                .map(user.get(), UserProfileViewModel.class);
-
-        return Optional.of(userProfileViewModel);
+        return user;
     }
 
-    @ModelAttribute("isSessionUserFollowCurrentProfile")
-    public boolean isSessionUserFollowCurrentProfile(HttpServletRequest request) {
-        Optional<UserProfileViewModel> loggedUser = this.getLoggedUser(request);
-
-        if (loggedUser.isPresent()) {
-
-        }
-        return true;
-    }
+//    @ModelAttribute("isUserFollowCurrentProfile")
+//    public boolean isUserFollowCurrentProfile(HttpServletRequest request) {
+//        Optional<UserProfileViewModel> loggedUser = this.getLoggedUser(request);
+//
+//        if (loggedUser.isEmpty()) {
+//            return false;
+//        }
+//
+//        return loggedUser.get().getFollowers().contains());
+//    }
 
 }

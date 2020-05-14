@@ -25,6 +25,8 @@ public interface UserService {
 
     void followUser(User loggedUser, User followingUser);
 
+    void unfollowUser(User loggedUser, User followingUser);
+
     long getUserFollowersCount(User user);
 
     long getUserFollowingsCount(User user);

@@ -20,7 +20,7 @@ public class UserProfileViewModel {
 
     private String bio;
 
-    private Set<User> followers = new HashSet<>();
+    private Set<User> followers;
 
-    private Set<User> following = new HashSet<>();
+    private Set<User> following;
 }
