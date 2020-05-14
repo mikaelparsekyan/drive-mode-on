@@ -79,4 +79,14 @@ public class Advice {
         return Optional.of(userProfileViewModel);
     }
 
+    @ModelAttribute("isSessionUserFollowCurrentProfile")
+    public boolean isSessionUserFollowCurrentProfile(HttpServletRequest request) {
+        Optional<UserProfileViewModel> loggedUser = this.getLoggedUser(request);
+
+        if (loggedUser.isPresent()) {
+
+        }
+        return true;
+    }
+
 }
