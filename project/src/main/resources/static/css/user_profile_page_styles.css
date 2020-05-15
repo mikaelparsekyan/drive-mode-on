@@ -65,7 +65,7 @@
     left: 50%;
     border: 1px rgba(213, 213, 213, 0.82) solid;
     border-radius: 10px;
-    margin-top: -75px;
+    margin-top: -150px;
     margin-left: -225px;
     opacity: 0;
     visibility: hidden;
@@ -83,13 +83,13 @@
     visibility: visible;
 }
 
-.followers-list .follower-info-div h1 {
-    font-size: 16px;
-}
+/*.followers-list .follower-info-div h1 {*/
+/*    font-size: 36px;*/
+/*}*/
 
 .followers-list .follower-info-div {
     padding: 10px;
-    border-bottom: 1px rgba(213, 213, 213, 0.82) solid;
+    border-top: 1px rgba(213, 213, 213, 0.82) solid;
 }
 
 .edit-profile-button, .follow-user-button {
@@ -117,4 +117,17 @@
 .followed:hover {
     background-color: #00c161;
     border-color: #00c161;
+}
+
+.followers-list-heading {
+    text-align: center;
+}
+
+.profile-followers-counter-text a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #000000;
+    font-family: Montserrat-Medium;
+    margin-left: 10px;
+    float: right;
 }

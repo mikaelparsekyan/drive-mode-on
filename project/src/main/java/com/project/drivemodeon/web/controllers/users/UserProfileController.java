@@ -51,7 +51,10 @@ public class UserProfileController extends MainController {
             modelAndView.addObject("profileUsername", currentPageUser.get().getUsername());
 
             if (loggedUser.isPresent()) {
-                User sessionUser = modelMapper.map(loggedUser.get(), User.class);
+                UserProfileViewModel loggedUserViewModel = modelMapper
+                        .map(loggedUser.get(), UserProfileViewModel.class);
+
+                User sessionUser = modelMapper.map(loggedUserViewModel, User.class);
 
                 modelAndView.addObject("isUserFollowCurrentProfile",
                         userService.isCurrentUserFollowProfileUser(

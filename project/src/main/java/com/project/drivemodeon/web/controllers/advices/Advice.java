@@ -75,16 +75,4 @@ public class Advice {
 
         return user;
     }
-
-//    @ModelAttribute("isUserFollowCurrentProfile")
-//    public boolean isUserFollowCurrentProfile(HttpServletRequest request) {
-//        Optional<UserProfileViewModel> loggedUser = this.getLoggedUser(request);
-//
-//        if (loggedUser.isEmpty()) {
-//            return false;
-//        }
-//
-//        return loggedUser.get().getFollowers().contains());
-//    }
-
 }
