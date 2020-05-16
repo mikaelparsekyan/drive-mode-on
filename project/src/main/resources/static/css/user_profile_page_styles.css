@@ -1,3 +1,23 @@
+#dimming {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#dimming.deactivated {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
 .confirm-user-unfollow-popup {
     position: fixed;
     transition: 0.3s;
@@ -6,6 +26,7 @@
     height: 150px;
     background-color: #fefefe;
     top: 50%;
+    z-index: 3;
     left: 50%;
     border: 1px rgba(213, 213, 213, 0.82) solid;
     border-radius: 10px;
@@ -69,6 +90,7 @@
     margin-left: -225px;
     opacity: 0;
     visibility: hidden;
+    z-index: 3;
 }
 
 .followers-list.active {
@@ -96,6 +118,7 @@
     height: 30px;
     width: 100px;
     float: left;
+    cursor: pointer;
     border-radius: 5px;
     background-color: #FAFAFA;
     border: 1px solid #cbcbcb;
@@ -105,6 +128,7 @@
 
 .follow-user-button {
     transition: 0.2s;
+    cursor: pointer;
 }
 
 .followed {
@@ -119,7 +143,7 @@
     border-color: #00c161;
 }
 
-.followers-list-heading {
+.followers-list-heading, .followings-list-heading {
     text-align: center;
 }
 
