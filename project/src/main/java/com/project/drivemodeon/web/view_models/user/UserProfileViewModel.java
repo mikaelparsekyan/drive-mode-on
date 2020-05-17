@@ -23,4 +23,6 @@ public class UserProfileViewModel {
     private Set<User> followers;
 
     private Set<User> following;
+
+    private boolean isAccountPrivate;
 }

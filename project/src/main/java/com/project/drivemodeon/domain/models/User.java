@@ -47,6 +47,8 @@ public class User extends BaseEntity {
     //TODO rename to 'followings'!
     private Set<User> following;
 
+    private boolean isAccountPrivate;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
