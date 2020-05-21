@@ -67,12 +67,11 @@ public class Advice {
         if (loggedUserId == null) {
             return Optional.empty();
         }
-        Optional<User> user = userService.getUserById(loggedUserId);
-
-        if (user.isEmpty()) {
+        Optional<User> userById = userService.getUserById(loggedUserId);
+        if (userById.isEmpty()) {
             return Optional.empty();
         }
 
-        return user;
+        return userById;
     }
 }

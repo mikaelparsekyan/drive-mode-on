@@ -1,5 +1,6 @@
 package com.project.drivemodeon.services.api;
 
+import com.project.drivemodeon.domain.dtos.users.UserEditDto;
 import com.project.drivemodeon.domain.dtos.users.UserSignInDto;
 import com.project.drivemodeon.domain.dtos.users.UserSignUpDto;
 import com.project.drivemodeon.domain.models.User;
@@ -30,4 +31,6 @@ public interface UserService {
     long getUserFollowersCount(User user);
 
     long getUserFollowingsCount(User user);
+
+    void editUser(String username, Long userId);
 }

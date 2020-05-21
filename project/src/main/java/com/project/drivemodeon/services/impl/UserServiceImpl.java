@@ -1,5 +1,6 @@
 package com.project.drivemodeon.services.impl;
 
+import com.project.drivemodeon.domain.dtos.users.UserEditDto;
 import com.project.drivemodeon.domain.dtos.users.UserExposeInfoDto;
 import com.project.drivemodeon.domain.dtos.users.UserSignInDto;
 import com.project.drivemodeon.domain.dtos.users.UserSignUpDto;
@@ -11,6 +12,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -105,5 +107,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public long getUserFollowingsCount(User user) {
         return (long) userRepository.getAllFollowingsByUsername(user.getUsername()).size();
+    }
+
+    @Transactional
+    @Override
+    public void editUser(String username, Long userId) {
+        userRepository.updateUserById(username, userId);
     }
 }

@@ -2,6 +2,7 @@ package com.project.drivemodeon.repositories;
 
 import com.project.drivemodeon.domain.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -20,4 +21,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u.following FROM User u WHERE u.username = :username")
     Set<User> getAllFollowingsByUsername(@Param("username") String username);
+
+    @Modifying
+    @Query("UPDATE User u SET u.username = ?1 WHERE u.id = ?2")
+    void updateUserById(String username, Long userId);
 }

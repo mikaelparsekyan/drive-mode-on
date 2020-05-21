@@ -37,7 +37,7 @@ public class UserSignInController extends MainController {
                     "user", userSignInDto);
         }
         Optional<User> loggedUser = userService.getUserById(userId);
-        return new ModelAndView("redirect:/user/" + loggedUser.get().getUsername());
+        return new ModelAndView("redirect:/user/" + loggedUser.get().getUsername());//TODO make Advice class here
     }
 
     @PostMapping

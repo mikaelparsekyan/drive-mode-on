@@ -47,7 +47,11 @@ public class User extends BaseEntity {
     //TODO rename to 'followings'!
     private Set<User> following;
 
+    @Column(name = "is_account_private")
     private boolean isAccountPrivate;
+
+    @OneToMany(mappedBy = "userId",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private Set<Log> logs;
 
     @Override
     public boolean equals(Object o) {
