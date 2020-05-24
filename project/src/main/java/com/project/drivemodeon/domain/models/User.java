@@ -16,6 +16,16 @@ public class User extends BaseEntity {
     @Column
     private String username;
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @OneToOne
+    @JoinColumn(name = "bio", referencedColumnName = "id")
+    private UserBio bio;
+
     @NotNull
     @Column
     private String email;
@@ -50,7 +60,7 @@ public class User extends BaseEntity {
     @Column(name = "is_account_private")
     private boolean isAccountPrivate;
 
-    @OneToMany(mappedBy = "userId",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Log> logs;
 
     @Override

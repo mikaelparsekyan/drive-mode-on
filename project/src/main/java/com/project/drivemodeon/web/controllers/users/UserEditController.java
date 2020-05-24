@@ -38,8 +38,9 @@ public class UserEditController {
     public ModelAndView doUserProfileEdit(HttpServletRequest request) {
         Long loggedUserId = advice.getLoggedUserId(request);
 
+        //TODO make obj
         String usernameParameter = request.getParameter("username");
-        
+
         userService.editUser(usernameParameter, loggedUserId);
 
         Optional<User> user = userService.getUserById(loggedUserId);

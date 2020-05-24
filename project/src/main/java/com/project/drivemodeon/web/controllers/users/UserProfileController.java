@@ -45,10 +45,10 @@ public class UserProfileController extends MainController {
 
         if (currentPageUser.isPresent()) {
             //TODO map other fields (bio, f_name, l_name ...)
-
+            System.out.println();
             modelAndView.addObject("view", "fragments/user/user_profile");
             modelAndView.addObject("userViewModel", currentPageUser.get());
-            modelAndView.addObject("profileUsername", currentPageUser.get().getUsername());
+            modelAndView.addObject("profileUsername", currentPageUser.get().getUsername());//TODO remove it
 
             if (loggedUser.isPresent()) {
                 UserProfileViewModel loggedUserViewModel = modelMapper

@@ -165,3 +165,25 @@
     font-size: 18px;
     text-align: center;
 }
+
+.user-profile-names {
+    position: absolute;
+}
+
+.user-profile-first-name-text {
+    margin-top: 40px;
+    margin-left: 280px;
+    float: left;
+}
+
+.user-profile-last-name-text {
+    margin-top: 40px;
+    margin-left: 4px;
+    float: left;
+}
+
+.user-profile-first-name-text p, .user-profile-last-name-text p {
+    font-family: "Montserrat-ExtraLight", serif;
+    color: black;
+    font-size: 14px;
+}

@@ -3,7 +3,6 @@ package com.project.drivemodeon.web.view_models.user;
 import com.project.drivemodeon.domain.models.User;
 import lombok.Data;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
