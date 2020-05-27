@@ -1,6 +1,7 @@
 package com.project.drivemodeon.web.controllers.users;
 
 import com.google.gson.Gson;
+import com.project.drivemodeon.domain.models.BaseEntity;
 import com.project.drivemodeon.domain.models.User;
 import com.project.drivemodeon.services.api.UserService;
 import com.project.drivemodeon.web.controllers.MainController;
@@ -13,8 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
@@ -45,7 +48,6 @@ public class UserProfileController extends MainController {
 
         if (currentPageUser.isPresent()) {
             //TODO map other fields (bio, f_name, l_name ...)
-            System.out.println();
             modelAndView.addObject("view", "fragments/user/user_profile");
             modelAndView.addObject("userViewModel", currentPageUser.get());
             modelAndView.addObject("profileUsername", currentPageUser.get().getUsername());//TODO remove it

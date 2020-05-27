@@ -4,6 +4,7 @@ import com.project.drivemodeon.domain.dtos.users.UserEditDto;
 import com.project.drivemodeon.domain.dtos.users.UserExposeInfoDto;
 import com.project.drivemodeon.domain.dtos.users.UserSignInDto;
 import com.project.drivemodeon.domain.dtos.users.UserSignUpDto;
+import com.project.drivemodeon.domain.models.BaseEntity;
 import com.project.drivemodeon.domain.models.User;
 import com.project.drivemodeon.repositories.UserRepository;
 import com.project.drivemodeon.services.api.UserService;
@@ -13,7 +14,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
