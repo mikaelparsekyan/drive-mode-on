@@ -361,6 +361,7 @@ footer ul {
     z-index: 1;
     visibility: hidden;
     opacity: 0;
+    transition: 0.3s;
     border-radius: 4px;
     background-color: #FAFAFA;
     box-shadow: 0 0 5px 1px rgba(var(--jb7, 0, 0, 0), .0975);
@@ -377,6 +378,7 @@ footer ul {
     float: right;
     visibility: hidden;
     opacity: 0;
+    transition: 0.3s;
     background-color: #FAFAFA;
 }
 

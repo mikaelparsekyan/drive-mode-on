@@ -1,6 +1,11 @@
-function showUserProfileDropdown() {
+function toggleUserDropdownMenu() {
     var userDropdown = $('.user-dropdown');
-    userDropdown.addClass('active');
     var dropdownArrow = $('.dropdown-arrow');
-    dropdownArrow.addClass('active');
+    var activeClass = ('active');
+
+    userDropdown.hasClass(activeClass) ? userDropdown.removeClass(activeClass) :
+        userDropdown.addClass(activeClass);
+
+    dropdownArrow.hasClass(activeClass) ? dropdownArrow.removeClass(activeClass) :
+        dropdownArrow.addClass(activeClass);
 }
