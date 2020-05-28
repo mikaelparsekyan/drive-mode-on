@@ -31,6 +31,7 @@ button:focus {
 
 ul {
     list-style-type: none;
+    padding: 0;
 }
 
 h1 {
@@ -351,17 +352,17 @@ footer ul {
 
 /*user setting dropdown*/
 .user-dropdown {
-    width: 140px;
-    height: 200px;
+    width: 180px;
+    height: fit-content;
     margin-top: 8px;
-    margin-right: 50px;
+    margin-right: 20px;
     position: fixed;
     right: 0;
     float: right;
     z-index: 1;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.3s;
+    visibility: visible;
+    opacity: 1;
+    transition: 0.2s;
     border-radius: 4px;
     background-color: #FAFAFA;
     box-shadow: 0 0 5px 1px rgba(var(--jb7, 0, 0, 0), .0975);
@@ -376,14 +377,48 @@ footer ul {
     margin-right: 125px;
     right: 0;
     float: right;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.3s;
+    visibility: visible;
+    opacity: 1;
+    transition: 0.2s;
     background-color: #FAFAFA;
 }
 
 .user-dropdown.active, .dropdown-arrow.active {
     visibility: visible;
-    transition: 0.3s;
+    transition: 0.2s;
     opacity: 1;
+}
+
+.user-dropdown li {
+    margin-bottom: 8px;
+}
+
+.add-post-div {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.logout-anchor {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.user-dropdown a {
+    text-decoration: none;
+    font-family: "Montserrat-Medium", serif;
+}
+
+.add-post-img, .add-post-href {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.logout-li {
+    padding-top: 8px;
+    border-top: 1px solid #cbcbcb;
+}
+
+.logout-anchor {
+    color: #FF5722;
 }
