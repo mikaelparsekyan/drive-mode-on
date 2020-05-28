@@ -348,3 +348,40 @@ footer ul {
     font-family: Montserrat-Medium, serif;
     color: #343434;
 }
+
+/*user setting dropdown*/
+.user-dropdown {
+    width: 140px;
+    height: 200px;
+    margin-top: 8px;
+    margin-right: 50px;
+    position: fixed;
+    right: 0;
+    float: right;
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    border-radius: 4px;
+    background-color: #FAFAFA;
+    box-shadow: 0 0 5px 1px rgba(var(--jb7, 0, 0, 0), .0975);
+}
+
+.dropdown-arrow {
+    width: 15px;
+    height: 15px;
+    transform: rotate(45deg);
+    position: fixed;
+    z-index: 1;
+    margin-right: 125px;
+    right: 0;
+    float: right;
+    visibility: hidden;
+    opacity: 0;
+    background-color: #FAFAFA;
+}
+
+.user-dropdown.active, .dropdown-arrow.active {
+    visibility: visible;
+    transition: 0.3s;
+    opacity: 1;
+}
