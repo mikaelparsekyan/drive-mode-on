@@ -1,16 +1,22 @@
-package com.project.drivemodeon.web.controllers.users;
+package com.project.drivemodeon.web.controllers.user;
 
-import com.project.drivemodeon.domain.dtos.users.UserEditDto;
 import com.project.drivemodeon.domain.models.User;
 import com.project.drivemodeon.services.api.UserService;
 import com.project.drivemodeon.web.controllers.advices.Advice;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @Controller
@@ -27,7 +33,7 @@ public class UserEditController {
     }
 
     @GetMapping
-    public ModelAndView getUserSettingsPage(HttpServletRequest request) {
+    public ModelAndView getUserSettingsPage() {
 
         ModelAndView modelAndView = new ModelAndView("layouts/index");
         modelAndView.addObject("view", "fragments/user/edit_user_profile");
@@ -49,5 +55,22 @@ public class UserEditController {
             return new ModelAndView("redirect:/");
         }
         return new ModelAndView("redirect:/user/" + usernameParameter);
+    }
+
+    @GetMapping("/uploadImage")
+    public ModelAndView getEditUserForm() {
+        return getUserSettingsPage();
+    }
+
+    @PostMapping("/uploadImage")
+    public ModelAndView uploadImage(@RequestParam("imageFile") MultipartFile imageFile) {
+        System.out.println("posting image...");
+        String path = "src/main/resources/photos/user/";
+        try {
+            Files.write(Path.of(path + imageFile.getOriginalFilename()), imageFile.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return getUserSettingsPage();
     }
 }

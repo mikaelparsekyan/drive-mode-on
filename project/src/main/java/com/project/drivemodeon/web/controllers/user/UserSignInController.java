@@ -1,4 +1,4 @@
-package com.project.drivemodeon.web.controllers.users;
+package com.project.drivemodeon.web.controllers.user;
 
 import com.project.drivemodeon.domain.dtos.users.UserSignInDto;
 import com.project.drivemodeon.domain.models.User;
