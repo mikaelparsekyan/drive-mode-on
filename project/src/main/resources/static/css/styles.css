@@ -359,11 +359,11 @@ footer ul {
     position: fixed;
     right: 0;
     float: right;
-    z-index: 1;
-    visibility: visible;
-    opacity: 1;
+    z-index: 2;
+    visibility: hidden;
+    opacity: 0;
     transition: 0.2s;
-    border-radius: 4px;
+    border-radius: 6px;
     background-color: #FAFAFA;
     box-shadow: 0 0 5px 1px rgba(var(--jb7, 0, 0, 0), .0975);
 }
@@ -377,10 +377,11 @@ footer ul {
     margin-right: 125px;
     right: 0;
     float: right;
-    visibility: visible;
-    opacity: 1;
+    visibility: hidden;
+    opacity: 0;
     transition: 0.2s;
     background-color: #FAFAFA;
+    box-shadow: inset 0 0 4px 0px rgba(var(--jb7, 0, 0, 0), .0975);
 }
 
 .user-dropdown.active, .dropdown-arrow.active {
@@ -390,12 +391,32 @@ footer ul {
 }
 
 .user-dropdown li {
-    margin-bottom: 8px;
+    margin-bottom: 7px;
 }
 
 .add-post-div {
     width: fit-content;
     margin: 0 auto;
+}
+
+#dimming {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 4;
+    cursor: pointer;
+}
+
+#dimming.deactivated {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .logout-anchor {
@@ -415,10 +436,11 @@ footer ul {
 }
 
 .logout-li {
-    padding-top: 8px;
+    padding-top: 9px;
     border-top: 1px solid #cbcbcb;
 }
 
 .logout-anchor {
     color: #FF5722;
+    cursor: pointer;
 }
