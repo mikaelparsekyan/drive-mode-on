@@ -1,43 +1,43 @@
-package com.project.drivemodeon.services.impl;
+package com.project.drivemodeon.services.impl.user;
 
-import com.project.drivemodeon.domain.dtos.users.UserEditDto;
-import com.project.drivemodeon.domain.dtos.users.UserExposeInfoDto;
 import com.project.drivemodeon.domain.dtos.users.UserSignInDto;
 import com.project.drivemodeon.domain.dtos.users.UserSignUpDto;
-import com.project.drivemodeon.domain.models.BaseEntity;
 import com.project.drivemodeon.domain.models.User;
 import com.project.drivemodeon.repositories.UserRepository;
-import com.project.drivemodeon.services.api.UserService;
-import com.project.drivemodeon.validation.constants.ValidationConstants;
-import org.apache.commons.codec.digest.DigestUtils;
+import com.project.drivemodeon.services.api.hash.HashService;
+import com.project.drivemodeon.services.api.user.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final HashService hashService;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, HashService hashService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.hashService = hashService;
     }
 
     @Override
     public boolean signUpUser(UserSignUpDto userSignUpDto) {
+        if (userSignUpDto == null) {
+            return false;
+        }
+
         String password = userSignUpDto.getPassword();
         String confirmedPassword = userSignUpDto.getConfirmPassword();
 
         if (password.trim().equals(confirmedPassword.trim())) {
             User user = modelMapper.map(userSignUpDto, User.class);
 
-            String hashPassword = DigestUtils.sha256Hex(user.getPassword());
-            user.setPassword(hashPassword);
+            String passwordHash = user.getPassword();
+            user.setPassword(passwordHash);
 
             userRepository.saveAndFlush(user);
 
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
             return -1;
 
         }
-        String passwordHash = DigestUtils.sha256Hex(userSignInDto.getPassword());
+        String passwordHash = hashService.hash(userSignInDto.getPassword());
 
         if (!(user.get().getPassword().equals(passwordHash))) {
             return -1;

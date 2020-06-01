@@ -1,6 +1,6 @@
 package com.project.drivemodeon.validation;
 
-import com.project.drivemodeon.services.api.UserService;
+import com.project.drivemodeon.services.api.user.UserService;
 import com.project.drivemodeon.validation.annotations.UniqueUsername;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,7 +1,7 @@
 package com.project.drivemodeon.web.controllers.user;
 
 import com.project.drivemodeon.domain.dtos.users.UserSignUpDto;
-import com.project.drivemodeon.services.api.UserService;
+import com.project.drivemodeon.services.api.user.UserService;
 import com.project.drivemodeon.util.api.ValidatorUtil;
 import com.project.drivemodeon.web.controllers.MainController;
 import org.springframework.stereotype.Controller;

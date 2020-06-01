@@ -1,8 +1,7 @@
 package com.project.drivemodeon.web.controllers.advices;
 
 import com.project.drivemodeon.domain.models.User;
-import com.project.drivemodeon.services.api.UserService;
-import com.project.drivemodeon.web.view_models.user.UserProfileViewModel;
+import com.project.drivemodeon.services.api.user.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;

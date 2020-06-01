@@ -1,4 +1,4 @@
-package com.project.drivemodeon.services.api;
+package com.project.drivemodeon.services.api.user;
 
 import com.project.drivemodeon.domain.dtos.users.UserEditDto;
 import com.project.drivemodeon.domain.dtos.users.UserSignInDto;

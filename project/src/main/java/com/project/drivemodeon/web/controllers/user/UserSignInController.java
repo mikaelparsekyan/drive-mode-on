@@ -2,7 +2,7 @@ package com.project.drivemodeon.web.controllers.user;
 
 import com.project.drivemodeon.domain.dtos.users.UserSignInDto;
 import com.project.drivemodeon.domain.models.User;
-import com.project.drivemodeon.services.api.UserService;
+import com.project.drivemodeon.services.api.user.UserService;
 import com.project.drivemodeon.web.controllers.MainController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
