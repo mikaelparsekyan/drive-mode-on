@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class UserSignInController extends MainController {
 
     @PostMapping
     public ModelAndView doSignIn(@ModelAttribute("user") UserSignInDto userSignInDto,
-                                 HttpServletRequest request) {
+                                 HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> inputErrors = new HashMap<>();
 
         ModelAndView modelAndView = new ModelAndView("layouts/index");
@@ -53,6 +54,8 @@ public class UserSignInController extends MainController {
         if (isUserSignedIn) {
             HttpSession userSession = request.getSession();
             userSession.setAttribute("user_id", signedUserId);
+
+            return new ModelAndView("redirect:/user/" + userSignInDto.getUsername());
         } else {
             inputErrors.put("invalidInfo", "Invalid username or password!");
         }
