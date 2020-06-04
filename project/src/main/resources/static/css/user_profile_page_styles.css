@@ -6,7 +6,7 @@
     height: 150px;
     background-color: #fefefe;
     top: 50%;
-    z-index: 3;
+    z-index: 4;
     left: 50%;
     border: 1px rgba(213, 213, 213, 0.82) solid;
     border-radius: 10px;
@@ -103,6 +103,11 @@
     height: 30px;
     width: 100px;
     float: left;
+    text-align: center;
+    line-height: 30px;
+    font-family: "Montserrat-Medium", serif;
+    font-size: 14px;
+    color: black;
     cursor: pointer;
     border-radius: 5px;
     background-color: #FAFAFA;

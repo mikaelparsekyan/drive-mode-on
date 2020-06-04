@@ -3,6 +3,7 @@ package com.project.drivemodeon.services.impl.user;
 import com.project.drivemodeon.domain.dtos.users.UserSignInDto;
 import com.project.drivemodeon.domain.dtos.users.UserSignUpDto;
 import com.project.drivemodeon.domain.models.User;
+import com.project.drivemodeon.exceptions.user.UserNotExistException;
 import com.project.drivemodeon.repositories.UserRepository;
 import com.project.drivemodeon.services.api.hash.HashService;
 import com.project.drivemodeon.services.api.user.UserService;
@@ -83,8 +84,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserByUsername(String username) {
-        return userRepository.findUserByUsername(username);
+    public User getUserByUsername(String username) throws Exception {
+        Optional<User> user = userRepository.findUserByUsername(username);
+        if (user.isEmpty()) {
+            throw new UserNotExistException();
+        }
+        return user.get();
     }
 
     @Override

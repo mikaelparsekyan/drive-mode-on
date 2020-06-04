@@ -58,7 +58,6 @@ public class UserSignUpController extends MainController {
             inputErrors = validatorUtil.violations(userSignUpDto);
         }
 
-        return super.view("fragments/signup", "inputErrors",
-                inputErrors);
+        return super.view("fragments/signup", "inputErrors", inputErrors);
     }
 }

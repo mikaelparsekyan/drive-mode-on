@@ -39,6 +39,10 @@ h1 {
     margin: 0;
 }
 
+a {
+    text-decoration: none;
+}
+
 /* HTML elements*/
 
 
@@ -113,7 +117,7 @@ footer ul {
 /* Navigation bar style */
 
 .main-content {
-    margin-top: 42px;
+    margin-top: 57px; /* The height of nav_bar with padding */
     width: 100%;
     z-index: -1;
 }
@@ -443,4 +447,55 @@ footer ul {
 .logout-anchor {
     color: #FF5722;
     cursor: pointer;
+}
+
+.confirm-user-log-out-popup {
+    position: fixed;
+    transition: 0.3s;
+    opacity: 0;
+    width: 350px;
+    height: 150px;
+    background-color: #fefefe;
+    top: 50%;
+    z-index: 999;
+    left: 50%;
+    border: 1px rgba(213, 213, 213, 0.82) solid;
+    border-radius: 10px;
+    margin-top: -100px;
+    margin-left: -175px;
+    visibility: hidden;
+    box-shadow: 0 0 5px 1px rgba(var(--jb7, 0, 0, 0), .0975);
+}
+
+.confirm-user-log-out-popup p {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.confirm-user-log-out-popup.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.confirm-user-log-out-popup .buttons {
+    bottom: 0;
+    margin-top: 50px;
+    border-radius: 0 1em 1em 0 !important;
+    border-color: rgba(213, 213, 213, 0.82);
+}
+
+.confirm-user-log-out-popup .buttons .cancel-logout-button, .agree-logout-button {
+    float: left;
+    height: 50px;
+    width: 50%;
+}
+
+.confirm-user-log-out-popup .buttons .agree-logout-button {
+    left: 50%;
+    background-color: #FF5722;
+    color: white;
+}
+
+.confirm-user-log-out-popup .buttons .cancel-logout-button {
+    border-bottom-left-radius: 10px;
 }

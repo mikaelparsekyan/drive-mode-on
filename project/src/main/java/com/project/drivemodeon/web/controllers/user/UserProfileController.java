@@ -2,6 +2,7 @@ package com.project.drivemodeon.web.controllers.user;
 
 import com.google.gson.Gson;
 import com.project.drivemodeon.domain.models.User;
+import com.project.drivemodeon.exceptions.user.UserNotExistException;
 import com.project.drivemodeon.services.api.user.UserService;
 import com.project.drivemodeon.web.controllers.MainController;
 import com.project.drivemodeon.web.controllers.advices.Advice;
@@ -37,45 +38,40 @@ public class UserProfileController extends MainController {
 
     @GetMapping("/{username}")
     public ModelAndView getUserProfile(@PathVariable String username,
-                                       HttpServletRequest request) {
+                                       HttpServletRequest request) throws Exception {
         ModelAndView modelAndView = new ModelAndView("layouts/index");
 
         Optional<User> loggedUser = advice.getLoggedUser(request);
-        Optional<User> currentPageUser = userService.getUserByUsername(username);
+        User currentPageUser = userService.getUserByUsername(username);
 
-        if (currentPageUser.isPresent()) {
-            //TODO map other fields (bio, f_name, l_name ...)
-            modelAndView.addObject("view", "fragments/user/user_profile");
-            modelAndView.addObject("userViewModel", currentPageUser.get());
-            modelAndView.addObject("profileUsername", currentPageUser.get().getUsername());//TODO remove it
+        //TODO map other fields (bio, f_name, l_name ...)
+        modelAndView.addObject("view", "fragments/user/user_profile");
+        modelAndView.addObject("userViewModel", currentPageUser);
 
-            if (loggedUser.isPresent()) {
-                UserProfileViewModel loggedUserViewModel = modelMapper
-                        .map(loggedUser.get(), UserProfileViewModel.class);
+        if (loggedUser.isPresent()) {
+            UserProfileViewModel loggedUserViewModel = modelMapper
+                    .map(loggedUser.get(), UserProfileViewModel.class);
 
-                User sessionUser = modelMapper.map(loggedUserViewModel, User.class);
+            User sessionUser = modelMapper.map(loggedUserViewModel, User.class);
 
-                modelAndView.addObject("isUserFollowCurrentProfile",
-                        userService.isCurrentUserFollowProfileUser(
-                                sessionUser, currentPageUser.get()));
-            }
-            return modelAndView;
+            modelAndView.addObject("isUserFollowCurrentProfile",
+                    userService.isCurrentUserFollowProfileUser(
+                            sessionUser, currentPageUser));
         }
-        modelAndView.setViewName("fragments/errors/user/user_not_found");
         return modelAndView;
     }
 
     @PostMapping("/follow/{username}")
     @ResponseBody
-    public String followUser(@PathVariable String username, HttpServletRequest request) {
+    public String followUser(@PathVariable String username, HttpServletRequest request) throws Exception {
         Map<String, Object> jsonResult = new HashMap<>();
 
         Optional<User> loggedUser = advice.getLoggedUser(request);
-        Optional<User> followingUser = userService.getUserByUsername(username);
+        User followingUser = userService.getUserByUsername(username);
 
-        if (loggedUser.isPresent() && followingUser.isPresent()) {
+        if (loggedUser.isPresent()) {
 
-            userService.followUser(loggedUser.get(), followingUser.get());
+            userService.followUser(loggedUser.get(), followingUser);
 
             jsonResult.put("success", true);
         } else {
@@ -88,15 +84,15 @@ public class UserProfileController extends MainController {
     @PostMapping("/unfollow/{username}")
     @ResponseBody
     public String unfollowUser(@PathVariable String username,
-                               HttpServletRequest request) {
+                               HttpServletRequest request) throws Exception {
         Map<String, Object> jsonResult = new HashMap<>();
 
         Optional<User> loggedUser = advice.getLoggedUser(request);
-        Optional<User> userToUnfollow = userService.getUserByUsername(username);
+        User userToUnfollow = userService.getUserByUsername(username);
 
-        if (loggedUser.isPresent() && userToUnfollow.isPresent()) {
+        if (loggedUser.isPresent()) {
 
-            userService.unfollowUser(loggedUser.get(), userToUnfollow.get());
+            userService.unfollowUser(loggedUser.get(), userToUnfollow);
 
             jsonResult.put("success", true);
         } else {
@@ -104,5 +100,26 @@ public class UserProfileController extends MainController {
         }
 
         return gson.toJson(jsonResult, HashMap.class);
+    }
+
+    @PostMapping("/logout")
+    @ResponseBody
+    public String logoutUser(HttpServletRequest request) {
+        Map<String, Object> jsonResult = new HashMap<>();
+
+        Optional<User> loggedUser = advice.getLoggedUser(request);
+
+        if (loggedUser.isEmpty()) {
+            jsonResult.put("success", false);
+        } else {
+            request.getSession().removeAttribute("user_id");
+            jsonResult.put("success", true);
+        }
+        return gson.toJson(jsonResult);
+    }
+
+    @ExceptionHandler(UserNotExistException.class)
+    public ModelAndView getUserNotFoundPage() {
+        return super.view("fragments/errors/user/user_not_found");
     }
 }
