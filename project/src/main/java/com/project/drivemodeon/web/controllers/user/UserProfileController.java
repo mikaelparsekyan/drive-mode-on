@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -102,24 +103,20 @@ public class UserProfileController extends MainController {
         return gson.toJson(jsonResult, HashMap.class);
     }
 
-    @PostMapping("/logout")
-    @ResponseBody
-    public String logoutUser(HttpServletRequest request) {
-        Map<String, Object> jsonResult = new HashMap<>();
-
+    @GetMapping("/logout")
+    public ModelAndView logoutUser(HttpServletRequest request) {
         Optional<User> loggedUser = advice.getLoggedUser(request);
 
-        if (loggedUser.isEmpty()) {
-            jsonResult.put("success", false);
-        } else {
+        if (loggedUser.isPresent()) {
             request.getSession().removeAttribute("user_id");
-            jsonResult.put("success", true);
         }
-        return gson.toJson(jsonResult);
+
+        return new ModelAndView("redirect:/home");
     }
 
     @ExceptionHandler(UserNotExistException.class)
-    public ModelAndView getUserNotFoundPage() {
+    public ModelAndView getUserNotFoundPage(HttpServletResponse response) {
+        response.setStatus(404);
         return super.view("fragments/errors/user/user_not_found");
     }
 }

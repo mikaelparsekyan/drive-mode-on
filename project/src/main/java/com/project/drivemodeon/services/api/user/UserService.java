@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Service
 public interface UserService {
-    boolean signUpUser(UserSignUpDto userSignUpDto);
+    void signUpUser(UserSignUpDto userSignUpDto) throws Exception;
 
     long signInUser(UserSignInDto userSignInDto);
 

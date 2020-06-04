@@ -3,6 +3,7 @@ package com.project.drivemodeon.services.impl.user;
 import com.project.drivemodeon.domain.dtos.users.UserSignInDto;
 import com.project.drivemodeon.domain.dtos.users.UserSignUpDto;
 import com.project.drivemodeon.domain.models.User;
+import com.project.drivemodeon.exceptions.user.InvalidUserSignUp;
 import com.project.drivemodeon.exceptions.user.UserNotExistException;
 import com.project.drivemodeon.repositories.UserRepository;
 import com.project.drivemodeon.services.api.hash.HashService;
@@ -26,25 +27,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean signUpUser(UserSignUpDto userSignUpDto) {
+    public void signUpUser(UserSignUpDto userSignUpDto) throws Exception {
         if (userSignUpDto == null) {
-            return false;
+            throw new InvalidUserSignUp();
         }
 
         String password = userSignUpDto.getPassword();
         String confirmedPassword = userSignUpDto.getConfirmPassword();
 
-        if (password.trim().equals(confirmedPassword.trim())) {
-            User user = modelMapper.map(userSignUpDto, User.class);
-
-            String passwordHash = user.getPassword();
-            user.setPassword(passwordHash);
-
-            userRepository.saveAndFlush(user);
-
-            return true;
+        if (!password.trim().equals(confirmedPassword.trim())) {
+            throw new InvalidUserSignUp();
         }
-        return false;
+
+        User user = modelMapper.map(userSignUpDto, User.class);
+
+        String passwordHash = user.getPassword();
+        user.setPassword(passwordHash);
+
+        userRepository.saveAndFlush(user);
     }
 
     @Override

@@ -499,3 +499,9 @@ footer ul {
 .confirm-user-log-out-popup .buttons .cancel-logout-button {
     border-bottom-left-radius: 10px;
 }
+
+.cancel-logout-button, .agree-logout-button {
+    line-height: 50px;
+    text-align: center;
+    font-family: "Montserrat-Medium", serif;
+}

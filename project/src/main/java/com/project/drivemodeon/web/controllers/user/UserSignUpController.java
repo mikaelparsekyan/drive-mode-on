@@ -1,10 +1,12 @@
 package com.project.drivemodeon.web.controllers.user;
 
 import com.project.drivemodeon.domain.dtos.users.UserSignUpDto;
+import com.project.drivemodeon.exceptions.user.InvalidUserSignUp;
 import com.project.drivemodeon.services.api.user.UserService;
 import com.project.drivemodeon.util.api.ValidatorUtil;
 import com.project.drivemodeon.web.controllers.MainController;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,13 +46,14 @@ public class UserSignUpController extends MainController {
     }
 
     @PostMapping
-    public ModelAndView doSignUp(@Valid @ModelAttribute("user") UserSignUpDto userSignUpDto,
-                                 BindingResult bindingResult) {
+    public ModelAndView doSignUp(@ModelAttribute("user") UserSignUpDto userSignUpDto,
+                                 BindingResult bindingResult) throws Exception {
         Map<String, Object> inputErrors = new HashMap<>();
 
         if (!bindingResult.hasErrors()) {
-            boolean isUserSignedUp = userService.signUpUser(userSignUpDto);
-            if (!isUserSignedUp) {
+            try {
+                userService.signUpUser(userSignUpDto);
+            } catch (InvalidUserSignUp invalidUserSignUp) {
                 inputErrors = new HashMap<>();
                 inputErrors.put("confirmPassword", "Passwords did not match");
             }

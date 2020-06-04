@@ -33,19 +33,3 @@ function showUserLogoutPopup() {
     $('#dimming').removeClass('deactivated');
     $('.confirm-user-log-out-popup').addClass('active');
 }
-
-function logoutUser() {
-    $.ajax({
-        type: "POST",
-        url: "/user/logout",
-        dataType: "json",
-        contentType: 'application/json',
-        mimeType: 'application/json',
-        success: function () {
-            deactivateDimming();
-            window.location = '/home'
-        },
-        error: function () {
-        }
-    });
-}
