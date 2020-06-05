@@ -4,10 +4,16 @@ $(document).on('keydown', function (e) {
     }
 });
 
+function dimBackgroundScreen() {
+    $('#dimming').addClass('active');
+}
+
 function deactivateAllPopups() {
     $('.followings-list').removeClass('active');
     $('.followers-list').removeClass('active');
-    $('#dimming').addClass('deactivated');
+
+    dimBackgroundScreen();
+
     $('.confirm-user-unfollow-popup').removeClass('active');
     $('.confirm-user-log-out-popup').removeClass('active');
 }
@@ -32,4 +38,10 @@ function toggleUserDropdownMenu() {
 function showUserLogoutPopup() {
     $('#dimming').removeClass('deactivated');
     $('.confirm-user-log-out-popup').addClass('active');
+}
+
+function showAddPostField() {
+    dimBackgroundScreen();
+
+
 }

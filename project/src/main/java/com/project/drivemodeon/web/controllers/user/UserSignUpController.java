@@ -46,7 +46,7 @@ public class UserSignUpController extends MainController {
     }
 
     @PostMapping
-    public ModelAndView doSignUp(@ModelAttribute("user") UserSignUpDto userSignUpDto,
+    public ModelAndView doSignUp(@Valid @ModelAttribute("user") UserSignUpDto userSignUpDto,
                                  BindingResult bindingResult) throws Exception {
         Map<String, Object> inputErrors = new HashMap<>();
 

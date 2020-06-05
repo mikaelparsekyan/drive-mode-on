@@ -9,6 +9,7 @@ import com.project.drivemodeon.web.controllers.advices.Advice;
 import com.project.drivemodeon.web.view_models.user.UserProfileViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 

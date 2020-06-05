@@ -434,7 +434,7 @@ footer ul {
     font-family: "Montserrat-Medium", serif;
 }
 
-.add-post-img, .add-post-href {
+.add-post-img, .user-activity-href {
     display: inline-block;
     vertical-align: middle;
 }

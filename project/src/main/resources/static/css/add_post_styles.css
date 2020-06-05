@@ -1,0 +1,18 @@
+.add-post-field {
+    z-index: 999;
+    margin: 0 auto;
+    height: 300px;
+    width: 300px;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
+    border-radius: 6px;
+    border: 1px solid #FAFAFA;
+    background-color: white;
+}
+
+.add-post-field.active {
+    visibility: visible;
+    opacity: 1;
+    transition: 0.3s;
+}
