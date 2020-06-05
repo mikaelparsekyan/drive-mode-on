@@ -1,6 +1,8 @@
 .add-post-field {
     z-index: 999;
-    margin: 0 auto;
+    position: fixed;
+    left: 50%;
+    margin: 0 auto 0 -150px;
     height: 300px;
     width: 300px;
     visibility: hidden;
@@ -15,4 +17,28 @@
     visibility: visible;
     opacity: 1;
     transition: 0.3s;
+}
+
+.start-post-div {
+    margin: 0 auto;
+    width: 480px;
+    height: 65px;
+    border-radius: 6px;
+    border: 1px #f3f3f3 solid;
+    background-color: white;
+    box-shadow: 0 0 5px 1px rgba(var(--jb7, 0, 0, 0), .0975);
+}
+
+.start-post-div .start-post-icon {
+    width: 26px;
+    height: auto;
+    margin: 20px 20px 20px 30px;
+}
+
+.start-post-link {
+    text-decoration: none;
+    font-family: "Montserrat-Medium", serif;
+    font-size: 16px;
+    color: #343434;
+    line-height: 65px;
 }

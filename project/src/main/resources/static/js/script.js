@@ -5,7 +5,7 @@ $(document).on('keydown', function (e) {
 });
 
 function dimBackgroundScreen() {
-    $('#dimming').addClass('active');
+    $('#dimming').removeClass('deactivated');
 }
 
 function deactivateAllPopups() {
@@ -43,5 +43,5 @@ function showUserLogoutPopup() {
 function showAddPostField() {
     dimBackgroundScreen();
 
-
+    $('.add-post-field').addClass('active');
 }
