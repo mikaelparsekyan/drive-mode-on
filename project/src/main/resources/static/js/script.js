@@ -12,7 +12,7 @@ function deactivateAllPopups() {
     $('.followings-list').removeClass('active');
     $('.followers-list').removeClass('active');
 
-    dimBackgroundScreen();
+    $('#dimming').addClass('deactivated');
 
     $('.confirm-user-unfollow-popup').removeClass('active');
     $('.confirm-user-log-out-popup').removeClass('active');

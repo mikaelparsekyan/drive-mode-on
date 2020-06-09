@@ -2,15 +2,16 @@
     z-index: 999;
     position: fixed;
     left: 50%;
-    margin: 0 auto 0 -150px;
-    height: 300px;
-    width: 300px;
-    visibility: hidden;
-    opacity: 0;
+    margin: 0 auto 0 -300px;
+    height: 600px;
+    width: 600px;
+    visibility: visible; /*TEMP*/
+    opacity: 1;
     transition: 0.3s;
     border-radius: 6px;
     border: 1px solid #FAFAFA;
     background-color: white;
+    box-shadow: 0 0 5px 1px rgba(var(--jb7, 0, 0, 0), .0975);
 }
 
 .add-post-field.active {
@@ -41,4 +42,36 @@
     font-size: 16px;
     color: #343434;
     line-height: 65px;
+}
+
+.create-post-heading {
+    height: 50px;
+    width: 100%;
+    background-color: #FAFAFA;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom: 1.5px #cecdcd solid;
+}
+
+.create-post-label {
+    font-family: Montserrat-Medium, serif;
+    position: relative;
+    line-height: 50px;
+    display: inline-block;
+    margin: 0 0 0 20px;
+}
+
+.close-post-img {
+    height: auto;
+    width: 22px;
+    margin: 12px 12px 0 0;
+    float: right;
+    display: inline-block;
+}
+
+.create-post-footer {
+    height: 50px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
 }
