@@ -5,8 +5,8 @@
     margin: 0 auto 0 -300px;
     height: 600px;
     width: 600px;
-    visibility: visible; /*TEMP*/
-    opacity: 1;
+    visibility: hidden; /*TEMP*/
+    opacity: 0;
     transition: 0.3s;
     border-radius: 6px;
     border: 1px solid #FAFAFA;
@@ -74,4 +74,32 @@
     width: 100%;
     position: absolute;
     bottom: 0;
+}
+
+.create-post-buttons {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+.add-post-field .create-post-buttons a {
+    position: relative;
+    float: left;
+    line-height: 50px;
+    border-top: 1.5px #cecdcd solid;
+    font-family: Montserrat-Medium, serif;
+    text-align: center;
+    height: 50px;
+    width: 50%;
+}
+
+.save-as-draft-link {
+    background: #fefefe;
+    border-bottom-left-radius: 6px;
+}
+
+.post-link {
+    background: #00E676;
+    color: white;
+    border-bottom-right-radius: 6px;
 }

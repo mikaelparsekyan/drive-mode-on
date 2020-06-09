@@ -418,8 +418,8 @@ footer ul {
 }
 
 #dimming.deactivated {
-    opacity: 1;
-    visibility: visible;
+    opacity: 0;
+    visibility: hidden;
     transition: 0.3s;
 }
 
