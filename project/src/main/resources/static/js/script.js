@@ -9,13 +9,13 @@ function dimBackgroundScreen() {
 }
 
 function deactivateAllPopups() {
-    $('.followings-list').removeClass('active');
-    $('.followers-list').removeClass('active');
+    $('.popup').removeClass('active');
+    //$('.followers-list').removeClass('active');
 
     $('#dimming').addClass('deactivated');
 
-    $('.confirm-user-unfollow-popup').removeClass('active');
-    $('.confirm-user-log-out-popup').removeClass('active');
+     // $('.confirm-user-unfollow-popup').removeClass('active');
+     // $('.confirm-user-log-out-popup').removeClass('active');
 }
 
 function deactivateDimming() {

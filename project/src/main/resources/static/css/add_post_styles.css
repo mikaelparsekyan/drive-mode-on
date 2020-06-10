@@ -103,3 +103,28 @@
     color: white;
     border-bottom-right-radius: 6px;
 }
+
+.create-post-user-information {
+    height: 60px;
+    width: content-box;
+    padding: 15px 15px 15px 25px;
+}
+
+.create-post-user-information .user-profile-picture {
+    width: 60px;
+    height: auto;
+    line-height: 10px;
+}
+
+.user-profile-picture, .user-name-dropdown {
+    float: left;
+}
+
+.create-post-username {
+    margin: 5px 0 5px;
+    font-size: 18px;
+}
+
+.user-name-dropdown {
+    margin: 0 10px 10px 10px;
+}

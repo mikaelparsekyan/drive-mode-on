@@ -33,26 +33,26 @@
     border-color: rgba(213, 213, 213, 0.82);
 }
 
-.confirm-user-unfollow-popup .buttons .cancel-button, .agree-button {
+.confirm-user-unfollow-popup .buttons .cancel-follow-button, .agree-follow-button {
     float: left;
     height: 50px;
     width: 50%;
 }
 
-.confirm-user-unfollow-popup .buttons .agree-button {
+.confirm-user-unfollow-popup .buttons .agree-follow-button {
     left: 50%;
     background-color: #00E676;
 }
 
-.confirm-user-unfollow-popup .buttons .cancel-button {
+.confirm-user-unfollow-popup .buttons .cancel-follow-button {
     border-bottom-left-radius: 10px;
 }
 
-.confirm-user-unfollow-popup .buttons .agree-button {
+.confirm-user-unfollow-popup .buttons .agree-follow-button {
     border-bottom-right-radius: 10px;
 }
 
-.confirm-user-unfollow-popup .buttons .agree-button:hover {
+.confirm-user-unfollow-popup .buttons .agree-follow-button:hover {
     background-color: #00C853;
 }
 
