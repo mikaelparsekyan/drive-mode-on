@@ -122,4 +122,9 @@ public class UserServiceImpl implements UserService {
     public void editUser(String username, Long userId) {
         userRepository.updateUserById(username, userId);
     }
+
+    @Override
+    public void addPost() {
+        //TODO
+    }
 }

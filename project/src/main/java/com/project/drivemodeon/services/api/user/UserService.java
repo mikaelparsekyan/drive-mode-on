@@ -32,4 +32,6 @@ public interface UserService {
     long getUserFollowingsCount(User user);
 
     void editUser(String username, Long userId);
+
+    void addPost();
 }
