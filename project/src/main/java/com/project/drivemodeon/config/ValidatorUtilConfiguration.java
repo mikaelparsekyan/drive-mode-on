@@ -1,7 +1,7 @@
 package com.project.drivemodeon.config;
 
 import com.project.drivemodeon.util.api.ValidatorUtil;
-import com.project.drivemodeon.util.impls.ValidatorUtilImpl;
+import com.project.drivemodeon.util.impl.ValidatorUtilImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

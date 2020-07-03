@@ -1,8 +1,8 @@
 package com.project.drivemodeon.services.api.user;
 
-import com.project.drivemodeon.domain.dtos.users.UserSignInDto;
-import com.project.drivemodeon.domain.dtos.users.UserSignUpDto;
-import com.project.drivemodeon.domain.models.User;
+import com.project.drivemodeon.model.service.users.UserSignInDto;
+import com.project.drivemodeon.model.service.users.UserSignUpDto;
+import com.project.drivemodeon.model.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

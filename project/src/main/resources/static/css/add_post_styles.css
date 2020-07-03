@@ -151,11 +151,10 @@
 
 .post-input {
     width: 98%;
+    height: 200px;
     display: block;
     margin: 20px auto 0;
     padding-left: 5px;
-    height: 200px;
-    line-height: 20px;
     color: black;
     border: 0;
     resize: none;

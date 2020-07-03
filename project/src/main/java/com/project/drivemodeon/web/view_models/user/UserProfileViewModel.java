@@ -1,6 +1,6 @@
 package com.project.drivemodeon.web.view_models.user;
 
-import com.project.drivemodeon.domain.models.User;
+import com.project.drivemodeon.model.entity.User;
 import lombok.Data;
 
 import java.util.Set;

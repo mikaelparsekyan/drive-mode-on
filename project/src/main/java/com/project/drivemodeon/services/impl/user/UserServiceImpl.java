@@ -1,10 +1,10 @@
 package com.project.drivemodeon.services.impl.user;
 
-import com.project.drivemodeon.domain.dtos.users.UserSignInDto;
-import com.project.drivemodeon.domain.dtos.users.UserSignUpDto;
-import com.project.drivemodeon.domain.models.User;
-import com.project.drivemodeon.exceptions.user.InvalidUserSignUp;
-import com.project.drivemodeon.exceptions.user.UserNotExistException;
+import com.project.drivemodeon.model.service.users.UserSignInDto;
+import com.project.drivemodeon.model.service.users.UserSignUpDto;
+import com.project.drivemodeon.model.entity.User;
+import com.project.drivemodeon.exception.user.InvalidUserSignUp;
+import com.project.drivemodeon.exception.user.UserNotExistException;
 import com.project.drivemodeon.repositories.UserRepository;
 import com.project.drivemodeon.services.api.hash.HashService;
 import com.project.drivemodeon.services.api.user.UserService;

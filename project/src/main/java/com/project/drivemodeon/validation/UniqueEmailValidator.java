@@ -1,7 +1,7 @@
 package com.project.drivemodeon.validation;
 
 import com.project.drivemodeon.services.api.user.UserService;
-import com.project.drivemodeon.validation.annotations.UniqueEmail;
+import com.project.drivemodeon.validation.annotation.UniqueEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;

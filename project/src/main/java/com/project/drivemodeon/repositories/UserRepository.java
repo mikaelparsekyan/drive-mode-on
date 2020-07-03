@@ -1,6 +1,6 @@
 package com.project.drivemodeon.repositories;
 
-import com.project.drivemodeon.domain.models.User;
+import com.project.drivemodeon.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

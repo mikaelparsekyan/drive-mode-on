@@ -11,41 +11,6 @@
 
 /* Fonts */
 
-/* HTML elements*/
-body {
-    margin: 0;
-    position: relative;
-}
-
-.inactive-body {
-    pointer-events: none;
-}
-
-button {
-    border: none;
-}
-
-button:focus {
-    outline: 0;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-h1 {
-    padding: 0;
-    margin: 0;
-}
-
-a {
-    text-decoration: none;
-}
-
-/* HTML elements*/
-
-
 footer ul {
     position: relative;
     bottom: 0;
@@ -398,9 +363,10 @@ footer ul {
     margin-bottom: 7px;
 }
 
-.add-post-div {
+.add-post-href-div, .user-profile-href-div {
     width: fit-content;
     margin: 0 auto;
+    margin-bottom: 10px;
 }
 
 #dimming {

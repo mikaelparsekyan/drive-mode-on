@@ -6,7 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class MainController {
+public abstract class MainController {
 
     //avoid creating instance
     protected MainController() {
