@@ -102,35 +102,34 @@ public class UserController extends MainController {
 
     @PostMapping("/signin")
     public String doSignIn(@Valid @ModelAttribute("userSignInBindingModel")
-                                       UserSignInBindingModel userSignInBindingModel,
+                                   UserSignInBindingModel userSignInBindingModel,
                            Model model,
                            HttpSession session) {
 
+
         UserSignInDto userSignInDto = modelMapper.map(userSignInBindingModel, UserSignInDto.class);
 
-        long signedUserId = userService.signInUser(userSignInDto);
-        boolean isUserSignedIn = signedUserId != -1;
+        UserSignInDto signedUser = userService.signInUser(userSignInDto);
+        boolean isUserSignedIn = signedUser != null;
 
         if (!isUserSignedIn) {
             model.addAttribute("notFound", true);
             return "fragments/signin";
         }
 
-        session.setAttribute("user_id", signedUserId);
+        session.setAttribute("user_id", signedUser.getId());
         return "redirect:/user/" + userSignInBindingModel.getUsername();
     }
 
     @GetMapping("/user/{username}")
-    public ModelAndView getUserProfile(@PathVariable String username,
-                                       HttpServletRequest request) throws Exception {
-        ModelAndView modelAndView = new ModelAndView("layouts/index");
-
+    public String getUserProfile(@PathVariable String username,
+                                 Model model,
+                                 HttpServletRequest request) throws Exception {
         Optional<User> loggedUser = advice.getLoggedUser(request);
         User currentPageUser = userService.getUserByUsername(username);
 
         //TODO map other fields (bio, f_name, l_name ...)
-        modelAndView.addObject("view", "fragments/user/user_profile");
-        modelAndView.addObject("userViewModel", currentPageUser);
+        model.addAttribute("userViewModel", currentPageUser);
 
         if (loggedUser.isPresent()) {
             UserProfileViewModel loggedUserViewModel = modelMapper
@@ -138,11 +137,11 @@ public class UserController extends MainController {
 
             User sessionUser = modelMapper.map(loggedUserViewModel, User.class);
 
-            modelAndView.addObject("isUserFollowCurrentProfile",
+            model.addAttribute("isUserFollowCurrentProfile",
                     userService.isCurrentUserFollowProfileUser(
                             sessionUser, currentPageUser));
         }
-        return modelAndView;
+        return "fragments/user_profile";
     }
 
     @PostMapping("/user/follow/{username}")

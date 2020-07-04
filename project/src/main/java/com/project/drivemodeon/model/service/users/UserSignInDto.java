@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class UserSignInDto {
+    private long id;
 
     @NotNull
     @Max(255)

@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface UserService {
     void signUpUser(UserSignUpDto userSignUpDto) throws Exception;
 
-    long signInUser(UserSignInDto userSignInDto);
+    UserSignInDto signInUser(UserSignInDto userSignInDto);
 
     boolean isEmailTaken(String email);
 

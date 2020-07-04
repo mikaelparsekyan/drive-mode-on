@@ -1,14 +1,15 @@
 package com.project.drivemodeon.services.impl.user;
 
-import com.project.drivemodeon.model.service.users.UserSignInDto;
-import com.project.drivemodeon.model.service.users.UserSignUpDto;
-import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.exception.user.InvalidUserSignUp;
 import com.project.drivemodeon.exception.user.UserNotExistException;
+import com.project.drivemodeon.model.entity.User;
+import com.project.drivemodeon.model.service.users.UserSignInDto;
+import com.project.drivemodeon.model.service.users.UserSignUpDto;
 import com.project.drivemodeon.repositories.UserRepository;
-import com.project.drivemodeon.services.api.hash.BCryptService;
 import com.project.drivemodeon.services.api.user.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,12 +19,13 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private final BCryptService bCryptService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, BCryptService bCryptService) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-        this.bCryptService = bCryptService;
+
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -41,29 +43,27 @@ public class UserServiceImpl implements UserService {
 
         User user = modelMapper.map(userSignUpDto, User.class);
 
-        String passwordHash = user.getPassword();
-        user.setPassword(passwordHash);
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
 
         userRepository.saveAndFlush(user);
     }
 
     @Override
-    public long signInUser(UserSignInDto userSignInDto) {
+    public UserSignInDto signInUser(UserSignInDto userSignInDto) {
         String username = userSignInDto.getUsername();
 
         Optional<User> user = userRepository.findUserByUsername(username);
 
         if (user.isEmpty()) {
-            return -1;
+            return null;
 
         }
-        String passwordHash = bCryptService.crypt(userSignInDto.getPassword());
-
-        if (!(user.get().getPassword().equals(passwordHash))) {
-            return -1;
+        if (!passwordEncoder.matches(userSignInDto.getPassword(), user.get().getPassword())) {
+            return null;
         }
 
-        return user.get().getId();
+        return modelMapper.map(user.get(), UserSignInDto.class);
     }
 
     @Override
