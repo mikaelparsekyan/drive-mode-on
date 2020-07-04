@@ -6,7 +6,7 @@ import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.exception.user.InvalidUserSignUp;
 import com.project.drivemodeon.exception.user.UserNotExistException;
 import com.project.drivemodeon.repositories.UserRepository;
-import com.project.drivemodeon.services.api.hash.HashService;
+import com.project.drivemodeon.services.api.hash.BCryptService;
 import com.project.drivemodeon.services.api.user.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -18,12 +18,12 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private final HashService hashService;
+    private final BCryptService bCryptService;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, HashService hashService) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, BCryptService bCryptService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-        this.hashService = hashService;
+        this.bCryptService = bCryptService;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
             return -1;
 
         }
-        String passwordHash = hashService.hash(userSignInDto.getPassword());
+        String passwordHash = bCryptService.crypt(userSignInDto.getPassword());
 
         if (!(user.get().getPassword().equals(passwordHash))) {
             return -1;

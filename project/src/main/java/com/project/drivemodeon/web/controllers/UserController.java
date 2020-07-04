@@ -1,20 +1,24 @@
 package com.project.drivemodeon.web.controllers;
 
 import com.google.gson.Gson;
-import com.project.drivemodeon.model.service.users.UserSignInDto;
-import com.project.drivemodeon.model.service.users.UserSignUpDto;
-import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.exception.user.InvalidUserSignUp;
 import com.project.drivemodeon.exception.user.UserNotExistException;
+import com.project.drivemodeon.model.binding.UserSignInBindingModel;
+import com.project.drivemodeon.model.binding.UserSignUpBindingModel;
+import com.project.drivemodeon.model.entity.User;
+import com.project.drivemodeon.model.service.users.UserSignInDto;
+import com.project.drivemodeon.model.service.users.UserSignUpDto;
 import com.project.drivemodeon.services.api.user.UserService;
 import com.project.drivemodeon.util.api.ValidatorUtil;
 import com.project.drivemodeon.web.controllers.advice.Advice;
 import com.project.drivemodeon.web.view_models.user.UserProfileViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,73 +47,77 @@ public class UserController extends MainController {
     }
 
     @GetMapping("/signup")
-    public ModelAndView getSignUpPage(HttpServletRequest request) {
-        HttpSession userSession = request.getSession();
-        Long userId = (Long) userSession.getAttribute("user_id");
+    public String getSignUpPage(Model model,
+                                HttpSession httpSession) {
+        Long userId = (Long) httpSession.getAttribute("user_id");
 
-        if (userId == null) {
-            UserSignUpDto userSignUpDto = new UserSignUpDto();
-            return super.view("fragments/signup",
-                    "user", userSignUpDto);
+        if (!model.containsAttribute("userSignUpBindingModel")) {
+            model.addAttribute("userSignUpBindingModel", new UserSignUpBindingModel());
         }
 
-        return new ModelAndView("redirect:/");
+        if (userId == null) {
+            return "fragments/signup";
+        }
+
+        return "redirect:signin";
     }
 
     @PostMapping("/signup")
-    public ModelAndView doSignUp(@Valid @ModelAttribute("user") UserSignUpDto userSignUpDto,
-                                 BindingResult bindingResult) throws Exception {
-        Map<String, Object> inputErrors = new HashMap<>();
-
-        if (!bindingResult.hasErrors()) {
-            try {
-                userService.signUpUser(userSignUpDto);
-            } catch (InvalidUserSignUp invalidUserSignUp) {
-                inputErrors = new HashMap<>();
-                inputErrors.put("confirmPassword", "Passwords did not match");
-            }
-        } else {
-            inputErrors = validatorUtil.violations(userSignUpDto);
+    public String doSignUp(@Valid @ModelAttribute("userSignUpBindingModel")
+                                   UserSignUpBindingModel userSignUpBindingModel,
+                           BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userSignUpBindingModel", userSignUpBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userSignUpBindingModel", bindingResult);
+            return "redirect:signup";
         }
 
-        return super.view("fragments/signup", "inputErrors", inputErrors);
+        UserSignUpDto userSignUpDto = modelMapper.map(userSignUpBindingModel, UserSignUpDto.class);
+        try {
+            userService.signUpUser(userSignUpDto);
+        } catch (Exception e) {
+            return "redirect:signup";
+        }
+
+        return "fragments/signup";
     }
 
     @GetMapping("/signin")
-    public ModelAndView getSignInPage(HttpServletRequest request) {
+    public String getSignInPage(Model model, HttpServletRequest request) {
         HttpSession userSession = request.getSession();
         Long userId = (Long) userSession.getAttribute("user_id");
 
-        if (userId == null) {
-            UserSignInDto userSignInDto = new UserSignInDto();
-            return super.view("fragments/signin",
-                    "user", userSignInDto);
+        if (!model.containsAttribute("userSignInBindingModel")) {
+            model.addAttribute("userSignInBindingModel", new UserSignInBindingModel());
         }
+
+        if (userId == null) {
+            return "fragments/signin";
+        }
+
         Optional<User> loggedUser = userService.getUserById(userId);
-        return new ModelAndView("redirect:/user/" + loggedUser.get().getUsername());//TODO make Advice class here
+        return ("redirect:/user/" + loggedUser.get().getUsername());//TODO make Advice class here
     }
 
     @PostMapping("/signin")
-    public ModelAndView doSignIn(@ModelAttribute("user") UserSignInDto userSignInDto,
-                                 HttpServletRequest request, HttpServletResponse response) {
-        Map<String, Object> inputErrors = new HashMap<>();
+    public String doSignIn(@Valid @ModelAttribute("userSignInBindingModel")
+                                       UserSignInBindingModel userSignInBindingModel,
+                           Model model,
+                           HttpSession session) {
 
-        ModelAndView modelAndView = new ModelAndView("layouts/index");
-        modelAndView.addObject("view", "fragments/signin");
+        UserSignInDto userSignInDto = modelMapper.map(userSignInBindingModel, UserSignInDto.class);
 
         long signedUserId = userService.signInUser(userSignInDto);
         boolean isUserSignedIn = signedUserId != -1;
-        if (isUserSignedIn) {
-            HttpSession userSession = request.getSession();
-            userSession.setAttribute("user_id", signedUserId);
 
-            return new ModelAndView("redirect:/user/" + userSignInDto.getUsername());
-        } else {
-            inputErrors.put("invalidInfo", "Invalid username or password!");
+        if (!isUserSignedIn) {
+            model.addAttribute("notFound", true);
+            return "fragments/signin";
         }
-        modelAndView.addObject("inputErrors", inputErrors);
 
-        return modelAndView;
+        session.setAttribute("user_id", signedUserId);
+        return "redirect:/user/" + userSignInBindingModel.getUsername();
     }
 
     @GetMapping("/user/{username}")
