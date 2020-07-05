@@ -103,9 +103,17 @@ public class UserController extends MainController {
     @PostMapping("/signin")
     public String doSignIn(@Valid @ModelAttribute("userSignInBindingModel")
                                    UserSignInBindingModel userSignInBindingModel,
+                           BindingResult bindingResult,
                            Model model,
+                           RedirectAttributes redirectAttributes,
                            HttpSession session) {
 
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userSignInBindingModel", userSignInBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userSignInBindingModel",
+                    bindingResult);
+            return "redirect:signin";
+        }
 
         UserSignInDto userSignInDto = modelMapper.map(userSignInBindingModel, UserSignInDto.class);
 
