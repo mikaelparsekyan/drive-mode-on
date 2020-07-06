@@ -59,7 +59,7 @@ public class User extends BaseEntity {
     @Column(name = "is_account_private")
     private boolean isAccountPrivate;
 
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Post> posts;
 
     @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

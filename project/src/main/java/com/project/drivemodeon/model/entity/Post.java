@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "posts")
@@ -22,8 +23,18 @@ public class Post extends BaseEntity {
     private boolean isDraft;
 
     @ManyToOne
-    @JoinColumn(name = "author", referencedColumnName = "id")
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
     private User author;
+
+//    @OneToMany
+//    @JoinColumn(name = "likes", referencedColumnName = "id")
+//    private User likers;
+
+    @Column(name = "posted_on")
+    private LocalDateTime postedOn;
+
+    @Column
+    private String location;
 
 //    @OneToMany
 //    @Column

@@ -140,6 +140,12 @@
     outline: none;
 }
 
+.location-input {
+    margin: 33px 0 5px;
+    width: 130px;
+    border-radius: 6px;
+}
+
 .post-type-select > option {
     outline: none;
 }
