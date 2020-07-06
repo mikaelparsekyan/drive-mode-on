@@ -1,10 +1,15 @@
 package com.project.drivemodeon.service.impl.user;
 
 import com.project.drivemodeon.exception.user.InvalidUserSignUp;
+import com.project.drivemodeon.exception.user.signup.BaseSignUpException;
+import com.project.drivemodeon.exception.user.signup.EmailAlreadyTaken;
+import com.project.drivemodeon.exception.user.signup.PasswordsNotMatch;
+import com.project.drivemodeon.exception.user.signup.UsernameAlreadyTaken;
 import com.project.drivemodeon.model.entity.User;
+import com.project.drivemodeon.model.service.user.UserServiceModel;
 import com.project.drivemodeon.model.service.user.UserSignInDto;
-import com.project.drivemodeon.model.service.user.UserSignUpDto;
 import com.project.drivemodeon.repository.UserRepository;
+import com.project.drivemodeon.service.api.role.RoleService;
 import com.project.drivemodeon.service.api.user.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,28 +23,44 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleService roleService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
 
         this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
     }
 
     @Override
-    public void signUpUser(UserSignUpDto userSignUpDto) throws Exception {
-        if (userSignUpDto == null) {
+    public void signUpUser(UserServiceModel userServiceModel) throws BaseSignUpException {
+        this.roleService.seedRoles();
+
+        if(this.userRepository.count() == 0){
+            userServiceModel.setAuthorities(this.roleService.);
+        }
+
+        if (userServiceModel == null) {
             throw new InvalidUserSignUp();
         }
 
-        String password = userSignUpDto.getPassword();
-        String confirmedPassword = userSignUpDto.getConfirmPassword();
+        String password = userServiceModel.getPassword();
+        String confirmedPassword = userServiceModel.getConfirmPassword();
 
         if (!password.trim().equals(confirmedPassword.trim())) {
-            throw new InvalidUserSignUp();
+            throw new PasswordsNotMatch();
         }
 
-        User user = modelMapper.map(userSignUpDto, User.class);
+        if (isEmailTaken(userServiceModel.getEmail())) {
+            throw new EmailAlreadyTaken();
+        }
+
+        if (isUsernameTaken(userServiceModel.getUsername())) {
+            throw new UsernameAlreadyTaken();
+        }
+
+        User user = modelMapper.map(userServiceModel, User.class);
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
@@ -48,8 +69,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserSignInDto signInUser(UserSignInDto userSignInDto) {
-        String username = userSignInDto.getUsername();
+    public UserSignInDto signInUser(UserServiceModel userServiceModel) {
+        String username = userServiceModel.getUsername();
 
         Optional<User> user = userRepository.findUserByUsername(username);
 
@@ -57,7 +78,7 @@ public class UserServiceImpl implements UserService {
             return null;
 
         }
-        if (!passwordEncoder.matches(userSignInDto.getPassword(), user.get().getPassword())) {
+        if (!passwordEncoder.matches(userServiceModel.getPassword(), user.get().getPassword())) {
             return null;
         }
 
@@ -82,7 +103,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUsername(String username)  {
+    public User getUserByUsername(String username) {
         Optional<User> user = userRepository.findUserByUsername(username);
         if (user.isEmpty()) {
             return null;

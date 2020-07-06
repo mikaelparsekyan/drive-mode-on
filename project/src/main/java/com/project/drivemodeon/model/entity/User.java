@@ -1,6 +1,7 @@
 package com.project.drivemodeon.model.entity;
 
 import lombok.Data;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,7 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @Data
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
     @NotNull
     @Column(unique = true)
     private String username;
@@ -59,11 +60,25 @@ public class User extends BaseEntity {
     @Column(name = "is_account_private")
     private boolean isAccountPrivate;
 
-    @OneToMany(mappedBy = "author_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Post> posts;
 
     @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Log> logs;
+
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id",
+                    referencedColumnName = "id"
+            )
+    )
+    private Set<Role> authorities;
 
     @Override
     public boolean equals(Object o) {
@@ -88,5 +103,25 @@ public class User extends BaseEntity {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

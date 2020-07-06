@@ -1,5 +1,7 @@
 package com.project.drivemodeon.service.api.user;
 
+import com.project.drivemodeon.exception.user.signup.BaseSignUpException;
+import com.project.drivemodeon.model.service.user.UserServiceModel;
 import com.project.drivemodeon.model.service.user.UserSignInDto;
 import com.project.drivemodeon.model.service.user.UserSignUpDto;
 import com.project.drivemodeon.model.entity.User;
@@ -9,9 +11,9 @@ import java.util.Optional;
 
 @Service
 public interface UserService {
-    void signUpUser(UserSignUpDto userSignUpDto) throws Exception;
+    void signUpUser(UserServiceModel userServiceModel) throws BaseSignUpException;
 
-    UserSignInDto signInUser(UserSignInDto userSignInDto);
+    UserSignInDto signInUser(UserServiceModel userServiceModel);
 
     boolean isEmailTaken(String email);
 

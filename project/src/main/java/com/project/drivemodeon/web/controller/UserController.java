@@ -2,9 +2,11 @@ package com.project.drivemodeon.web.controller;
 
 import com.google.gson.Gson;
 import com.project.drivemodeon.exception.user.UserNotExistException;
+import com.project.drivemodeon.exception.user.signup.BaseSignUpException;
 import com.project.drivemodeon.model.binding.user.UserSignInBindingModel;
 import com.project.drivemodeon.model.binding.user.UserSignUpBindingModel;
 import com.project.drivemodeon.model.entity.User;
+import com.project.drivemodeon.model.service.user.UserServiceModel;
 import com.project.drivemodeon.model.service.user.UserSignUpDto;
 import com.project.drivemodeon.service.api.user.UserService;
 import com.project.drivemodeon.util.api.ValidatorUtil;
@@ -76,14 +78,16 @@ public class UserController extends MainController {
             return modelAndView;
         }
 
-        UserSignUpDto userSignUpDto = modelMapper.map(userSignUpBindingModel, UserSignUpDto.class);
+        UserServiceModel userServiceModel = modelMapper
+                .map(userSignUpBindingModel, UserServiceModel.class);
         try {
-            userService.signUpUser(userSignUpDto);
-        } catch (Exception e) {
+            userService.signUpUser(userServiceModel);
+        } catch (BaseSignUpException e) {
+            modelAndView.addObject(e.getFieldName() + "Err", e.getMessage());
             return modelAndView;
         }
 
-        return modelAndView;
+        return new ModelAndView("redirect:/signin");
     }
 
     @GetMapping("/signin")

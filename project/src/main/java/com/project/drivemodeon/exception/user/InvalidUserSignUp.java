@@ -1,9 +1,11 @@
 package com.project.drivemodeon.exception.user;
 
-public class InvalidUserSignUp extends Exception {
-    private static final String EXCEPTION_MESSAGE = "Invalid user sign in parameters";
+import com.project.drivemodeon.exception.user.signup.BaseSignUpException;
+
+public class InvalidUserSignUp extends BaseSignUpException {
+    private static final String EXCEPTION_MESSAGE = "Something went wrong!";
 
     public InvalidUserSignUp() {
-        super(EXCEPTION_MESSAGE);
+        super(EXCEPTION_MESSAGE,"");
     }
 }
