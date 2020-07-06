@@ -13,10 +13,7 @@ public abstract class MainController {
     }
 
     protected ModelAndView view(String viewName) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("layouts/index");
-        modelAndView.addObject("view", viewName);
-        return modelAndView;
+        return new ModelAndView(viewName);
     }
 
     protected ModelAndView view(String viewName, String objName, Object object) {

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,8 +42,8 @@ public class UserEditController {
     }
 
     @PostMapping
-    public ModelAndView doUserProfileEdit(HttpServletRequest request) {
-        Long loggedUserId = advice.getLoggedUserId(request);
+    public ModelAndView doUserProfileEdit(HttpSession httpSession, HttpServletRequest request) {
+        Long loggedUserId = advice.getLoggedUserId(httpSession);
 
         //TODO make obj
         String usernameParameter = request.getParameter("username");

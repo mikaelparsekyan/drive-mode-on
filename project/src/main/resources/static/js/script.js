@@ -14,8 +14,8 @@ function deactivateAllPopups() {
 
     $('#dimming').addClass('deactivated');
 
-     // $('.confirm-user-unfollow-popup').removeClass('active');
-     // $('.confirm-user-log-out-popup').removeClass('active');
+    $('.confirm-user-unfollow-popup').removeClass('active');
+    $('.confirm-user-log-out-popup').removeClass('active');
 }
 
 function deactivateDimming() {
@@ -42,6 +42,5 @@ function showUserLogoutPopup() {
 
 function showAddPostField() {
     dimBackgroundScreen();
-
     $('.add-post-field').addClass('active');
 }

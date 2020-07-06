@@ -3,10 +3,13 @@ package com.project.drivemodeon.web.controllers.advice;
 import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.services.api.user.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.Optional;
 
 @ControllerAdvice
@@ -22,15 +25,13 @@ public class Advice {
     }
 
     @ModelAttribute("isUserLogged")
-    public boolean isUserLoggedIn(HttpServletRequest request) {
-        Long loggedUserId = (Long) request.getSession().getAttribute("user_id");
-
-        return loggedUserId != null;
+    public boolean isUserLoggedIn(@AuthenticationPrincipal Principal principal) {
+        return principal != null;
     }
 
     @ModelAttribute("username")
-    public String getUsername(HttpServletRequest request) {
-        Long loggedUserId = (Long) request.getSession().getAttribute("user_id");
+    public String getUsername(HttpSession httpSession) {
+        Long loggedUserId = (Long) httpSession.getAttribute("user_id");
 
         if (loggedUserId != null) {
             Optional<User> user = userService.getUserById(loggedUserId);
@@ -42,35 +43,32 @@ public class Advice {
     }
 
     @ModelAttribute("loggedUserId")
-    public Long getLoggedUserId(HttpServletRequest request) {
-        return (Long) request.getSession().getAttribute("user_id");
+    public Long getLoggedUserId(HttpSession httpSession) {
+        return (Long) httpSession.getAttribute("user_id");
     }
 
     @ModelAttribute("userProfileRoute")
-    public String getUserProfileRoute(HttpServletRequest request) {
-        Long loggedUserId = (Long) request.getSession().getAttribute("user_id");
-        if (loggedUserId != null) {
-            Optional<User> user = userService.getUserById(loggedUserId);
-            if (user.isPresent()) {
-                return String.format("/user/%s",
-                        user.get().getUsername().toLowerCase());
+    public String getUserProfileRoute(@AuthenticationPrincipal Principal principal) {
+        if (principal != null) {
+            String name = principal.getName();
+            if (name != null) {
+                User user = userService.getUserByUsername(name);
+                if (user != null) {//TODO make optional all this types
+                    return String.format("/user/%s",
+                            user.getUsername().toLowerCase());
+                }
             }
         }
         return null;
     }
 
     @ModelAttribute("sessionUser")
-    public Optional<User> getLoggedUser(HttpServletRequest request) {
-        Long loggedUserId = (Long) request.getSession().getAttribute("user_id");
-
-        if (loggedUserId == null) {
+    public Optional<User> getLoggedUser(@AuthenticationPrincipal Principal principal) {
+        if (principal == null) {
             return Optional.empty();
         }
-        Optional<User> userById = userService.getUserById(loggedUserId);
-        if (userById.isEmpty()) {
-            return Optional.empty();
-        }
+        User user = userService.getUserByUsername(principal.getName());
 
-        return userById;
+        return Optional.of(user);
     }
 }

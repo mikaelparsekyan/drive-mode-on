@@ -19,7 +19,7 @@ public interface UserService {
 
     Optional<User> getUserById(long id);
 
-    User getUserByUsername(String username) throws Exception;
+    User getUserByUsername(String username);
 
     boolean isCurrentUserFollowProfileUser(User currentUser, User profileUser);
 

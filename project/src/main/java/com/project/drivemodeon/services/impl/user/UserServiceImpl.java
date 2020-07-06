@@ -84,10 +84,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUsername(String username) throws Exception {
+    public User getUserByUsername(String username)  {
         Optional<User> user = userRepository.findUserByUsername(username);
         if (user.isEmpty()) {
-            throw new UserNotExistException();
+            return null;
         }
         return user.get();
     }
