@@ -1,0 +1,43 @@
+.no-post-available {
+    font-size: 30px;
+    font-family: Montserrat-Medium, serif;
+    color: #343434;
+    margin: 0 auto;
+    line-height: 60vh;
+    text-align: center;
+}
+
+.post-content {
+    margin: 35px auto auto;
+    width: 800px;
+    height: 800px;
+    border-radius: 6px;
+    border: 1.5px #f3f3f3 solid;
+    background-color: white;
+}
+
+.post-heading {
+    display: inline-block;
+    width: 100%;
+}
+
+.post-date-div {
+    margin: 20px;
+    float: right;
+    display: inline-block;
+}
+
+.post-date-div p {
+    font-size: 14px;
+    float: right;
+    display: inline-block;
+}
+
+.post-author {
+    margin: 20px;
+    display: inline-block;
+}
+
+.post-author h1 {
+    font-size: 24px;
+}

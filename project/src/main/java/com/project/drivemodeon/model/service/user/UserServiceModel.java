@@ -1,6 +1,6 @@
 package com.project.drivemodeon.model.service.user;
 
-import com.project.drivemodeon.model.entity.Role;
+import com.project.drivemodeon.model.entity.AuthorityEntity;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -32,5 +32,5 @@ public class UserServiceModel {
 
     private boolean isProfilePrivate;
 
-    private Set<Role> authorities;
+    private Set<AuthorityEntity> authorities;
 }

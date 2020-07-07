@@ -5,17 +5,19 @@ import com.project.drivemodeon.exception.user.signup.BaseSignUpException;
 import com.project.drivemodeon.exception.user.signup.EmailAlreadyTaken;
 import com.project.drivemodeon.exception.user.signup.PasswordsNotMatch;
 import com.project.drivemodeon.exception.user.signup.UsernameAlreadyTaken;
+import com.project.drivemodeon.model.entity.AuthorityEntity;
 import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.model.service.user.UserServiceModel;
 import com.project.drivemodeon.model.service.user.UserSignInDto;
 import com.project.drivemodeon.repository.UserRepository;
-import com.project.drivemodeon.service.api.role.RoleService;
 import com.project.drivemodeon.service.api.user.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,27 +25,30 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
-    private final RoleService roleService;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleService roleService) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
 
         this.passwordEncoder = passwordEncoder;
-        this.roleService = roleService;
     }
 
     @Override
     public void signUpUser(UserServiceModel userServiceModel) throws BaseSignUpException {
-        this.roleService.seedRoles();
-
-        if(this.userRepository.count() == 0){
-            userServiceModel.setAuthorities(this.roleService.);
-        }
-
         if (userServiceModel == null) {
             throw new InvalidUserSignUp();
         }
+        User userEntity = modelMapper.map(userServiceModel, User.class);
+
+        AuthorityEntity authorityEntity = new AuthorityEntity();
+        if (this.userRepository.count() == 0) {
+            authorityEntity.setUser(userEntity);
+            authorityEntity.setName("ROLE_ADMIN");
+        } else {
+            authorityEntity.setUser(userEntity);
+            authorityEntity.setName("ROLE_USER");
+        }
+        userEntity.setAuthorities(List.of(authorityEntity));
 
         String password = userServiceModel.getPassword();
         String confirmedPassword = userServiceModel.getConfirmPassword();
@@ -60,12 +65,10 @@ public class UserServiceImpl implements UserService {
             throw new UsernameAlreadyTaken();
         }
 
-        User user = modelMapper.map(userServiceModel, User.class);
+        String encodedPassword = passwordEncoder.encode(userEntity.getPassword());
+        userEntity.setPassword(encodedPassword);
 
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-
-        userRepository.saveAndFlush(user);
+        userRepository.saveAndFlush(userEntity);
     }
 
     @Override

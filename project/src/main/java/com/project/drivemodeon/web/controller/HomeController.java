@@ -18,11 +18,8 @@ public class HomeController extends MainController {
     }
 
     @GetMapping(value = {"/", "/index", "/home"})
-    public ModelAndView getHomePage(HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("layouts/index");
+    public ModelAndView getHomePage() {
 
-        modelAndView.addObject("view", "fragments/home");
-
-        return modelAndView;
+        return new ModelAndView("home");
     }
 }

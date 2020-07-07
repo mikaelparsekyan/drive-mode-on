@@ -1,19 +1,25 @@
 package com.project.drivemodeon.model.entity;
 
-import lombok.Data;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
 @Data
-public class User extends BaseEntity implements UserDetails {
-    @NotNull
+@AllArgsConstructor
+@NoArgsConstructor
+public class User extends BaseEntity {
+
     @Column(unique = true)
+    @NonNull
     private String username;
 
     @Column(name = "first_name")
@@ -66,19 +72,12 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Log> logs;
 
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(
-                    name = "user_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "role_id",
-                    referencedColumnName = "id"
-            )
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
     )
-    private Set<Role> authorities;
+    private List<AuthorityEntity> authorities = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -103,25 +102,5 @@ public class User extends BaseEntity implements UserDetails {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 }

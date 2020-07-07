@@ -193,7 +193,7 @@ footer ul {
 
 .user-profile-content-div {
     margin: 0 250px;
-    height: 100vh;
+    height: 100%;
     padding: 30px 100px;
     border-color: rgba(244, 244, 244, 0.35);
     border-style: solid;

@@ -1,5 +1,6 @@
 package com.project.drivemodeon.config.security;
 
+import com.project.drivemodeon.service.impl.user.UserDetail;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,9 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
+    private final UserDetail userDetailsService;
 
-    public SecurityConfig(PasswordEncoder passwordEncoder) {
+    public SecurityConfig(PasswordEncoder passwordEncoder, UserDetail userDetailsService) {
         this.passwordEncoder = passwordEncoder;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -28,7 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/user/**").permitAll()
-                .antMatchers("/feed").hasRole("USER")
+                .antMatchers("/feed").permitAll()
+                .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/", "/signup", "/signin").anonymous()
                 .anyRequest().authenticated()
                 .and()
@@ -51,13 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("TestTestov")
-//                .password(passwordEncoder.encode("Spass123"))
-//                .roles("USER");
-//        auth.inMemoryAuthentication()
-//                .withUser("KiroK")
-//                .password(passwordEncoder.encode("Spass123"))
-//                .roles("USER");
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
     }
 }
