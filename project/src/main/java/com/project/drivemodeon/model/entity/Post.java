@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "posts")
@@ -26,9 +27,19 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private User author;
 
-//    @OneToMany
-//    @JoinColumn(name = "likes", referencedColumnName = "id")
-//    private User likers;
+    @ManyToMany
+    @JoinTable(
+            name = "post_likes",
+            joinColumns = @JoinColumn(
+                    name = "post_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "user_id",
+                    referencedColumnName = "id"
+            )
+    )
+    private Set<User> likers;
 
     @Column(name = "posted_on")
     private LocalDateTime postedOn;

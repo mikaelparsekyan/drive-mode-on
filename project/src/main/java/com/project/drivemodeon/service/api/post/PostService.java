@@ -5,7 +5,9 @@ import com.project.drivemodeon.model.service.user.UserServiceModel;
 import com.project.drivemodeon.validation.constant.enumeration.PostPrivacyEnum;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface PostService {
@@ -13,5 +15,9 @@ public interface PostService {
 
     List<PostServiceModel> getAllPostsByPrivacy(PostPrivacyEnum postPrivacyEnum);
 
-    List<PostServiceModel> getAllFeedPostsByUser(UserServiceModel userServiceModel);
+    LinkedList<PostServiceModel> getAllFeedPostsByUser(UserServiceModel userServiceModel);
+
+    Optional<PostServiceModel> getPostById(Long id);
+
+    void likePost(Long postId, String username);
 }

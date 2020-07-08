@@ -2,6 +2,7 @@ package com.project.drivemodeon.model.service.user;
 
 import com.project.drivemodeon.model.entity.AuthorityEntity;
 import lombok.Data;
+import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -9,7 +10,10 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Data
+@Getter
 public class UserServiceModel {
+    private long id;
+
     @NotNull(message = "Username cannot be empty!")
     @Size(min = 4, max = 10, message = "Username must be between 4 and 15 symbols!")
     private String username;

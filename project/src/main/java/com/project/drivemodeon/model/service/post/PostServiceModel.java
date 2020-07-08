@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 
 @Data
 public class PostServiceModel {
+    private long id;
+
     @Length(min = 1, max = 1000)
     private String value;
 

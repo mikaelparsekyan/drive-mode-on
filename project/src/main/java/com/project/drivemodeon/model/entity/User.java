@@ -79,6 +79,9 @@ public class User extends BaseEntity {
     )
     private List<AuthorityEntity> authorities = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "likers", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Post> likers;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

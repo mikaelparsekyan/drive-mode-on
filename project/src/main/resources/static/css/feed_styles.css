@@ -9,10 +9,8 @@
 
 .post-content {
     margin: 35px auto auto;
-    width: 800px;
-    min-height: 300px;
+    width: 80%;
     height: auto;
-    position: relative;
     z-index: -1;
     border-radius: 6px;
     border: 1.5px #f3f3f3 solid;
@@ -25,27 +23,34 @@
 }
 
 .post-date-div {
-    margin: 20px 40px 0 0;
+    margin: 0 15px 0 0;
     float: right;
     display: inline-block;
 }
 
 .post-date-div p {
     font-size: 14px;
+    color: #6c6c6c;
     float: right;
     display: inline-block;
 }
 
 .post-author {
-    margin: 20px 0 0 40px;
+    margin: 15px 0 0 20px;
     display: inline-block;
 }
 
 .post-author a {
     text-decoration: none;
     font-family: Montserrat-Medium, serif;
-    color: #343434;
-    font-size: 24px;
+    color: #8c8c8c;
+    transition: 0.2s;
+    font-size: 18px;
+}
+
+.post-author a:hover {
+    color: black;
+    transition: 0.2s;
 }
 
 .post-main-content-div p {
@@ -53,24 +58,34 @@
 }
 
 .post-footer {
-    background-color: #00E676;
+    background-color: #FAFAFA;
     width: 100%;
-    height: 60px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: inline-block;
+    height: 50px;
+    border-top: 1.5px #f3f3f3 solid;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
-    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    position: relative;
 }
 
-.comment-post-div , .like-post-div {
+.comment-post-div, .like-post-div {
     float: left;
-    height: 60px;
-    width: 60px;
-    background-color: orange;
+    height: 50px;
+    width: 50px;
 }
-.like-post-div {
-    background-color: red;
+
+.like-post-div img, .comment-post-div img {
+    margin: 10px 0 0 20px;
+    width: 25px;
+    overflow: hidden;
+    opacity: 0.5;
+    transition: 0.2s;
+}
+
+.like-post-div img:hover, .comment-post-div img:hover, .liked img{
+    opacity: 1;
+    transition: 0.2s;
 }

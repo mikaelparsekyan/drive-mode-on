@@ -11,7 +11,9 @@ import com.project.drivemodeon.validation.constant.enumeration.PostPrivacyEnum;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,21 +36,22 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostServiceModel> getAllPostsByPrivacy(PostPrivacyEnum postPrivacyEnum) {
-        return this.postRepository.findAllByPostPrivacyLike(postPrivacyEnum)
+    public LinkedList<PostServiceModel> getAllPostsByPrivacy(PostPrivacyEnum postPrivacyEnum) {
+        return this.postRepository
+                .findAllByPostPrivacyLikeOrderByPostedOnDesc(postPrivacyEnum)
                 .stream()
                 .map(post -> modelMapper.map(post, PostServiceModel.class))
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override
-    public List<PostServiceModel> getAllFeedPostsByUser(UserServiceModel user) {
+    public LinkedList<PostServiceModel> getAllFeedPostsByUser(UserServiceModel user) {
         User userEntity = userService.getUserByUsername(user.getUsername());
         if (userEntity == null) {
             return null;
         }
         return this.postRepository
-                .findAll()
+                .findAllByDraftIsFalse()
                 .stream()
                 .filter(post -> {
                     User author = post.getAuthor();
@@ -59,7 +62,36 @@ public class PostServiceImpl implements PostService {
                     }
                     return false;
                 })
+                .sorted((p1, p2) -> p2.getPostedOn().compareTo(p1.getPostedOn()))
                 .map(post -> modelMapper.map(post, PostServiceModel.class))
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public Optional<PostServiceModel> getPostById(Long id) {
+        Optional<Post> postById = this.postRepository.findById(id);
+        if (postById.isEmpty()) {
+            return Optional.empty();
+        }
+        PostServiceModel postServiceModel = modelMapper
+                .map(postById.get(), PostServiceModel.class);
+
+        return Optional.of(postServiceModel);
+    }
+
+    @Override
+    public void likePost(Long postId, String username) {
+        Optional<Post> post = postRepository.findById(postId);
+        User user = userService.getUserByUsername(username);
+        if (post.isEmpty()) {
+            return;
+        }
+
+        if (post.get().getLikers() != null) {
+            post.get().getLikers().add(user);
+            return;
+        }
+        post.get().setLikers(new HashSet<>());
+        post.get().getLikers().add(user);
     }
 }
