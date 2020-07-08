@@ -29,12 +29,15 @@
     border: 1px #f3f3f3 solid;
     background-color: white;
     box-shadow: 0 0 5px 1px rgba(var(--jb7, 0, 0, 0), .0975);
+    line-height: 65px;
 }
 
-.start-post-div .start-post-icon {
-    width: 26px;
-    height: auto;
-    margin: 20px 20px 20px 30px;
+.start-post-icon {
+    height: 50%;
+    width: auto;
+    margin-top: 12px;
+    margin-left: 18px;
+    line-height: 65px;
 }
 
 .start-post-link {
@@ -42,6 +45,8 @@
     font-family: "Montserrat-Medium", serif;
     font-size: 16px;
     color: #343434;
+    vertical-align: center;
+    margin-left: 20px;
     line-height: 65px;
 }
 

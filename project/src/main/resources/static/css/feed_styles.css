@@ -9,7 +9,7 @@
 
 .post-content {
     margin: 35px auto auto;
-    width: 80%;
+    width: 100%;
     height: auto;
     z-index: -1;
     border-radius: 6px;
@@ -85,7 +85,15 @@
     transition: 0.2s;
 }
 
-.like-post-div img:hover, .comment-post-div img:hover, .liked img{
+.like-post-div img:hover, .comment-post-div img:hover, .liked img {
     opacity: 1;
     transition: 0.2s;
+}
+
+.post-likes-counter {
+    float: left;
+    line-height: 50px;
+    display: inline-block;
+    margin-left: 3px;
+    font-family: Montserrat-Medium, serif;
 }

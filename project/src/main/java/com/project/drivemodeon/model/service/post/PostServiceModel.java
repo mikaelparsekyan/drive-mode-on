@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 public class PostServiceModel {
@@ -28,4 +29,6 @@ public class PostServiceModel {
     private LocalDateTime postedOn;
 
     private String location;
+
+    private Set<User> likers;
 }
