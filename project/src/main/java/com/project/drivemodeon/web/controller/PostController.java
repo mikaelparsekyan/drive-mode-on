@@ -93,7 +93,7 @@ public class PostController {
     public String likePost(@PathVariable("id") String id,
                            @AuthenticationPrincipal Principal principal) {
         Map<String, Object> jsonResult = new HashMap<>();
-        long postId = 0;
+        long postId;
         try {
             postId = Long.parseLong(id);
         } catch (Exception e) {
@@ -123,7 +123,28 @@ public class PostController {
     public String dislikePost(@PathVariable("id") String id,
                               @AuthenticationPrincipal Principal principal) {
         Map<String, Object> jsonResult = new HashMap<>();
+        long postId;
+        try {
+            postId = Long.parseLong(id);
+        } catch (Exception e) {
+            jsonResult.put("success", false);
+            return gson.toJson(jsonResult, HashMap.class);
+        }
+        if (principal == null) {
+            jsonResult.put("success", false);
+            return gson.toJson(jsonResult, HashMap.class);
+        }
+        Optional<PostServiceModel> postById = postService.getPostById(postId);
+        User user = userService.getUserByUsername(principal.getName());
 
+        if (postById.isEmpty() || !postById.get().getLikers().contains(user)) {
+            jsonResult.put("success", false);
+            return gson.toJson(jsonResult, HashMap.class);
+        }
+
+        postService.dislikePost(postId, user.getUsername());
+
+        jsonResult.put("success", true);
         return gson.toJson(jsonResult, HashMap.class);
     }
 }

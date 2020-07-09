@@ -98,6 +98,16 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void dislikePost(Long postId, String username) {
+        Optional<Post> post = postRepository.findById(postId);
+        User user = userService.getUserByUsername(username);
+        if (post.isEmpty()) {
+            return;
+        }
 
+        if (post.get().getLikers() != null) {
+            post.get().getLikers().remove(user);
+            return;
+        }
+        post.get().setLikers(new HashSet<>());
     }
 }
