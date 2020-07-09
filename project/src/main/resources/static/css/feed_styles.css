@@ -97,3 +97,8 @@
     margin-left: 3px;
     font-family: Montserrat-Medium, serif;
 }
+
+.disliked img {
+    opacity: 0.5;
+    transition: 0.2s;
+}

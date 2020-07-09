@@ -1,6 +1,7 @@
 package com.project.drivemodeon.web.controller.advice;
 
 import com.project.drivemodeon.model.entity.User;
+import com.project.drivemodeon.model.view.UserViewModel;
 import com.project.drivemodeon.service.api.user.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

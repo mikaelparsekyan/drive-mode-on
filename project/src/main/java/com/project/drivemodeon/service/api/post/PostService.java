@@ -20,4 +20,6 @@ public interface PostService {
     Optional<PostServiceModel> getPostById(Long id);
 
     void likePost(Long postId, String username);
+
+    void dislikePost(Long postId, String username);
 }

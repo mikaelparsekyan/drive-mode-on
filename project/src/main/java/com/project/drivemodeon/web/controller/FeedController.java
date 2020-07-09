@@ -2,6 +2,7 @@ package com.project.drivemodeon.web.controller;
 
 import com.project.drivemodeon.model.binding.post.AddPostBindingModel;
 import com.project.drivemodeon.model.entity.User;
+import com.project.drivemodeon.model.service.post.PostServiceModel;
 import com.project.drivemodeon.model.service.user.UserServiceModel;
 import com.project.drivemodeon.service.api.post.PostService;
 import com.project.drivemodeon.validation.constant.enumeration.Countries;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.LinkedList;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/feed")
@@ -38,11 +41,12 @@ public class FeedController extends MainController {
         modelAndView.addObject("countries", new Countries().getCountries());
         if (principal != null) {
             Optional<User> loggedUser = advice.getLoggedUser(principal);
-            if (loggedUser.isPresent()) {
 
-                modelAndView.addObject("followingPosts",
-                        postService.getAllFeedPostsByUser(
-                                this.modelMapper.map(loggedUser.get(), UserServiceModel.class)));
+            if (loggedUser.isPresent()) {
+                LinkedList<PostServiceModel> allFeedPostsByUser = postService.getAllFeedPostsByUser(this.modelMapper
+                        .map(loggedUser.get(), UserServiceModel.class));
+
+                modelAndView.addObject("followingPosts", allFeedPostsByUser);
             }
         }
         modelAndView.addObject("addPostBindingModel", new AddPostBindingModel());

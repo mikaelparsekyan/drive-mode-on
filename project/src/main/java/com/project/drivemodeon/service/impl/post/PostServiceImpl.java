@@ -55,7 +55,8 @@ public class PostServiceImpl implements PostService {
                 .stream()
                 .filter(post -> {
                     User author = post.getAuthor();
-                    if (userEntity.getFollowing().contains(author)) {
+                    if (userEntity.getFollowing().contains(author) ||
+                            author.getId() == user.getId()) {
                         if (post.getPostPrivacy() != PostPrivacyEnum.ONLY_ME) {
                             return true;
                         }
@@ -93,5 +94,10 @@ public class PostServiceImpl implements PostService {
         }
         post.get().setLikers(new HashSet<>());
         post.get().getLikers().add(user);
+    }
+
+    @Override
+    public void dislikePost(Long postId, String username) {
+
     }
 }

@@ -5,6 +5,7 @@ import com.project.drivemodeon.model.binding.post.AddPostBindingModel;
 import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.model.service.post.PostServiceModel;
 import com.project.drivemodeon.model.service.user.UserServiceModel;
+import com.project.drivemodeon.model.view.UserViewModel;
 import com.project.drivemodeon.service.api.post.PostService;
 import com.project.drivemodeon.service.api.user.UserService;
 import com.project.drivemodeon.validation.constant.enumeration.PostPrivacyEnum;
@@ -99,17 +100,30 @@ public class PostController {
             jsonResult.put("success", false);
             return gson.toJson(jsonResult, HashMap.class);
         }
-        Optional<PostServiceModel> postById = postService.getPostById(postId);
-
-        if (postById.isEmpty() || principal == null) {
+        if (principal == null) {
             jsonResult.put("success", false);
             return gson.toJson(jsonResult, HashMap.class);
         }
+        Optional<PostServiceModel> postById = postService.getPostById(postId);
         User user = userService.getUserByUsername(principal.getName());
+
+        if (postById.isEmpty() || postById.get().getLikers().contains(user)) {
+            jsonResult.put("success", false);
+            return gson.toJson(jsonResult, HashMap.class);
+        }
 
         postService.likePost(postId, user.getUsername());
 
         jsonResult.put("success", true);
+        return gson.toJson(jsonResult, HashMap.class);
+    }
+
+    @PostMapping("/dislike/{id}")
+    @ResponseBody
+    public String dislikePost(@PathVariable("id") String id,
+                              @AuthenticationPrincipal Principal principal) {
+        Map<String, Object> jsonResult = new HashMap<>();
+
         return gson.toJson(jsonResult, HashMap.class);
     }
 }
