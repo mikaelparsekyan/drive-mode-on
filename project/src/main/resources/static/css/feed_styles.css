@@ -21,6 +21,7 @@
 .post-heading {
     display: inline-block;
     line-height: 30px;
+    background-color: #FAFAFA;
     border-bottom: 1.5px #ececec solid;
     width: 100%;
 }
@@ -32,7 +33,7 @@
 }
 
 .post-date-div p {
-    font-size: 12px;
+    font-size: 14px;
     color: #404040;
     float: right;
     display: inline-block;
@@ -46,9 +47,22 @@
 .post-author a {
     text-decoration: none;
     font-family: Montserrat-Medium, serif;
-    color: #797979;
+    color: #636363;
     transition: 0.2s;
     font-size: 16px;
+    display: inline-block;
+}
+
+.post-author div {
+    display: inline-block;
+}
+
+.post-author p {
+    margin: 0;
+    padding: 0;
+    color: #797979;
+    font-family: Montserrat-Light, serif;
+    display: inline-block;
 }
 
 .post-author a:hover {
@@ -107,7 +121,83 @@
     transition: 0.2s;
 }
 
-.post-comments-div.active{
+.post-comments-div {
+    transition: 0.3s;
+    z-index: 9999;
+}
+
+.comments-list {
+    position: fixed;
+    transition: 0.3s;
+    width: 450px;
+    height: 450px;
+    background-color: #fefefe;
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    margin-top: -250px;
+    margin-left: -225px;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 5;
+}
+
+.post-comments-div.active, .comments-list.active {
     opacity: 1;
+    transition: 0.3s;
     visibility: visible;
+}
+
+.comments-list-heading {
+    text-align: center;
+    border-bottom: 1.5px #cecece solid;
+    padding-bottom: 10px;
+}
+
+.add-comment-input {
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding-top: 10px;
+    bottom: 0;
+    border-top: 1.5px #cecece solid;
+}
+
+.add-comment-input {
+    display: inline-block;
+}
+
+.add-comment-input textarea {
+    width: 80%;
+    height: 20px;
+    display: inline-block;
+    margin: 0 10px 5px;
+    text-decoration: none;
+    border-radius: 6px;
+    outline: none;
+    border: 1.5px #cecece solid;
+    padding: 8px;
+    color: #767676;
+    font-family: Montserrat-Medium, serif;
+}
+
+.post-comment-button {
+    position: absolute;
+    height: 20px;
+    width: auto;
+    bottom: 14px;
+    font-size: 14px;
+    right: 0;
+    margin: 0 20px 20px 0;
+    display: inline-block;
+    padding: 0;
+    color: #8c8c8c;
+    transition: 0.2s;
+    background-color: transparent;
+    border: none;
+}
+
+.post-comment-button:hover {
+    color: black;
+    transition: 0.2s;
 }

@@ -73,21 +73,11 @@
     box-shadow: 0 0 5px 1px rgba(var(--jb7, 0, 0, 0), .0975);
 }
 
-.followers-list.active {
+.followers-list.active, .followings-list.active {
     transition: 0.3s;
     opacity: 1;
     visibility: visible;
 }
-
-.followings-list.active {
-    transition: 0.3s;
-    opacity: 1;
-    visibility: visible;
-}
-
-/*.followers-list .follower-info-div h1 {*/
-/*    font-size: 36px;*/
-/*}*/
 
 .followers-list .follower-info-div {
     padding: 10px;
