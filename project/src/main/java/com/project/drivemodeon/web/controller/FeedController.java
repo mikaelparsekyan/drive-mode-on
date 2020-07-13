@@ -49,6 +49,7 @@ public class FeedController extends MainController {
     @GetMapping
     public ModelAndView getMapping(@AuthenticationPrincipal Principal principal) {
         ModelAndView modelAndView = new ModelAndView("feed");
+        modelAndView.addObject("addCommentBindingModel", new AddCommentBindingModel());
         modelAndView.addObject("postPrivacyEnum", PostPrivacyEnum.values());
         modelAndView.addObject("countries", new Countries().getCountries());
         if (principal != null) {

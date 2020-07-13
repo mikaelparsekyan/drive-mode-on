@@ -12,7 +12,10 @@ import com.project.drivemodeon.service.api.user.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -41,11 +44,17 @@ public class CommentController {
     @PostMapping("/add")
     @ResponseBody
     @Transactional
-    public String postComment(@Valid @ModelAttribute AddCommentBindingModel addCommentBindingModel,
+    public String postComment(@Valid @ModelAttribute("addCommentBindingModel") AddCommentBindingModel addCommentBindingModel,
+                              BindingResult bindingResult,
                               @AuthenticationPrincipal Principal principal) {
-        System.out.println();
+
         Map<String, Object> jsonResult = new HashMap<>();
         jsonResult.put("success", false);
+        if (bindingResult.hasErrors()) {
+            jsonResult.put("addCommentError", bindingResult.getFieldErrors("text")
+                    .get(0).getDefaultMessage());
+            return gson.toJson(jsonResult);
+        }
 
         if (principal == null) {
             return gson.toJson(jsonResult, HashMap.class);
