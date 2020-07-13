@@ -6,7 +6,9 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Entity
 @Table(name = "posts")
@@ -48,5 +50,5 @@ public class Post extends BaseEntity {
     private String location;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Comment> comments;
+    private Set<Comment> comments = new LinkedHashSet<>();
 }

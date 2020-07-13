@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/comment")
@@ -78,16 +76,20 @@ public class CommentController {
         if (postById.isEmpty()) {
             jsonResult.put("success", false);
         }
-        Map<String, Map<String, String>> commentsList = new LinkedHashMap<>();
+        Map<String, Map<String, String>> commentsSet = new LinkedHashMap<>();
+
+        LinkedHashSet<Comment> postComments = postById.get().getComments().stream()
+                .sorted(Comparator.comparing(Comment::getDate))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
         int i = 1;
-        for (Comment comment : postById.get().getComments()) {
+        for (Comment comment : postComments) {
             Map<String, String> commentData = new LinkedHashMap<>();
             commentData.put("text", comment.getText());
             commentData.put("author", comment.getAuthor().getUsername());
-            commentsList.put("comment" + (i++), commentData);
+            commentsSet.put("comment" + (i++), commentData);
         }
         jsonResult.put("success", true);
-        jsonResult.put("comments", commentsList);
+        jsonResult.put("comments", commentsSet);
         return gson.toJson(jsonResult);
     }
 }

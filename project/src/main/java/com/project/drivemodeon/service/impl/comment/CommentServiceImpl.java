@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -35,6 +36,8 @@ public class CommentServiceImpl implements CommentService {
         if (postById.isPresent()) {
             Post post = modelMapper.map(postById.get(), Post.class);
             comment.setPost(post);
+            comment.setText(comment.getText().replaceAll("\\<.*?>",""));
+            comment.setDate(LocalDateTime.now());
             commentRepository.saveAndFlush(comment);
         }
     }

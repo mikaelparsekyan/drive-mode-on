@@ -108,7 +108,7 @@
     transition: 0.2s;
 }
 
-.post-likes-counter {
+.post-likes-counter, .post-comment-counter {
     float: left;
     line-height: 50px;
     display: inline-block;

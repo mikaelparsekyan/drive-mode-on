@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Data
@@ -33,5 +34,5 @@ public class PostServiceModel {
 
     private Set<User> likers;
 
-    private Set<Comment> comments;
+    private LinkedHashSet<Comment> comments;
 }
