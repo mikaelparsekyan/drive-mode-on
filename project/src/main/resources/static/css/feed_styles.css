@@ -201,3 +201,23 @@
     color: black;
     transition: 0.2s;
 }
+
+#commentsIdDiv {
+    height: 320px;
+    overflow-y: auto;
+}
+
+.comment-section {
+    border-bottom: 1px #cecece solid;
+}
+
+.comment-username {
+    margin-left: 10px;
+    font-family: Montserrat-Medium, serif;
+}
+
+.comment-content {
+    margin-left: 20px;
+    font-family: Montserrat-Light, serif;
+    font-size: 14px;
+}

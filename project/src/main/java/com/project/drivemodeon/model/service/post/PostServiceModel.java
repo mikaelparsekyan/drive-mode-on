@@ -1,5 +1,6 @@
 package com.project.drivemodeon.model.service.post;
 
+import com.project.drivemodeon.model.entity.Comment;
 import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.validation.constant.enumeration.PostPrivacyEnum;
 import lombok.Data;
@@ -31,4 +32,6 @@ public class PostServiceModel {
     private String location;
 
     private Set<User> likers;
+
+    private Set<Comment> comments;
 }

@@ -47,7 +47,6 @@ public class Post extends BaseEntity {
     @Column
     private String location;
 
-//    @OneToMany
-//    @Column
-//    private Set<Picture> postPictures;
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Comment> comments;
 }

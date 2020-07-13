@@ -2,6 +2,7 @@ package com.project.drivemodeon.web.controller;
 
 import com.project.drivemodeon.model.binding.comment.AddCommentBindingModel;
 import com.project.drivemodeon.model.binding.post.AddPostBindingModel;
+import com.project.drivemodeon.model.entity.Post;
 import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.model.service.comment.CommentServiceModel;
 import com.project.drivemodeon.model.service.post.PostServiceModel;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -63,5 +65,4 @@ public class FeedController extends MainController {
 
         return modelAndView;
     }
-
 }

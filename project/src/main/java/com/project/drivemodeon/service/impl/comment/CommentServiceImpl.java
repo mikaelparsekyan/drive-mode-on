@@ -10,6 +10,7 @@ import com.project.drivemodeon.service.api.post.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -26,14 +27,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public void addComment(CommentServiceModel commentServiceModel, long postId) {
         Comment comment = modelMapper.map(commentServiceModel, Comment.class);
 
         Optional<PostServiceModel> postById = postService.getPostById(postId);
         if (postById.isPresent()) {
-            Post post = modelMapper.map(postById, Post.class);
+            Post post = modelMapper.map(postById.get(), Post.class);
             comment.setPost(post);
-
             commentRepository.saveAndFlush(comment);
         }
     }
