@@ -1,5 +1,6 @@
 package com.project.drivemodeon.web.controller;
 
+import com.project.drivemodeon.model.binding.comment.AddCommentBindingModel;
 import com.project.drivemodeon.service.api.post.PostService;
 import com.project.drivemodeon.validation.constant.enumeration.PostPrivacyEnum;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ public class ExploreController {
     @GetMapping
     public ModelAndView getExplorePage() {
         ModelAndView modelAndView = new ModelAndView("explore");
+        modelAndView.addObject("addCommentBindingModel", new AddCommentBindingModel());
         modelAndView.addObject("publicPosts",
                 postService.getAllPostsByPrivacy(PostPrivacyEnum.PUBLIC));
         return modelAndView;

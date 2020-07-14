@@ -291,7 +291,7 @@ footer ul {
     width: 30%;
     height: 100%;
     float: left;
-    display: block;
+    display: inline;
     border: 2px rgba(213, 213, 213, 0.82);
     border-right-style: solid;
 }
@@ -372,10 +372,9 @@ footer ul {
     margin-bottom: 7px;
 }
 
-.add-post-href-div, .user-profile-href-div {
+.user-drafts-href, .user-drafts-div {
     width: fit-content;
-    margin: 0 auto;
-    margin-bottom: 10px;
+    margin: 0 auto 10px;
 }
 
 #dimming {
@@ -409,7 +408,7 @@ footer ul {
     font-family: "Montserrat-Medium", serif;
 }
 
-.add-post-img, .user-activity-href {
+.add-post-img, .user-drafts-href {
     display: inline-block;
     vertical-align: middle;
 }

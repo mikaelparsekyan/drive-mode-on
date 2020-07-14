@@ -213,6 +213,8 @@
 
 .comment-username {
     margin-left: 10px;
+    margin-top: 10px;
+    display: inline;
     font-family: Montserrat-Medium, serif;
 }
 
@@ -220,4 +222,8 @@
     margin-left: 20px;
     font-family: Montserrat-Light, serif;
     font-size: 14px;
+}
+.comment-input-error textarea {
+    transition: 0.2s;
+    border: 1.5px #F44336 solid;
 }

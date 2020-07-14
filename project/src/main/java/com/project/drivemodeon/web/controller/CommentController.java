@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -51,8 +52,6 @@ public class CommentController {
         Map<String, Object> jsonResult = new HashMap<>();
         jsonResult.put("success", false);
         if (bindingResult.hasErrors()) {
-            jsonResult.put("addCommentError", bindingResult.getFieldErrors("text")
-                    .get(0).getDefaultMessage());
             return gson.toJson(jsonResult);
         }
 
@@ -67,6 +66,7 @@ public class CommentController {
 
         if (user != null) {
             commentServiceModel.setAuthor(user);
+            commentServiceModel.setText(commentServiceModel.getText());
             commentService.addComment(commentServiceModel, addCommentBindingModel.getPostId());
         }
         jsonResult.put("success", true);
@@ -95,6 +95,8 @@ public class CommentController {
             Map<String, String> commentData = new LinkedHashMap<>();
             commentData.put("text", comment.getText());
             commentData.put("author", comment.getAuthor().getUsername());
+            commentData.put("date", comment.getDate().format(
+                    DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             commentsSet.put("comment" + (i++), commentData);
         }
         jsonResult.put("success", true);

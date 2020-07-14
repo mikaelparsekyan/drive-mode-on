@@ -4,6 +4,8 @@ import com.project.drivemodeon.model.entity.Post;
 import com.project.drivemodeon.model.entity.User;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class CommentServiceModel {
     private User author;
@@ -11,4 +13,6 @@ public class CommentServiceModel {
     private String text;
 
     private Post post;
+
+    private LocalDateTime date;
 }

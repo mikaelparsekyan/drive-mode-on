@@ -36,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
         if (postById.isPresent()) {
             Post post = modelMapper.map(postById.get(), Post.class);
             comment.setPost(post);
-            comment.setText(comment.getText().replaceAll("\\<.*?>",""));
+            comment.setText(comment.getText().replaceAll("\\<.*?>","").trim());
             comment.setDate(LocalDateTime.now());
             commentRepository.saveAndFlush(comment);
         }
