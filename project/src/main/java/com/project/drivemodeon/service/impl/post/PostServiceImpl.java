@@ -69,6 +69,27 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public LinkedList<PostServiceModel> getAllDraftsByUser(UserServiceModel user) {
+        User userEntity = userService.getUserByUsername(user.getUsername());
+        if (userEntity == null) {
+            return null;
+        }
+        return this.postRepository
+                .findAllByDraftIsTrue()
+                .stream()
+                .filter(post -> {
+                    User author = post.getAuthor();
+                    if (author.getId() == user.getId()) {
+                        return true;
+                    }
+                    return false;
+                })
+                .sorted((p1, p2) -> p2.getPostedOn().compareTo(p1.getPostedOn()))
+                .map(post -> modelMapper.map(post, PostServiceModel.class))
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
     public Optional<PostServiceModel> getPostById(Long id) {
         Optional<Post> postById = this.postRepository.findById(id);
         if (postById.isEmpty()) {

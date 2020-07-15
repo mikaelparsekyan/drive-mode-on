@@ -1,0 +1,95 @@
+.draft-title, .no-drafts-message {
+    margin: 10px auto;
+    font-family: Montserrat-Light, serif;
+    text-align: center;
+}
+
+.draft-content {
+    margin: 35px auto auto;
+    width: 100%;
+    height: auto;
+    z-index: -1;
+    border-radius: 6px;
+    border: 1.5px #f3f3f3 solid;
+    background-color: white;
+    box-shadow: 0 0 4px 1px rgba(var(--jb7, 0, 0, 0), .0175);
+}
+
+.draft-heading {
+    display: inline-block;
+    line-height: 30px;
+    background-color: #FAFAFA;
+    border-bottom: 1.5px #ececec solid;
+    width: 100%;
+}
+
+.draft-date-div {
+    margin: 0 15px 0 0;
+    float: right;
+    display: inline-block;
+}
+
+.draft-date-div p {
+    font-size: 14px;
+    color: #404040;
+    float: right;
+    display: inline-block;
+}
+
+.draft-author {
+    margin: 15px 0 0 20px;
+    display: inline-block;
+}
+
+.draft-author a {
+    text-decoration: none;
+    font-family: Montserrat-Medium, serif;
+    color: #636363;
+    transition: 0.2s;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.draft-author div {
+    display: inline-block;
+}
+
+.draft-author p {
+    margin: 0;
+    padding: 0;
+    color: #797979;
+    font-family: Montserrat-Light, serif;
+    display: inline-block;
+}
+
+.draft-author a:hover {
+    color: black;
+    transition: 0.2s;
+}
+
+.draft-main-content-div p {
+    color: #4b4b4b; /*TODO fix this styling!S*/
+    margin: 30px 0 30px 0;
+}
+
+.draft-footer {
+    background-color: #FAFAFA;
+    width: 100%;
+    height: 50px;
+    border-top: 1.5px #ececec solid;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    position: relative;
+}
+
+.post-draft-button {
+    width: 100%;
+    height: 100%;
+    border-radius: 0 0 6px 6px;
+    color: white;
+    background-color: #00E676;
+}

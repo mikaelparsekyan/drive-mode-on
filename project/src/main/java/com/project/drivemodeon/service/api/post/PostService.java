@@ -17,6 +17,8 @@ public interface PostService {
 
     LinkedList<PostServiceModel> getAllFeedPostsByUser(UserServiceModel userServiceModel);
 
+    LinkedList<PostServiceModel> getAllDraftsByUser(UserServiceModel userServiceModel);
+
     Optional<PostServiceModel> getPostById(Long id);
 
     void likePost(Long postId, String username);

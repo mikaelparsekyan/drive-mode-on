@@ -375,6 +375,7 @@ footer ul {
 .user-drafts-href, .user-drafts-div {
     width: fit-content;
     margin: 0 auto 10px;
+    color: #8c8c8c;
 }
 
 #dimming {
