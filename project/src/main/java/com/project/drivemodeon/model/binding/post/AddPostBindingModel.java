@@ -6,10 +6,11 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class AddPostBindingModel {
+public class AddPostBindingModel implements Serializable {
     @Length(min = 1, max = 1000)
     private String value;
 

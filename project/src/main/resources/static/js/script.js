@@ -13,6 +13,7 @@ function deactivateAllPopups() {
     //$('.followers-list').removeClass('active');
 
     $('#dimming').addClass('deactivated');
+    $('#dimming').removeClass('active');
 
     $('.confirm-user-unfollow-popup').removeClass('active');
     $('.confirm-user-log-out-popup').removeClass('active');

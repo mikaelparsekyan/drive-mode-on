@@ -30,7 +30,7 @@ footer ul {
 }
 
 /* Navigation bar style */
-.logo img{
+.logo img {
     float: left;
     height: 50px;
     margin-left: 30px;
@@ -395,6 +395,12 @@ footer ul {
 #dimming.deactivated {
     opacity: 0;
     visibility: hidden;
+    transition: 0.3s;
+}
+
+#dimming.active {
+    opacity: 1;
+    visibility: visible;
     transition: 0.3s;
 }
 

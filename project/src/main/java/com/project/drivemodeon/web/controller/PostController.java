@@ -13,6 +13,7 @@ import com.project.drivemodeon.web.controller.advice.Advice;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,15 +46,18 @@ public class PostController {
     }
 
     @GetMapping("/add")
-    public ModelAndView getAllPostPage() {
+    public ModelAndView getAllPostPage(Model model) {
         ModelAndView modelAndView = new ModelAndView("redirect:/feed");
-        modelAndView.addObject("addPostBindingModel", new AddPostBindingModel());
+
+        if (!model.containsAttribute("addPostBindingModel")) {
+            modelAndView.addObject("addPostBindingModel", new AddPostBindingModel());
+        }
         return modelAndView;
     }
 
     @PostMapping("/add")
     public ModelAndView addPost(@Valid @ModelAttribute("addPostBindingModel")
-                                        AddPostBindingModel postBindingModel,
+                                        AddPostBindingModel addPostBindingModel,
                                 BindingResult result,
                                 RedirectAttributes redirectAttributes,
                                 @AuthenticationPrincipal Principal principal) {
@@ -61,14 +65,14 @@ public class PostController {
         Optional<User> loggedUser = advice.getLoggedUser(principal);
 
         if (result.hasErrors()) {
-            redirectAttributes.addAttribute("addPostBindingModel",
-                    postBindingModel);
-
+            redirectAttributes.addFlashAttribute("addPostBindingModel", addPostBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addPostBindingModel", result);
+            redirectAttributes.addAttribute("error", true);
             return modelAndView;
         }
         PostServiceModel postServiceModel = modelMapper
-                .map(postBindingModel, PostServiceModel.class);
-        String postPrivacyValue = postBindingModel.getPostPrivacy();
+                .map(addPostBindingModel, PostServiceModel.class);
+        String postPrivacyValue = addPostBindingModel.getPostPrivacy();
 
         if (!Arrays.asList(PostPrivacyEnum.values()).contains(
                 PostPrivacyEnum.valueOf(postPrivacyValue)) ||
@@ -79,7 +83,7 @@ public class PostController {
         }
         postServiceModel.setPostPrivacy(
                 PostPrivacyEnum.valueOf(postPrivacyValue));
-        postServiceModel.setDraft(postBindingModel.getIsDraft() == 1);
+        postServiceModel.setDraft(addPostBindingModel.getIsDraft() == 1);
         postServiceModel.setAuthor(loggedUser.get());
         postServiceModel.setPostedOn(LocalDateTime.now());
 
