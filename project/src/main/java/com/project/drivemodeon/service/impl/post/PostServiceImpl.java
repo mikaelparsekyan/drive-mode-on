@@ -131,4 +131,17 @@ public class PostServiceImpl implements PostService {
         }
         post.get().setLikers(new HashSet<>());
     }
+
+    @Override
+    public void saveDraftAsPost(PostServiceModel draft) {
+        Post post = modelMapper.map(draft, Post.class);
+        post.setDraft(false);
+        this.postRepository.saveAndFlush(post);
+    }
+
+    @Override
+    public void deleteDraft(PostServiceModel draft) {
+        Post post = modelMapper.map(draft, Post.class);
+        this.postRepository.delete(post);
+    }
 }

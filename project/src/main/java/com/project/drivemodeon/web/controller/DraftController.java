@@ -2,6 +2,7 @@ package com.project.drivemodeon.web.controller;
 
 import com.google.gson.Gson;
 import com.project.drivemodeon.model.entity.User;
+import com.project.drivemodeon.model.service.post.PostServiceModel;
 import com.project.drivemodeon.model.service.user.UserServiceModel;
 import com.project.drivemodeon.service.api.post.PostService;
 import com.project.drivemodeon.service.api.user.UserService;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/draft")
@@ -57,14 +59,45 @@ public class DraftController {
     public String addDraftAsPost(@PathVariable("id") String strId) {
         Map<String, Object> jsonResult = new HashMap<>();
         jsonResult.put("success", false);
-
+        long id = 0;
         try {
-            long id = Long.parseLong(strId);
+            id = Long.parseLong(strId);
             System.out.println(id);
         } catch (Exception e) {
-
+            return gson.toJson(jsonResult);
         }
 
+        Optional<PostServiceModel> postById = postService.getPostById(id);
+
+        if (postById.isEmpty()) {
+            return gson.toJson(jsonResult);
+        }
+
+        postService.saveDraftAsPost(postById.get());
+
+        jsonResult.put("success", true);
         return gson.toJson(jsonResult);
+    }
+
+    @PostMapping("/delete/{id}")
+    public ModelAndView deleteDraft(@PathVariable("id") String strId) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/");
+        long id = 0;
+        try {
+            id = Long.parseLong(strId);
+            System.out.println(id);
+        } catch (Exception e) {
+            return modelAndView;
+        }
+
+        Optional<PostServiceModel> postById = postService.getPostById(id);
+
+        if (postById.isEmpty()) {
+            return modelAndView;
+        }
+
+        postService.deleteDraft(postById.get());
+
+        return modelAndView;
     }
 }

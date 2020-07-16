@@ -24,4 +24,8 @@ public interface PostService {
     void likePost(Long postId, String username);
 
     void dislikePost(Long postId, String username);
+
+    void saveDraftAsPost(PostServiceModel draft);
+
+    void deleteDraft(PostServiceModel draft);
 }
