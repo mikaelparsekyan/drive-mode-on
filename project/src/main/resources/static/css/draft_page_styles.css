@@ -87,9 +87,39 @@
 }
 
 .post-draft-button {
-    width: 100%;
     height: 100%;
-    border-radius: 0 0 6px 6px;
+    border-radius: 0 0 0 6px;
     color: white;
+    border-right: 2px #cecece solid;
+    transition: 0.2s;
     background-color: #00E676;
+}
+
+.post-draft-button:hover {
+    transition: 0.2s;
+    background-color: #02b65e;
+}
+
+.delete-draft-button {
+    transition: 0.2s;
+    background-color: rgba(244, 67, 54, 0.78);
+    border-radius: 0 0 6px 0;
+    color: white;
+}
+
+.delete-draft-button:hover {
+    transition: 0.2s;
+    background-color: rgba(182, 52, 43, 0.78);
+}
+
+.draft-buttons button {
+    position: relative;
+    float: left;
+    outline: none;
+    line-height: 50px;
+    border-top: 1.5px #cecdcd solid;
+    font-family: Montserrat-Medium, serif;
+    text-align: center;
+    height: 50px;
+    width: 50%
 }
