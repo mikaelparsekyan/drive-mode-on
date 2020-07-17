@@ -22,8 +22,8 @@ import java.nio.file.Path;
 import java.security.Principal;
 import java.util.Optional;
 
-@Controller
-@RequestMapping("/edit/profile")
+//@Controller
+//@RequestMapping("/edit/profile")
 public class UserEditController {
     private final UserService userService;
     private final Advice advice;
@@ -35,47 +35,21 @@ public class UserEditController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping
-    public ModelAndView getUserSettingsPage() {
 
-        ModelAndView modelAndView = new ModelAndView("layouts/index");
-        modelAndView.addObject("view", "fragments/user/edit_user_profile");
-        return modelAndView;
-    }
-
-    @PostMapping
-    public ModelAndView doUserProfileEdit(HttpSession httpSession,
-                                          HttpServletRequest request,
-                                          @AuthenticationPrincipal Principal principal) {
-        Long loggedUserId = advice.getLoggedUserId(principal);
-
-        //TODO make obj
-        String usernameParameter = request.getParameter("username");
-
-        userService.editUser(usernameParameter, loggedUserId);
-
-        Optional<User> user = userService.getUserById(loggedUserId);
-        if (user.isEmpty()) {
-            //UserId not valid
-            return new ModelAndView("redirect:/");
-        }
-        return new ModelAndView("redirect:/user/" + usernameParameter);
-    }
-
-    @GetMapping("/uploadImage")
-    public ModelAndView getEditUserForm() {
-        return getUserSettingsPage();
-    }
-
-    @PostMapping("/uploadImage")
-    public ModelAndView uploadImage(@RequestParam("imageFile") MultipartFile imageFile) {
-        System.out.println("posting image...");
-        String path = "src/main/resources/photos/user/";
-        try {
-            Files.write(Path.of(path + imageFile.getOriginalFilename()), imageFile.getBytes());
-        } catch (MaxUploadSizeExceededException | IOException e) {
-            System.out.println("too large file! :(");
-        }
-        return getUserSettingsPage();
-    }
+//    @GetMapping("/uploadImage")
+//    public ModelAndView getEditUserForm() {
+//        return getUserSettingsPage();
+//    }
+//
+//    @PostMapping("/uploadImage")
+//    public ModelAndView uploadImage(@RequestParam("imageFile") MultipartFile imageFile) {
+//        System.out.println("posting image...");
+//        String path = "src/main/resources/photos/user/";
+//        try {
+//            Files.write(Path.of(path + imageFile.getOriginalFilename()), imageFile.getBytes());
+//        } catch (MaxUploadSizeExceededException | IOException e) {
+//            System.out.println("too large file! :(");
+//        }
+//        return getUserSettingsPage();
+//    }
 }

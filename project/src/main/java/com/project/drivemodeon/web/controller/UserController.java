@@ -13,6 +13,7 @@ import com.project.drivemodeon.util.api.ValidatorUtil;
 import com.project.drivemodeon.web.controller.advice.Advice;
 import com.project.drivemodeon.web.view_models.user.UserProfileViewModel;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -107,25 +109,29 @@ public class UserController extends MainController {
 
     @GetMapping("/user/{username}")
     public ModelAndView getUserProfile(@PathVariable String username,
-                                       @AuthenticationPrincipal Principal principal) {
+                                       @AuthenticationPrincipal Principal principal) throws Exception {
         Optional<User> loggedUser = advice.getLoggedUser(principal);
         User currentPageUser = userService.getUserByUsername(username);
+
+        if (currentPageUser == null) {
+            throw new UserNotExistException();
+        }
 
         ModelAndView modelAndView = new ModelAndView("user_profile");
 
         //TODO map other fields (bio, f_name, l_name ...)
         modelAndView.addObject("userViewModel", currentPageUser);
 
-        if (loggedUser.isPresent()) {
-            UserProfileViewModel loggedUserViewModel = modelMapper
-                    .map(loggedUser.get(), UserProfileViewModel.class);
 
-            User sessionUser = modelMapper.map(loggedUserViewModel, User.class);
+        UserProfileViewModel loggedUserViewModel = modelMapper
+                .map(loggedUser.get(), UserProfileViewModel.class);
 
-            modelAndView.addObject("isUserFollowCurrentProfile",
-                    userService.isCurrentUserFollowProfileUser(
-                            sessionUser, currentPageUser));
-        }
+        User sessionUser = modelMapper.map(loggedUserViewModel, User.class);
+
+        modelAndView.addObject("isUserFollowCurrentProfile",
+                userService.isCurrentUserFollowProfileUser(
+                        sessionUser, currentPageUser));
+
         return modelAndView;
     }
 
@@ -173,9 +179,27 @@ public class UserController extends MainController {
         return gson.toJson(jsonResult, HashMap.class);
     }
 
-    @ExceptionHandler(UserNotExistException.class)
-    public ModelAndView getUserNotFoundPage(HttpServletResponse response) {
-        response.setStatus(404);
-        return super.view("fragments/errors/user/user_not_found");
+    @GetMapping("/user/edit/profile")
+    public ModelAndView getUserSettingsPage() {
+
+        return new ModelAndView("edit_profile");
+    }
+
+    @PostMapping("/user/edit/profile")
+    public ModelAndView doUserProfileEdit(HttpServletRequest request,
+                                          @AuthenticationPrincipal Principal principal) {
+        Long loggedUserId = advice.getLoggedUserId(principal);
+
+        //TODO make obj
+        String usernameParameter = request.getParameter("username");
+
+        userService.editUser(usernameParameter, loggedUserId);
+
+        Optional<User> user = userService.getUserById(loggedUserId);
+        if (user.isEmpty()) {
+            //UserId not valid
+            return new ModelAndView("redirect:/");
+        }
+        return new ModelAndView("redirect:/user/" + usernameParameter);
     }
 }
