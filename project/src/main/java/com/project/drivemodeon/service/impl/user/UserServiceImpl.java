@@ -7,8 +7,8 @@ import com.project.drivemodeon.exception.user.signup.PasswordsNotMatch;
 import com.project.drivemodeon.exception.user.signup.UsernameAlreadyTaken;
 import com.project.drivemodeon.model.entity.AuthorityEntity;
 import com.project.drivemodeon.model.entity.User;
+import com.project.drivemodeon.model.entity.UserBio;
 import com.project.drivemodeon.model.service.user.UserServiceModel;
-import com.project.drivemodeon.model.service.user.UserSignInDto;
 import com.project.drivemodeon.repository.UserRepository;
 import com.project.drivemodeon.service.api.user.UserService;
 import org.modelmapper.ModelMapper;
@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,20 +71,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserSignInDto signInUser(UserServiceModel userServiceModel) {
+    public boolean signInUser(UserServiceModel userServiceModel) {
         String username = userServiceModel.getUsername();
 
         Optional<User> user = userRepository.findUserByUsername(username);
 
         if (user.isEmpty()) {
-            return null;
+            return false;
 
         }
         if (!passwordEncoder.matches(userServiceModel.getPassword(), user.get().getPassword())) {
-            return null;
+            return false;
         }
-
-        return modelMapper.map(user.get(), UserSignInDto.class);
+        return true;
     }
 
     @Override
@@ -141,8 +139,25 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void editUser(String username, Long userId) {
-        userRepository.updateUserById(username, userId);
+    public void editUser(UserServiceModel userServiceModel) {
+        if (userServiceModel != null) {
+            Optional<User> user = getUserById(userServiceModel.getId());
+            if (user.isPresent()) {
+                user.get().setFirstName(userServiceModel.getFirstName());
+                user.get().setLastName(userServiceModel.getLastName());
+                user.get().setUsername(userServiceModel.getUsername());
+                user.get().setEmail(userServiceModel.getEmail());
+                user.get().setPassword(passwordEncoder.encode(userServiceModel.getPassword()));
+                if (user.get().getBio() != null) {
+                    UserBio userBio = user.get().getBio();
+                    userBio.setValue(userServiceModel.getBio());
+                    user.get().setBio(userBio);
+                } else {
+                    user.get().setBio(new UserBio(userServiceModel.getBio()));
+                }
+                userRepository.saveAndFlush(user.get());
+            }
+        }
     }
 
     @Override

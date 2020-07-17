@@ -2,8 +2,6 @@ package com.project.drivemodeon.service.api.user;
 
 import com.project.drivemodeon.exception.user.signup.BaseSignUpException;
 import com.project.drivemodeon.model.service.user.UserServiceModel;
-import com.project.drivemodeon.model.service.user.UserSignInDto;
-import com.project.drivemodeon.model.service.user.UserSignUpDto;
 import com.project.drivemodeon.model.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +11,7 @@ import java.util.Optional;
 public interface UserService {
     void signUpUser(UserServiceModel userServiceModel) throws BaseSignUpException;
 
-    UserSignInDto signInUser(UserServiceModel userServiceModel);
+    boolean signInUser(UserServiceModel userServiceModel);
 
     boolean isEmailTaken(String email);
 
@@ -33,7 +31,7 @@ public interface UserService {
 
     long getUserFollowingsCount(User user);
 
-    void editUser(String username, Long userId);
+    void editUser(UserServiceModel userServiceModel);
 
     void addPost();
 }
