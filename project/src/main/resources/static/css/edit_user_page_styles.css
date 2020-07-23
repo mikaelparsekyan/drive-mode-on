@@ -23,7 +23,7 @@
 #edit-user-form input {
     width: 100%;
     margin-top: 4px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     box-sizing: border-box;
     padding: 10px;
     border: 1px solid #E0E0E0;
@@ -57,4 +57,10 @@
 .edit-profile-submit:hover {
     background-color: #43A047;
     border-color: #43A047;
+}
+
+.error {
+    margin: 0 0 10px 0;
+    font-size: 12px;
+    color: #B00020;
 }
