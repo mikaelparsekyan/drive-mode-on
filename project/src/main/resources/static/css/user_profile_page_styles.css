@@ -88,6 +88,14 @@
     padding: 10px;
     border-top: 1px rgba(213, 213, 213, 0.82) solid;
 }
+.followings-list .followings-info-div a {
+    color: rgba(31, 31, 31, 0.91);
+    font-size: 12px;
+    font-family:"Montserrat-ExtraLight", serif;
+}
+.followings-list .followings-info-div a:hover {
+    color: black;
+}
 
 .edit-profile-button, .follow-user-button {
     height: 30px;
@@ -131,7 +139,7 @@
     text-decoration: none;
     font-size: 16px;
     color: #000000;
-    font-family: Montserrat-Medium;
+    font-family: Montserrat-Medium, serif;
     margin-left: 10px;
     float: right;
 }
@@ -141,21 +149,31 @@
     font-size: 18px;
     text-align: center;
 }
-
-.user-profile-first-name-text {
+.posts-title {
     margin-top: 40px;
-    margin-left: 280px;
-    float: left;
+    font-size: 18px;
+    font-family: "Montserrat-ExtraLight", serif;
+    text-align: center;
 }
 
-.user-profile-last-name-text {
-    margin-top: 40px;
-    margin-left: 4px;
+.user-profile-first-name-text, .user-profile-last-name-text {
+    margin-right: 4px;
     float: left;
 }
 
 .user-profile-first-name-text p, .user-profile-last-name-text p {
-    font-family: "Montserrat-ExtraLight", serif;
+    font-family: "Montserrat-Medium", serif;
     color: black;
+    font-size: 14px;
+}
+.user-profile-names {
+    margin-top: 40px;
+    margin-left: 80px;
+    overflow: hidden;
+}
+.user-bio {
+    margin-left: 80px;
+    overflow: hidden;
+    font-family: "Montserrat-ExtraLight", serif;
     font-size: 14px;
 }

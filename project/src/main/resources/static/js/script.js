@@ -140,6 +140,7 @@ function postComment() {
         data: $('#add-comment-form').serialize(),
         success: function (data) {
             if (data.success) {
+                alert('asd');
                 $('#add-comment-form').removeClass("comment-input-error");
                 loadPostComments(postId);
                 let postCommentCounter = $('.post-comments-counter[data-id=' + postId + ']');

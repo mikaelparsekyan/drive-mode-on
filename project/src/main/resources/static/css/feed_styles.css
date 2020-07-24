@@ -26,9 +26,16 @@
     width: 100%;
 }
 
-.post-date-div {
-    margin: 0 15px 0 0;
+.post-date-div, .delete-post-button {
+    margin: 0 20px 0 0;
     float: right;
+    display: inline-block;
+}
+.delete-post-button {
+    font-family: "Montserrat-Medium", serif;
+    font-size: 14px;
+    color: #B00020;
+    line-height: 55px;
     display: inline-block;
 }
 
@@ -229,4 +236,12 @@
 .comment-input-error textarea {
     transition: 0.2s;
     border: 1.5px #F44336 solid;
+}
+
+.post-error {
+    text-align: center;
+    color: #F44336;
+    font-size: 14px;
+    font-family: Montserrat-ExtraLight, serif;
+    margin: 0 auto;
 }

@@ -369,13 +369,20 @@ footer ul {
 }
 
 .user-dropdown li {
-    margin-bottom: 7px;
+    margin-top: 15px;
+    text-align: center;
 }
 
-.user-drafts-href, .user-drafts-div {
+.user-drafts-href, .user-drafts-div, .my-profile-href{
     width: fit-content;
-    margin: 0 auto 10px;
-    color: #8c8c8c;
+    margin: 0 auto;
+    color: #686666;
+}
+
+.user-drafts-href:hover, .user-drafts-div:hover, .my-profile-href:hover{
+    width: fit-content;
+    margin: 0 auto;
+    color: black;
 }
 
 #dimming {

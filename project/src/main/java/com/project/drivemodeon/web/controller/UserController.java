@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.project.drivemodeon.exception.user.UserNotExistException;
 import com.project.drivemodeon.exception.user.UserNotLoggedException;
 import com.project.drivemodeon.exception.user.signup.BaseSignUpException;
+import com.project.drivemodeon.model.binding.comment.AddCommentBindingModel;
 import com.project.drivemodeon.model.binding.user.EditUserBindingModel;
 import com.project.drivemodeon.model.binding.user.UserSignInBindingModel;
 import com.project.drivemodeon.model.binding.user.UserSignUpBindingModel;
@@ -113,31 +114,31 @@ public class UserController extends MainController {
     @GetMapping("/user/{username}")
     public ModelAndView getUserProfile(@PathVariable String username,
                                        @AuthenticationPrincipal Principal principal) throws Exception {
-        User loggedUser = userService.getUserByUsername(principal.getName());
+        User loggedUser = null;
+        if (principal != null) {
+            loggedUser = userService.getUserByUsername(principal.getName());
+        }
         User currentPageUser = userService.getUserByUsername(username);
 
-        if (loggedUser == null) {
-            throw new UserNotLoggedException();
-        }
 
         if (currentPageUser == null) {
             throw new UserNotExistException();
         }
 
         ModelAndView modelAndView = new ModelAndView("user_profile");
-
-        //TODO map other fields (bio, f_name, l_name ...)
         modelAndView.addObject("userViewModel", currentPageUser);
+        modelAndView.addObject("addCommentBindingModel", new AddCommentBindingModel());
 
-        UserProfileViewModel loggedUserViewModel = modelMapper
-                .map(loggedUser, UserProfileViewModel.class);
+        if(loggedUser != null) {
+            UserProfileViewModel loggedUserViewModel = modelMapper
+                    .map(loggedUser, UserProfileViewModel.class);
 
-        User sessionUser = modelMapper.map(loggedUserViewModel, User.class);
+            User sessionUser = modelMapper.map(loggedUserViewModel, User.class);
 
-        modelAndView.addObject("isUserFollowCurrentProfile",
-                userService.isCurrentUserFollowProfileUser(
-                        sessionUser, currentPageUser));
-
+            modelAndView.addObject("isUserFollowCurrentProfile",
+                    userService.isCurrentUserFollowProfileUser(
+                            sessionUser, currentPageUser));
+        }
         return modelAndView;
     }
 
