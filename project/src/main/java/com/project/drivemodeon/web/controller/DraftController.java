@@ -1,6 +1,8 @@
 package com.project.drivemodeon.web.controller;
 
 import com.google.gson.Gson;
+import com.project.drivemodeon.exception.user.UserNotExistException;
+import com.project.drivemodeon.exception.user.UserNotLoggedException;
 import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.model.service.post.PostServiceModel;
 import com.project.drivemodeon.model.service.user.UserServiceModel;
@@ -80,23 +82,37 @@ public class DraftController {
     }
 
     @PostMapping("/delete/{id}")
-    public ModelAndView deleteDraft(@PathVariable("id") String strId) {
+    public ModelAndView deleteDraft(@PathVariable("id") String strId,
+                                    @AuthenticationPrincipal Principal principal) throws UserNotLoggedException, UserNotExistException {
         ModelAndView modelAndView = new ModelAndView("redirect:/");
+
+        if (principal == null) {
+            throw new UserNotLoggedException();
+        }
+
         long id = 0;
         try {
             id = Long.parseLong(strId);
             System.out.println(id);
-        } catch (Exception e) {
+        } catch (
+                Exception e) {
             return modelAndView;
         }
 
         Optional<PostServiceModel> postById = postService.getPostById(id);
+        User user = userService.getUserByUsername(principal.getName());
+
+        if (user == null) {
+            throw new UserNotExistException();
+        }
 
         if (postById.isEmpty()) {
             return modelAndView;
         }
 
-        postService.deleteDraft(postById.get());
+        if (postById.get().getAuthor().getId() == user.getId()) {
+            postService.deleteDraft(postById.get());
+        }
 
         return modelAndView;
     }

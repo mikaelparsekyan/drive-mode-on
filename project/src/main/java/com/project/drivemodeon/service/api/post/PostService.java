@@ -28,4 +28,6 @@ public interface PostService {
     void saveDraftAsPost(PostServiceModel draft);
 
     void deleteDraft(PostServiceModel draft);
+
+    void deletePost(PostServiceModel post);
 }

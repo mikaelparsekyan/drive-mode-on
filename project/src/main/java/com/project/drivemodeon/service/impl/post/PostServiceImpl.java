@@ -144,4 +144,10 @@ public class PostServiceImpl implements PostService {
         Post post = modelMapper.map(draft, Post.class);
         this.postRepository.delete(post);
     }
+
+    @Override
+    public void deletePost(PostServiceModel postServiceModel) {
+        Post post = modelMapper.map(postServiceModel, Post.class);
+        this.postRepository.delete(post);
+    }
 }

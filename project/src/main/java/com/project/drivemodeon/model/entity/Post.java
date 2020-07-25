@@ -25,7 +25,7 @@ public class Post extends BaseEntity {
     @Column(name = "is_draft", columnDefinition = "TINYINT(1) DEFAULT 0")
     private boolean isDraft;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private User author;
 

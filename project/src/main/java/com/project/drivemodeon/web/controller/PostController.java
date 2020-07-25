@@ -1,7 +1,10 @@
 package com.project.drivemodeon.web.controller;
 
 import com.google.gson.Gson;
+import com.project.drivemodeon.exception.user.UserNotExistException;
+import com.project.drivemodeon.exception.user.UserNotLoggedException;
 import com.project.drivemodeon.model.binding.post.AddPostBindingModel;
+import com.project.drivemodeon.model.entity.BaseEntity;
 import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.model.service.post.PostServiceModel;
 import com.project.drivemodeon.model.service.user.UserServiceModel;
@@ -22,10 +25,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/post")
@@ -150,5 +151,39 @@ public class PostController {
 
         jsonResult.put("success", true);
         return gson.toJson(jsonResult, HashMap.class);
+    }
+
+    @GetMapping("/delete/{id}")
+    public ModelAndView deleteDraft(@PathVariable("id") String strId,
+                                    @AuthenticationPrincipal Principal principal) throws UserNotLoggedException, UserNotExistException {
+        ModelAndView modelAndView = new ModelAndView("redirect:/feed");
+
+        if (principal == null) {
+            throw new UserNotLoggedException();
+        }
+        long id = 0;
+        try {
+            id = Long.parseLong(strId);
+            System.out.println(id);
+        } catch (Exception e) {
+            return modelAndView;
+        }
+
+        Optional<PostServiceModel> postById = postService.getPostById(id);
+        User user = userService.getUserByUsername(principal.getName());
+
+        if (user == null) {
+            throw new UserNotExistException();
+        }
+
+        if (postById.isEmpty()) {
+            return modelAndView;
+        }
+
+        if (postById.get().getAuthor().getId() == user.getId()) {
+            postService.deletePost(postById.get());
+        }
+
+        return modelAndView;
     }
 }
