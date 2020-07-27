@@ -2,6 +2,7 @@ package com.project.drivemodeon.web.controller;
 
 import com.google.gson.Gson;
 import com.project.drivemodeon.exception.user.UserNotExistException;
+import com.project.drivemodeon.exception.user.UserNotLoggedException;
 import com.project.drivemodeon.exception.user.signup.BaseSignUpException;
 import com.project.drivemodeon.model.binding.comment.AddCommentBindingModel;
 import com.project.drivemodeon.model.binding.user.EditUserBindingModel;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -207,6 +209,22 @@ public class UserController extends MainController {
         }
         modelAndView.setViewName("edit_profile");
         return modelAndView;
+    }
+
+    @PostMapping("/edit/profile/uploadImage")
+    public ModelAndView uploadProfileImage(@AuthenticationPrincipal Principal principal,
+                                           @RequestParam("imageFile") MultipartFile image) throws Exception {
+        if (principal == null) {
+            throw new UserNotLoggedException();
+        }
+        User user = userService.getUserByUsername(principal.getName());
+        if (user == null) {
+            throw new UserNotExistException();
+        }
+
+        userService.uploadImage(image,user);
+
+        return new ModelAndView("redirect:/user/" + user.getUsername());
     }
 
     @PostMapping("/user/edit/profile")

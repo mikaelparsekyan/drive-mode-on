@@ -11,11 +11,17 @@ import com.project.drivemodeon.model.entity.UserBio;
 import com.project.drivemodeon.model.service.user.UserServiceModel;
 import com.project.drivemodeon.repository.UserRepository;
 import com.project.drivemodeon.service.api.user.UserService;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +55,8 @@ public class UserServiceImpl implements UserService {
         }
         userEntity.setAuthorities(List.of(authorityEntity));
 
+        //Trim to void XSS
+        userServiceModel.setUsername(userServiceModel.getUsername().replaceAll("\\<[^>]*>", ""));
         String password = userServiceModel.getPassword();
         String confirmedPassword = userServiceModel.getConfirmPassword();
 
@@ -161,7 +169,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addPost() {
-        //TODO
+    public void uploadImage(MultipartFile image, User user) {
+        List<String> allowedExtensions = new ArrayList<>(Arrays.asList("jpg", "jpeg", "png"));
+        String fileExtension = image.getOriginalFilename().split("\\.")[1];
+
+        if (allowedExtensions.contains(fileExtension)) {
+            File pathToImage = new File("src/main/resources/upload/user/" + user.getUsername());
+            pathToImage.mkdirs();
+
+            if(pathToImage.exists()){
+                try {
+                    FileUtils.cleanDirectory(pathToImage);
+                    //  File imgFile = new File(pathToImage + "/" + image);
+                    //imgFile.mkdirs();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

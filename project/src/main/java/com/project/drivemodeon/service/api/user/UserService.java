@@ -4,6 +4,7 @@ import com.project.drivemodeon.exception.user.signup.BaseSignUpException;
 import com.project.drivemodeon.model.service.user.UserServiceModel;
 import com.project.drivemodeon.model.entity.User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -33,5 +34,5 @@ public interface UserService {
 
     void editUser(UserServiceModel userServiceModel);
 
-    void addPost();
+    void uploadImage(MultipartFile image, User user);
 }

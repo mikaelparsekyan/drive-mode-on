@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/explore").permitAll()
                 .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/feed").permitAll()
+                .antMatchers("/feed").authenticated()
                 .antMatchers("/", "/signup", "/signin").anonymous()
                 .anyRequest().authenticated()
                 .and()

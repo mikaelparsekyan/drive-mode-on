@@ -64,3 +64,16 @@
     font-size: 12px;
     color: #B00020;
 }
+
+.edit-profile-picture-button-submit {
+    background-color: #00E676;
+    border-radius: 6px;
+    color: white;
+    border: 0;
+    padding: 10px;
+}
+
+.edit-profile-image-input {
+    color: black;
+    border: 0;
+}
