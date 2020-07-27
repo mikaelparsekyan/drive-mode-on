@@ -2,7 +2,6 @@ package com.project.drivemodeon.web.controller;
 
 import com.google.gson.Gson;
 import com.project.drivemodeon.exception.user.UserNotExistException;
-import com.project.drivemodeon.exception.user.UserNotLoggedException;
 import com.project.drivemodeon.exception.user.signup.BaseSignUpException;
 import com.project.drivemodeon.model.binding.comment.AddCommentBindingModel;
 import com.project.drivemodeon.model.binding.user.EditUserBindingModel;
@@ -15,6 +14,7 @@ import com.project.drivemodeon.util.api.ValidatorUtil;
 import com.project.drivemodeon.web.controller.advice.Advice;
 import com.project.drivemodeon.web.view_models.user.UserProfileViewModel;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,9 +24,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
@@ -129,7 +129,7 @@ public class UserController extends MainController {
         modelAndView.addObject("userViewModel", currentPageUser);
         modelAndView.addObject("addCommentBindingModel", new AddCommentBindingModel());
 
-        if(loggedUser != null) {
+        if (loggedUser != null) {
             UserProfileViewModel loggedUserViewModel = modelMapper
                     .map(loggedUser, UserProfileViewModel.class);
 

@@ -17,21 +17,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = UserNotExistException.class)
     public ModelAndView userNotLoggedPage() {
         ModelAndView modelAndView =
-                new ModelAndView("fragments/error/main_error_page");
+                new ModelAndView("error");
         modelAndView.addObject("errCode", "404");
         modelAndView.addObject("error",
                 "Ooops... User with this username do not exists!");
-        return modelAndView;
-    }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public ModelAndView handle404error() {
-        ModelAndView modelAndView =
-                new ModelAndView("fragments/error/main_error_page");
-        modelAndView.addObject("errCode", "404");
-        modelAndView.addObject("error",
-                "Ooops... We did not find your search!");
         return modelAndView;
     }
 }
