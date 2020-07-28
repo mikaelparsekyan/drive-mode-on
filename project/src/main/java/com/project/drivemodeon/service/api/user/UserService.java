@@ -34,5 +34,5 @@ public interface UserService {
 
     void editUser(UserServiceModel userServiceModel);
 
-    void uploadImage(MultipartFile image, User user);
+    void uploadProfileImage(MultipartFile image, User user);
 }

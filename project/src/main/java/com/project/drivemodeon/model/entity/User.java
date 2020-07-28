@@ -37,6 +37,9 @@ public class User extends BaseEntity {
     @Column
     private String password;
 
+    @Column(name = "image_path")
+    private String imagePath;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "users_relations",
             joinColumns = {

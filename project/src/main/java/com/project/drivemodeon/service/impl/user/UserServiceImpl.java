@@ -169,19 +169,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void uploadImage(MultipartFile image, User user) {
+    public void uploadProfileImage(MultipartFile image, User user) {
         List<String> allowedExtensions = new ArrayList<>(Arrays.asList("jpg", "jpeg", "png"));
         String fileExtension = image.getOriginalFilename().split("\\.")[1];
 
         if (allowedExtensions.contains(fileExtension)) {
-            File pathToImage = new File("src/main/resources/upload/user/" + user.getUsername());
+            String path = "/upload/user/" + user.getUsername().toLowerCase() + "/profile_pic";
+            File pathToImage = new File("src/main/resources/static" + path);
             pathToImage.mkdirs();
 
-            if(pathToImage.exists()){
+            if (pathToImage.exists()) {
                 try {
                     FileUtils.cleanDirectory(pathToImage);
-                    //  File imgFile = new File(pathToImage + "/" + image);
-                    //imgFile.mkdirs();
+
+                    String imageFileString = user.getUsername().toLowerCase() + "_profile_pic." + fileExtension;
+                    File file = new File("src/main/resources/static" + path, imageFileString);
+
+                    org.apache.commons.io.FileUtils.writeByteArrayToFile(file, image.getBytes());
+
+
+                    user.setImagePath(path + "/" + imageFileString);
+                    userRepository.saveAndFlush(user);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

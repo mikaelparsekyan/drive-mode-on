@@ -87,6 +87,27 @@ footer ul {
     color: #000000;
 }
 
+.navbar-user-icon {
+    height: 40px;
+    width: 40px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    overflow: hidden;
+    border: 1.5px rgba(73, 71, 71, 0.67) solid;
+    border-radius: 50%;
+    border-top-left-radius: 50% 50%;
+    border-top-right-radius: 50% 50%;
+    border-bottom-right-radius: 50% 50%;
+    border-bottom-left-radius: 50% 50%;
+}
+
+.navbar-user-icon-shape {
+    height: 50px;
+    width: 50px;
+    z-index: 999;
+}
+
 .header-divider {
     border-left: 1.5px solid #616161;
 }
@@ -373,13 +394,13 @@ footer ul {
     text-align: center;
 }
 
-.user-drafts-href, .user-drafts-div, .my-profile-href{
+.user-drafts-href, .user-drafts-div, .my-profile-href {
     width: fit-content;
     margin: 0 auto;
     color: #686666;
 }
 
-.user-drafts-href:hover, .user-drafts-div:hover, .my-profile-href:hover{
+.user-drafts-href:hover, .user-drafts-div:hover, .my-profile-href:hover {
     width: fit-content;
     margin: 0 auto;
     color: black;

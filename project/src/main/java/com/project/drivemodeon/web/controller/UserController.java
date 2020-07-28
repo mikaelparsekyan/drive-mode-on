@@ -15,7 +15,6 @@ import com.project.drivemodeon.util.api.ValidatorUtil;
 import com.project.drivemodeon.web.controller.advice.Advice;
 import com.project.drivemodeon.web.view_models.user.UserProfileViewModel;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,7 +25,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -222,7 +220,7 @@ public class UserController extends MainController {
             throw new UserNotExistException();
         }
 
-        userService.uploadImage(image,user);
+        userService.uploadProfileImage(image,user);
 
         return new ModelAndView("redirect:/user/" + user.getUsername());
     }
