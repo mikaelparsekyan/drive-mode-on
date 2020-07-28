@@ -203,6 +203,7 @@ public class UserController extends MainController {
         if (!model.containsAttribute("editUserBindingModel")) {
             EditUserBindingModel editUserBindingModel = modelMapper
                     .map(userByUsername, EditUserBindingModel.class);
+            editUserBindingModel.setIsAccountPrivate(userByUsername.isAccountPrivate() ? 1 : 0);
             model.addAttribute("editUserBindingModel", editUserBindingModel);
         }
         modelAndView.setViewName("edit_profile");
@@ -253,6 +254,7 @@ public class UserController extends MainController {
         }
 
         userServiceModel.setId(loggedUserId);
+        userServiceModel.setAccountPrivate(editUserBindingModel.getIsAccountPrivate() == 1);
         userService.editUser(userServiceModel);
 
         //Authenticate user after edit

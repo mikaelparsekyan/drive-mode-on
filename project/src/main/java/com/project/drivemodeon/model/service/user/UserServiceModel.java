@@ -41,7 +41,7 @@ public class UserServiceModel {
 
     private String confirmPassword;
 
-    private boolean isProfilePrivate;
+    private boolean isAccountPrivate;
 
     private Set<AuthorityEntity> authorities;
 }

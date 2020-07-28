@@ -154,6 +154,7 @@ public class UserServiceImpl implements UserService {
                 user.get().setFirstName(userServiceModel.getFirstName());
                 user.get().setLastName(userServiceModel.getLastName());
                 user.get().setUsername(userServiceModel.getUsername());
+                user.get().setAccountPrivate(userServiceModel.isAccountPrivate());
                 user.get().setEmail(userServiceModel.getEmail());
                 user.get().setPassword(passwordEncoder.encode(userServiceModel.getPassword()));
                 if (user.get().getBio() != null) {
@@ -171,7 +172,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void uploadProfileImage(MultipartFile image, User user) {
         List<String> allowedExtensions = new ArrayList<>(Arrays.asList("jpg", "jpeg", "png"));
-        String fileExtension = image.getOriginalFilename().split("\\.")[1];
+        String fileExtension = image.getOriginalFilename()
+                .substring(image.getOriginalFilename().lastIndexOf(".") + 1);
 
         if (allowedExtensions.contains(fileExtension)) {
             String path = "/upload/user/" + user.getUsername().toLowerCase() + "/profile_pic";

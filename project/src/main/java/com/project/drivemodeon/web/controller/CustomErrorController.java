@@ -16,8 +16,8 @@ public class CustomErrorController implements ErrorController {
     public ModelAndView handleError(HttpServletResponse response) {
         int errStatus = response.getStatus();
 
-        if(errStatus == 403){
-            //Redirect when page is forbidden
+        if(errStatus == 403 || errStatus == 200){
+            //Redirect when page is forbidden or ok
             return new ModelAndView("redirect:/feed");
         }
 

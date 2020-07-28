@@ -2,6 +2,7 @@ package com.project.drivemodeon.model.binding.user;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -32,6 +33,8 @@ public class EditUserBindingModel implements Serializable {
 
     @Length(min = 1, max = 40, message = "Bio should be between 1 and 40 symbols!")
     private String bio;
+
+    private int isAccountPrivate;
 
     @NotNull(message = "Password cannot be empty!")
     @Length(min = 8, message = "Password must be at least 8 symbols!")

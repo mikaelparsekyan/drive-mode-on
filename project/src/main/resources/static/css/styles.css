@@ -134,70 +134,6 @@ footer ul {
     font-family: "Montserrat-Medium", serif;
     border-radius: 3px;
 }
-
-/*.form .form-labels {*/
-/*    font-size: 14px;*/
-/*    display: inline-block;*/
-/*    margin-bottom: 6px;*/
-/*}*/
-
-/*.form input {*/
-/*    width: 100%;*/
-/*    box-sizing: border-box;*/
-/*    padding: 10px;*/
-/*    border: 1px solid #E0E0E0;*/
-/*    font-size: 14px;*/
-/*    clear: both;*/
-/*    outline: none;*/
-/*}*/
-
-/*.form div {*/
-/*    margin-top: 30px;*/
-/*}*/
-
-/*.submit-button {*/
-/*    background-color: #00C853;*/
-/*    color: #ffffff;*/
-/*    width: 100%;*/
-/*    padding: 10px;*/
-/*    size: 10px;*/
-/*    border-color: #00C853;*/
-/*    border-style: solid;*/
-/*    text-transform: uppercase;*/
-/*}*/
-
-
-/*.submit-button:hover {*/
-/*    background-color: #43A047;*/
-/*    border-color: #43A047;*/
-/*}*/
-
-/*.signup-submit-button {*/
-/*    margin-top: 80px;*/
-/*}*/
-
-/*.signin-submit-button {*/
-/*    margin-top: 50px;*/
-/*}*/
-
-/*.input-form-hint-div {*/
-/*    height: 50px;*/
-/*    font-size: 12px;*/
-/*    display: inline;*/
-/*    padding: 20px;*/
-/*}*/
-
-/*.form-hint-p {*/
-/*    text-align: center;*/
-/*}*/
-
-/*.input-error-span p {*/
-/*    padding-top: 10px;*/
-/*    margin: 0;*/
-/*    font-size: 12px;*/
-/*    color: #B00020;*/
-/*}*/
-
 /* Signin / Signup forms style */
 
 .sign-in-page-content {
@@ -241,7 +177,7 @@ footer ul {
     text-align: center;
     font-size: 28px;
     float: left;
-    margin-left: 80px;
+    margin-left: 40px;
 }
 
 .user-profile-information-heading {
@@ -255,6 +191,22 @@ footer ul {
 
 .user-profile-picture-div {
     margin-left: 30px;
+    float: left;
+}
+
+.user-profile-picture-div img {
+    height: 100px;
+    width: 100px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    overflow: hidden;
+    border: 1.5px rgba(73, 71, 71, 0.67) solid;
+    border-radius: 50%;
+    border-top-left-radius: 50% 50%;
+    border-top-right-radius: 50% 50%;
+    border-bottom-right-radius: 50% 50%;
+    border-bottom-left-radius: 50% 50%;
 }
 
 .profile-followers-counter-text h1 {

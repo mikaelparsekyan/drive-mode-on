@@ -20,7 +20,7 @@
     padding-right: 140px;
 }
 
-#edit-user-form input {
+#edit-user-form .input-fields{
     width: 100%;
     margin-top: 4px;
     margin-bottom: 20px;
@@ -31,6 +31,10 @@
     clear: both;
     outline: none;
     transition: 0.2s;
+}
+.checkbox-input {
+    margin-top: 4px;
+    margin-bottom: 20px;
 }
 
 #edit-user-form input:focus {

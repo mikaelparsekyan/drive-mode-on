@@ -79,16 +79,16 @@
     visibility: visible;
 }
 
-.followers-list .follower-info-div {
+.followers-list .followers-info-div {
     padding: 10px;
     border-top: 1px rgba(213, 213, 213, 0.82) solid;
 }
 
-.followings-list .followings-info-div {
+.followings-list .followings-info-div, .followers-info-div {
     padding: 10px;
     border-top: 1px rgba(213, 213, 213, 0.82) solid;
 }
-.followings-list .followings-info-div a {
+.followings-list .followings-info-div a, .followers-info-div a {
     color: rgba(31, 31, 31, 0.91);
     font-size: 12px;
     font-family:"Montserrat-ExtraLight", serif;
@@ -168,11 +168,11 @@
 }
 .user-profile-names {
     margin-top: 40px;
-    margin-left: 80px;
+    margin-left: 180px;
     overflow: hidden;
 }
 .user-bio {
-    margin-left: 80px;
+    margin-left: 180px;
     overflow: hidden;
     font-family: "Montserrat-ExtraLight", serif;
     font-size: 14px;
