@@ -1,7 +1,9 @@
 package com.project.drivemodeon.service.api.post;
 
+import com.project.drivemodeon.model.entity.Post;
 import com.project.drivemodeon.model.service.post.PostServiceModel;
 import com.project.drivemodeon.model.service.user.UserServiceModel;
+import com.project.drivemodeon.model.view.PostViewModel;
 import com.project.drivemodeon.validation.constant.enumeration.PostPrivacyEnum;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +15,11 @@ import java.util.Optional;
 public interface PostService {
     void addPost(PostServiceModel postServiceModel);
 
-    List<PostServiceModel> getAllPostsByPrivacy(PostPrivacyEnum postPrivacyEnum);
+    List<PostViewModel> getAllPostsByPrivacy(PostPrivacyEnum postPrivacyEnum);
 
-    LinkedList<PostServiceModel> getAllFeedPostsByUser(UserServiceModel userServiceModel);
+    LinkedList<PostViewModel> getAllFeedPostsByUser(UserServiceModel userServiceModel);
 
-    LinkedList<PostServiceModel> getAllDraftsByUser(UserServiceModel userServiceModel);
+    LinkedList<PostViewModel> getAllDraftsByUser(UserServiceModel userServiceModel);
 
     Optional<PostServiceModel> getPostById(Long id);
 

@@ -138,6 +138,8 @@ public class UserController extends MainController {
             modelAndView.addObject("isUserFollowCurrentProfile",
                     userService.isCurrentUserFollowProfileUser(
                             sessionUser, currentPageUser));
+        } else {
+            modelAndView.addObject("isUserFollowCurrentProfile", false);
         }
         return modelAndView;
     }
@@ -221,7 +223,7 @@ public class UserController extends MainController {
             throw new UserNotExistException();
         }
 
-        userService.uploadProfileImage(image,user);
+        userService.uploadProfileImage(image, user);
 
         return new ModelAndView("redirect:/user/" + user.getUsername());
     }

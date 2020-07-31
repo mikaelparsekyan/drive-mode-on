@@ -1,12 +1,17 @@
 package com.project.drivemodeon.web.controller;
 
 import com.project.drivemodeon.model.binding.comment.AddCommentBindingModel;
+import com.project.drivemodeon.model.entity.Post;
 import com.project.drivemodeon.service.api.post.PostService;
 import com.project.drivemodeon.validation.constant.enumeration.PostPrivacyEnum;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/explore")

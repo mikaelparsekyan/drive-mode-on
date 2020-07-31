@@ -185,3 +185,9 @@
     font-size: 20px;
     float: top;
 }
+.add-post-picture-input {
+    color: black;
+    margin-left: 10px;
+    width: 100%;
+    border: 0;
+}

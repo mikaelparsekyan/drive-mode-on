@@ -1,41 +1,33 @@
-package com.project.drivemodeon.model.service.post;
+package com.project.drivemodeon.model.view;
 
 import com.project.drivemodeon.model.entity.Comment;
 import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.validation.constant.enumeration.PostPrivacyEnum;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Data
-public class PostServiceModel {
+public class PostViewModel {
     private long id;
 
-    @Length(min = 1, max = 1000)
     private String value;
 
-    @NotNull
     private PostPrivacyEnum postPrivacy;
 
-    @NotNull
     private boolean isDraft;
 
-    @NotNull
     private User author;
 
-    @NotNull
+    private Set<User> likers;
+
     private LocalDateTime postedOn;
 
     private String location;
 
-    private Set<User> likers;
+    private String imagePath;
 
-    private LinkedHashSet<Comment> comments;
-
-    private MultipartFile imageFile;
+    private Set<Comment> comments = new LinkedHashSet<>();
 }

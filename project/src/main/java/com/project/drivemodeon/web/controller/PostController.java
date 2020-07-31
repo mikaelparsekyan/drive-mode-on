@@ -60,15 +60,12 @@ public class PostController {
     public ModelAndView addPost(@Valid @ModelAttribute("addPostBindingModel")
                                         AddPostBindingModel addPostBindingModel,
                                 BindingResult result,
-                                RedirectAttributes redirectAttributes,
                                 @AuthenticationPrincipal Principal principal) {
         ModelAndView modelAndView = new ModelAndView("redirect:/feed");
         Optional<User> loggedUser = advice.getLoggedUser(principal);
 
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("addPostBindingModel", addPostBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addPostBindingModel", result);
-            redirectAttributes.addAttribute("error", true);
+            modelAndView.addObject("error", true);
             return modelAndView;
         }
         PostServiceModel postServiceModel = modelMapper

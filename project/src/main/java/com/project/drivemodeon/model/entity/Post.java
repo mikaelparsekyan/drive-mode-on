@@ -49,6 +49,9 @@ public class Post extends BaseEntity {
     @Column
     private String location;
 
+    @Column(name = "image_path")
+    private String imagePath;
+
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Comment> comments = new LinkedHashSet<>();
 }

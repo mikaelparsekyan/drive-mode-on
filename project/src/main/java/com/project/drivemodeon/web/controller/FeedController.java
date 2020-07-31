@@ -7,6 +7,7 @@ import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.model.service.comment.CommentServiceModel;
 import com.project.drivemodeon.model.service.post.PostServiceModel;
 import com.project.drivemodeon.model.service.user.UserServiceModel;
+import com.project.drivemodeon.model.view.PostViewModel;
 import com.project.drivemodeon.service.api.comment.CommentService;
 import com.project.drivemodeon.service.api.post.PostService;
 import com.project.drivemodeon.service.api.user.UserService;
@@ -56,7 +57,7 @@ public class FeedController extends MainController {
             Optional<User> loggedUser = advice.getLoggedUser(principal);
 
             if (loggedUser.isPresent()) {
-                LinkedList<PostServiceModel> allFeedPostsByUser = postService.getAllFeedPostsByUser(this.modelMapper
+                LinkedList<PostViewModel> allFeedPostsByUser = postService.getAllFeedPostsByUser(this.modelMapper
                         .map(loggedUser.get(), UserServiceModel.class));
 
                 modelAndView.addObject("followingPosts", allFeedPostsByUser);
