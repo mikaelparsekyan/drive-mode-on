@@ -15,7 +15,6 @@ import java.util.SortedSet;
 @Data
 public class Post extends BaseEntity {
     @Size(min = 1, max = 1000)
-    @Column
     private String value;
 
     @Enumerated(EnumType.STRING)

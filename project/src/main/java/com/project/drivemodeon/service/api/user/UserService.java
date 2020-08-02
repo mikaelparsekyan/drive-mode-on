@@ -12,8 +12,6 @@ import java.util.Optional;
 public interface UserService {
     void signUpUser(UserServiceModel userServiceModel) throws BaseSignUpException;
 
-    boolean signInUser(UserServiceModel userServiceModel);
-
     boolean isEmailTaken(String email);
 
     boolean isUsernameTaken(String username);
@@ -27,10 +25,6 @@ public interface UserService {
     void followUser(User loggedUser, User followingUser);
 
     void unfollowUser(User loggedUser, User followingUser);
-
-    long getUserFollowersCount(User user);
-
-    long getUserFollowingsCount(User user);
 
     void editUser(UserServiceModel userServiceModel);
 

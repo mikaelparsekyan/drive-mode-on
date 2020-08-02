@@ -8,12 +8,14 @@ import com.project.drivemodeon.model.binding.comment.AddCommentBindingModel;
 import com.project.drivemodeon.model.binding.user.EditUserBindingModel;
 import com.project.drivemodeon.model.binding.user.UserSignInBindingModel;
 import com.project.drivemodeon.model.binding.user.UserSignUpBindingModel;
+import com.project.drivemodeon.model.entity.Post;
 import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.model.service.user.UserServiceModel;
+import com.project.drivemodeon.model.view.UserViewModel;
 import com.project.drivemodeon.service.api.user.UserService;
 import com.project.drivemodeon.util.api.ValidatorUtil;
+import com.project.drivemodeon.validation.constant.enumeration.PostPrivacyEnum;
 import com.project.drivemodeon.web.controller.advice.Advice;
-import com.project.drivemodeon.web.view_models.user.UserProfileViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,10 +32,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController extends MainController {
@@ -120,7 +120,6 @@ public class UserController extends MainController {
         }
         User currentPageUser = userService.getUserByUsername(username);
 
-
         if (currentPageUser == null) {
             throw new UserNotExistException();
         }
@@ -129,17 +128,29 @@ public class UserController extends MainController {
         modelAndView.addObject("userViewModel", currentPageUser);
         modelAndView.addObject("addCommentBindingModel", new AddCommentBindingModel());
 
-        if (loggedUser != null) {
-            UserProfileViewModel loggedUserViewModel = modelMapper
-                    .map(loggedUser, UserProfileViewModel.class);
+        Set<Post> posts = currentPageUser.getPosts();
+        if (loggedUser == null) {
+            posts = posts.stream().filter(post -> post.getPostPrivacy() == PostPrivacyEnum.PUBLIC)
+                    .collect(Collectors.toCollection(LinkedHashSet::new));
+            modelAndView.addObject("userPosts", posts);
+
+            modelAndView.addObject("isUserFollowCurrentProfile", false);
+        } else {
+            final User user = loggedUser;
+            posts = posts.stream().filter(post -> post.getPostPrivacy() == PostPrivacyEnum.PUBLIC && !post.isDraft() || (
+                    post.getPostPrivacy() == PostPrivacyEnum.FOR_FRIENDS_ONLY && post.getAuthor().getFollowers()
+                            .contains(user) && !post.isDraft()) || (post.getAuthor().getId() == user.getId() && !post.isDraft()))
+                    .collect(Collectors.toCollection(LinkedHashSet::new));
+            modelAndView.addObject("userPosts", posts);
+
+            UserViewModel loggedUserViewModel = modelMapper
+                    .map(loggedUser, UserViewModel.class);
 
             User sessionUser = modelMapper.map(loggedUserViewModel, User.class);
 
             modelAndView.addObject("isUserFollowCurrentProfile",
                     userService.isCurrentUserFollowProfileUser(
                             sessionUser, currentPageUser));
-        } else {
-            modelAndView.addObject("isUserFollowCurrentProfile", false);
         }
         return modelAndView;
     }
@@ -233,8 +244,7 @@ public class UserController extends MainController {
                                                   EditUserBindingModel editUserBindingModel,
                                           BindingResult bindingResult,
                                           RedirectAttributes redirectAttributes,
-                                          @AuthenticationPrincipal Principal principal,
-                                          Model model) {
+                                          @AuthenticationPrincipal Principal principal) {
         ModelAndView modelAndView = new ModelAndView("redirect:/user/edit/profile");
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("editUserBindingModel", editUserBindingModel);
@@ -251,14 +261,22 @@ public class UserController extends MainController {
         UserServiceModel userServiceModel = modelMapper.map(editUserBindingModel, UserServiceModel.class);
 
         if (!userServiceModel.getPassword().equals(userServiceModel.getConfirmPassword())) {
-            model.addAttribute("passNotMatch", "Passwords not match");
+            redirectAttributes.addFlashAttribute("passNotMatch", true);
+            return modelAndView;
+        }
+        if (!userServiceModel.getUsername().equals(advice.getLoggedUser(principal).get().getUsername()) &&
+                userService.isUsernameTaken(userServiceModel.getUsername())) {
+            redirectAttributes.addFlashAttribute("usernameIsTaken", true);
+            return modelAndView;
+        } else if (!userServiceModel.getEmail().equals(advice.getLoggedUser(principal).get().getEmail()) &&
+                userService.isEmailTaken(userServiceModel.getEmail())) {
+            redirectAttributes.addFlashAttribute("emailIsTaken", true);
             return modelAndView;
         }
 
         userServiceModel.setId(loggedUserId);
         userServiceModel.setAccountPrivate(editUserBindingModel.getIsAccountPrivate() == 1);
         userService.editUser(userServiceModel);
-
         //Authenticate user after edit
         Collection<SimpleGrantedAuthority> nowAuthorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder
                 .getContext().getAuthentication().getAuthorities();

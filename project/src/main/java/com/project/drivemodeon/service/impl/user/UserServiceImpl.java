@@ -79,22 +79,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean signInUser(UserServiceModel userServiceModel) {
-        String username = userServiceModel.getUsername();
-
-        Optional<User> user = userRepository.findUserByUsername(username);
-
-        if (user.isEmpty()) {
-            return false;
-
-        }
-        if (!passwordEncoder.matches(userServiceModel.getPassword(), user.get().getPassword())) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public boolean isEmailTaken(String email) {
         Optional<User> foundUser = userRepository.findUserByEmail(email);
         return foundUser.isPresent();
@@ -133,16 +117,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void unfollowUser(User loggedUser, User followingUser) {
         loggedUser.getFollowing().remove(followingUser);
-    }
-
-    @Override
-    public long getUserFollowersCount(User user) {
-        return (long) userRepository.getAllFollowersByUsername(user.getUsername()).size();
-    }
-
-    @Override
-    public long getUserFollowingsCount(User user) {
-        return (long) userRepository.getAllFollowingsByUsername(user.getUsername()).size();
     }
 
     @Transactional

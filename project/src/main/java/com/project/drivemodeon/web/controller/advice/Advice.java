@@ -1,5 +1,6 @@
 package com.project.drivemodeon.web.controller.advice;
 
+import com.project.drivemodeon.model.entity.AuthorityEntity;
 import com.project.drivemodeon.model.entity.User;
 import com.project.drivemodeon.model.view.UserViewModel;
 import com.project.drivemodeon.service.api.user.UserService;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.security.Principal;
+import java.util.LinkedHashSet;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class Advice {
@@ -74,5 +77,21 @@ public class Advice {
             return Optional.empty();
         }
         return Optional.of(user);
+    }
+
+    @ModelAttribute("isUserAdmin")
+    public boolean isUserAdmin(@AuthenticationPrincipal Principal principal) {
+        if (principal == null) {
+            return false;
+        }
+        User user = userService.getUserByUsername(principal.getName());
+
+        if (user == null) {
+            return false;
+        }
+        LinkedHashSet<String> authorities = user.getAuthorities()
+                .stream().map(AuthorityEntity::getName)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+        return authorities.contains("ROLE_ADMIN");
     }
 }

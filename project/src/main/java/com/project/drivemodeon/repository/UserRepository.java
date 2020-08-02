@@ -14,6 +14,7 @@ import java.util.Set;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserByEmail(String email);
 
+    @Query("SELECT u FROM User u WHERE LOWER(u.username) = LOWER(:username)")
     Optional<User> findUserByUsername(String username);
 
     @Query("SELECT u.followers FROM User u WHERE u.username = :username")

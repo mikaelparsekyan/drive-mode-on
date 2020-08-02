@@ -176,8 +176,10 @@ public class PostController {
         if (postById.isEmpty()) {
             return modelAndView;
         }
-
-        if (postById.get().getAuthor().getId() == user.getId()) {
+        LinkedList<String> authorities = user.getAuthorities()
+                .stream().map(authorityEntity -> authorityEntity.getName())
+                .collect(Collectors.toCollection(LinkedList::new));
+        if ((postById.get().getAuthor().getId() == user.getId()) || authorities.contains("ROLE_ADMIN")) {
             postService.deletePost(postById.get());
         }
 

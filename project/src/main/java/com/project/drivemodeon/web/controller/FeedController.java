@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Optional;
@@ -53,6 +54,7 @@ public class FeedController extends MainController {
         modelAndView.addObject("addCommentBindingModel", new AddCommentBindingModel());
         modelAndView.addObject("postPrivacyEnum", PostPrivacyEnum.values());
         modelAndView.addObject("countries", new Countries().getCountries());
+        modelAndView.addObject("nowDate", LocalDateTime.now());
         if (principal != null) {
             Optional<User> loggedUser = advice.getLoggedUser(principal);
 

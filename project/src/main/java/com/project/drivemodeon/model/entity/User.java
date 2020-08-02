@@ -69,9 +69,6 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Post> posts = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Log> logs;
-
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
