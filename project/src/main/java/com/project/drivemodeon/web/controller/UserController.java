@@ -217,6 +217,7 @@ public class UserController extends MainController {
             EditUserBindingModel editUserBindingModel = modelMapper
                     .map(userByUsername, EditUserBindingModel.class);
             editUserBindingModel.setIsAccountPrivate(userByUsername.isAccountPrivate() ? 1 : 0);
+            editUserBindingModel.setPassword("");//reset password
             model.addAttribute("editUserBindingModel", editUserBindingModel);
         }
         modelAndView.setViewName("edit_profile");

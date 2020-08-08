@@ -19,6 +19,10 @@
     padding-left: 140px;
     padding-right: 140px;
 }
+.profile-pic-form-div {
+    margin-bottom: 40px;
+    margin-left: 20px;
+}
 
 #edit-user-form .input-fields{
     width: 100%;
